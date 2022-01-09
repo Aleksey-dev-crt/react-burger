@@ -1,3 +1,4 @@
 {
-    "json.maxItemsComputed": 10000
+    "json.maxItemsComputed": 10000,
+    "css.customData": [".vscode/custom.css-data.json"]
 }
