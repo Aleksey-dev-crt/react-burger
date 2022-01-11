@@ -12,36 +12,38 @@ function AppHeader() {
   const [typeAccount, setTypeAccount] = React.useState('primary');
 
   const setPrimary = (e) => {
-    if (e.currentTarget.lastChild.textContent === 'Конструктор') setTypeBurger('primary');
-    if (e.currentTarget.lastChild.textContent === 'Лента заказов') setTypeList('primary');
-    if (e.currentTarget.lastChild.textContent === 'Личный кабинет') setTypeAccount('primary');
+    if (e.currentTarget.lastChild.textContent == 'Конструктор') setTypeBurger('primary');
+    if (e.currentTarget.lastChild.textContent == 'Лента заказов') setTypeList('primary');
+    if (e.currentTarget.lastChild.textContent == 'Личный кабинет') setTypeAccount('primary');
   };
 
   const setSecondary = (e) => {
-    if (e.currentTarget.lastChild.textContent === 'Конструктор') setTypeBurger('secondary');
-    if (e.currentTarget.lastChild.textContent === 'Лента заказов') setTypeList('secondary');
-    if (e.currentTarget.lastChild.textContent === 'Личный кабинет') setTypeAccount('secondary');
+    if (e.currentTarget.lastChild.textContent == 'Конструктор') setTypeBurger('secondary');
+    if (e.currentTarget.lastChild.textContent == 'Лента заказов') setTypeList('secondary');
+    if (e.currentTarget.lastChild.textContent == 'Личный кабинет') setTypeAccount('secondary');
   };
 
   return (
-    <header className={AppHeaderStyles.header} style={{}}>
-      <nav className={AppHeaderStyles.navigation}>
-        <div
-          className={'mt-4 mb-4 mr-2 pl-5 pr-5 ' + AppHeaderStyles.navigation__link}
-          onMouseOver={setSecondary}
-          onMouseOut={setPrimary}
-        >
-          <BurgerIcon type={typeBurger} />
-          <p className="pl-2 text text_type_main-default">Конструктор</p>
-        </div>
-        <div
-          className={'mt-4 mb-4 mr-2 pl-5 pr-5 ' + AppHeaderStyles.navigation__link}
-          onMouseOver={setSecondary}
-          onMouseOut={setPrimary}
-        >
-          <ListIcon type={typeList} />
-          <p className="pl-2 text text_type_main-default">Лента заказов</p>
-        </div>
+    <header className={AppHeaderStyles.header}>
+      <nav>
+        <ul className={AppHeaderStyles.nav}>
+          <li
+            className={'mt-4 mb-4 mr-2 pl-5 pr-5 ' + AppHeaderStyles.nav__link}
+            onMouseOver={setSecondary}
+            onMouseOut={setPrimary}
+          >
+            <BurgerIcon type={typeBurger} />
+            <p className="pl-2 text text_type_main-default">Конструктор</p>
+          </li>
+          <li
+            className={'mt-4 mb-4 mr-2 pl-5 pr-5 ' + AppHeaderStyles.nav__link}
+            onMouseOver={setSecondary}
+            onMouseOut={setPrimary}
+          >
+            <ListIcon type={typeList} />
+            <p className="pl-2 text text_type_main-default">Лента заказов</p>
+          </li>
+        </ul>
       </nav>
       <Logo />
       <div
