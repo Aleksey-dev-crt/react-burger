@@ -1,6 +1,6 @@
-import React from 'react';
 import AppHeader from './components/AppHeader/AppHeader';
 import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients';
+import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor';
 import './App.css';
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <AppHeader />
       <main className="content">
         <BurgerIngredients />
+        <BurgerConstructor />
       </main>
     </div>
   );

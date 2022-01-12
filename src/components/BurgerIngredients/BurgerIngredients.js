@@ -55,7 +55,7 @@ const IngridientsCategory = (props) => {
   return (
     <li id={props.type}>
       <h2 className="text text_type_main-medium">{props.text}</h2>
-      <ul className={'pl-4 ' + BurgerIngredientsStyles.ingridientsList}>
+      <ul className={'pl-4 ' + BurgerIngredientsStyles.ingridients}>
         {category.map((el, i) => (
           <Ingridient key={i} ingridient={el} />
         ))}

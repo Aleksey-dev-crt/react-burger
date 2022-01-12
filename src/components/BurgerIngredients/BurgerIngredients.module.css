@@ -22,7 +22,7 @@
   background-color: #8585ad;
 }
 
-.ingridientsList {
+.ingridients {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
