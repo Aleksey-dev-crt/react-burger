@@ -1,6 +1,6 @@
 **Ссылка на страницу**
 
- - [react-burger](https://aleksey-dev-crt.github.io/react-burger/index.html)
+ - [react-burger](https://aleksey-dev-crt.github.io/react-burger/)
 
 # Getting Started with Create React App
 
