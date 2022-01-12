@@ -51,7 +51,7 @@ const Ingridient = (props) => {
 }
 
 const IngridientsCategory = (props) => {
-  const category = data.filter((el) => el.type == props.type)
+  const category = data.filter((el) => el.type === props.type)
   return (
     <li id={props.type}>
       <h2 className="text text_type_main-medium">{props.text}</h2>

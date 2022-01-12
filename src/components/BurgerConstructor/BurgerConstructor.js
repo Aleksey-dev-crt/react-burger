@@ -46,8 +46,8 @@ PlaceOrder.propTypes = {
 }
 
 function BurgerConstructor() {
-  const ingredients = data.filter((el) => el.type != 'bun')
-  const buns = data.filter((el) => el.type == 'bun')
+  const ingredients = data.filter((el) => el.type !== 'bun')
+  const buns = data.filter((el) => el.type === 'bun')
   const cost = ingredients.reduce((acc, el) => (acc += el.price), 0) + buns[1].price * 2
 
   return (

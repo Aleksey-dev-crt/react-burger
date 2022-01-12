@@ -12,15 +12,15 @@ function AppHeader() {
   const [typeAccount, setTypeAccount] = React.useState('primary');
 
   const setPrimary = (e) => {
-    if (e.currentTarget.lastChild.textContent == 'Конструктор') setTypeBurger('primary');
-    if (e.currentTarget.lastChild.textContent == 'Лента заказов') setTypeList('primary');
-    if (e.currentTarget.lastChild.textContent == 'Личный кабинет') setTypeAccount('primary');
+    if (e.currentTarget.lastChild.textContent === 'Конструктор') setTypeBurger('primary');
+    if (e.currentTarget.lastChild.textContent === 'Лента заказов') setTypeList('primary');
+    if (e.currentTarget.lastChild.textContent ==='Личный кабинет') setTypeAccount('primary');
   };
 
   const setSecondary = (e) => {
-    if (e.currentTarget.lastChild.textContent == 'Конструктор') setTypeBurger('secondary');
-    if (e.currentTarget.lastChild.textContent == 'Лента заказов') setTypeList('secondary');
-    if (e.currentTarget.lastChild.textContent == 'Личный кабинет') setTypeAccount('secondary');
+    if (e.currentTarget.lastChild.textContent === 'Конструктор') setTypeBurger('secondary');
+    if (e.currentTarget.lastChild.textContent === 'Лента заказов') setTypeList('secondary');
+    if (e.currentTarget.lastChild.textContent === 'Личный кабинет') setTypeAccount('secondary');
   };
 
   return (
