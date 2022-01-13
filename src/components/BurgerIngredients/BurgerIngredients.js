@@ -5,7 +5,7 @@ import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const Tabs = () => {
-  const [current, setCurrent] = React.useState('bun')
+  const [current, setCurrent] = React.useState('bun')  
 
   return (
     <div style={{ display: 'flex' }}>
@@ -34,41 +34,54 @@ const Count = (props) => {
   } else return null
 }
 
-const Ingridient = (props) => {
+const Ingredient = (props) => {
   return (
-    <li className={'mt-6 ' + BurgerIngredientsStyles.ingridient}>
-      <img className="ml-4 mr-4" src={props.ingridient.image} alt={props.ingridient.name} />
+    <li className={'mt-6 ' + BurgerIngredientsStyles.ingredient}>
+      <img className="ml-4 mr-4" src={props.ingredient.image} alt={props.ingredient.name} />
       <div className={BurgerIngredientsStyles.price}>
-        <p className="text text_type_digits-default">{props.ingridient.price}</p>
+        <p className="text text_type_digits-default">{props.ingredient.price}</p>
         <CurrencyIcon type="primary" />
       </div>
       <p className="text text_type_main-default" style={{ textAlign: 'center' }}>
-        {props.ingridient.name}
+        {props.ingredient.name}
       </p>
-      <Count show={props.ingridient.__v > 0}>{props.ingridient.__v}</Count>
+      <Count show={props.ingredient.__v > 0}>{props.ingredient.__v}</Count>
     </li>
   )
 }
 
-const IngridientsCategory = (props) => {
+const IngredientsCategory = (props) => {
   const category = data.filter((el) => el.type === props.type)
   return (
     <li id={props.type}>
       <h2 className="text text_type_main-medium">{props.text}</h2>
-      <ul className={'pl-4 ' + BurgerIngredientsStyles.ingridients}>
+      <ul className={'pl-4 ' + BurgerIngredientsStyles.ingredients}>
         {category.map((el, i) => (
-          <Ingridient key={i} ingridient={el} />
+          <Ingredient key={i} ingredient={el} />
         ))}
       </ul>
     </li>
   )
 }
 
-Ingridient.propTypes = {
-  ingridient: PropTypes.object.isRequired,
+Ingredient.propTypes = {
+  ingredient: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    calories: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_mobile: PropTypes.string,
+    image_large: PropTypes.string,
+    __v: PropTypes.number,
+  }),
 }
 
-IngridientsCategory.propTypes = {
+IngredientsCategory.propTypes = {
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 }
@@ -86,7 +99,7 @@ function BurgerIngredients() {
       <Tabs />
       <ul className={'mt-10 ' + BurgerIngredientsStyles.container}>
         {categories.map((el, i) => (
-          <IngridientsCategory key={i} type={el.type} text={el.text} />
+          <IngredientsCategory key={i} type={el.type} text={el.text} />
         ))}
       </ul>
     </section>
