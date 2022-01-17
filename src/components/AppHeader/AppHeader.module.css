@@ -1,0 +1,27 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 88px;
+    background-color: #1C1C21;
+  }
+  
+  .nav {
+    all: unset;
+    display: flex;
+    margin-right: 112px;
+  }
+  
+  .nav__link {
+    display: flex;
+  }
+
+  .nav__link:hover {
+    color: #8585AD;
+    cursor: pointer;
+  }
+  
+  .account {
+    composes: nav__link;
+    margin-left: 289px;
+  }
