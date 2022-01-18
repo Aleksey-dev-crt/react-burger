@@ -1,29 +1,28 @@
 import React from 'react'
-import { data } from '../../utils/data'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const Tabs = () => {
-  const [current, setCurrent] = React.useState('bun')  
+  const [current, setCurrent] = React.useState('bun')
+
+  const setTab = (tab) => {
+    setCurrent(tab)
+    const element = document.getElementById(tab)
+    if (element) element.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
     <div style={{ display: 'flex' }}>
-      <a style={{ all: 'unset' }} href="#bun">
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        <Tab value="bun" active={current === 'bun'} onClick={() => setTab('bun')}>
           Булки
         </Tab>
-      </a>
-      <a style={{ all: 'unset' }} href="#sauce">
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        <Tab value="sauce" active={current === 'sauce'} onClick={() => setTab('sauce')}>
           Соусы
         </Tab>
-      </a>
-      <a style={{ all: 'unset' }} href="#main">
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        <Tab value="main" active={current === 'main'} onClick={() => setTab('main')}>
           Начинки
         </Tab>
-      </a>
     </div>
   )
 }
@@ -51,7 +50,8 @@ const Ingredient = (props) => {
 }
 
 const IngredientsCategory = (props) => {
-  const category = data.filter((el) => el.type === props.type)
+  const category = props.ingredients.filter((el) => el.type === props.type)
+
   return (
     <li id={props.type}>
       <h2 className="text text_type_main-medium">{props.text}</h2>
@@ -86,7 +86,7 @@ IngredientsCategory.propTypes = {
   text: PropTypes.string.isRequired,
 }
 
-function BurgerIngredients() {
+function BurgerIngredients({ ingredients }) {
   const categories = [
     { type: 'bun', text: 'Булки' },
     { type: 'sauce', text: 'Соусы' },
@@ -99,7 +99,7 @@ function BurgerIngredients() {
       <Tabs />
       <ul className={'mt-10 ' + BurgerIngredientsStyles.container}>
         {categories.map((el, i) => (
-          <IngredientsCategory key={i} type={el.type} text={el.text} />
+          <IngredientsCategory key={i} type={el.type} text={el.text} ingredients={ingredients} />
         ))}
       </ul>
     </section>

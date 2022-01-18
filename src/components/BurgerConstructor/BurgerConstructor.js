@@ -4,7 +4,6 @@ import {
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { data } from '../../utils/data'
 import burgerConstructorStyle from './BurgerConstructor.module.css'
 import currencyIcon from '../../images/currencyIcon.svg'
 
@@ -45,10 +44,11 @@ PlaceOrder.propTypes = {
   cost: PropTypes.number.isRequired,
 }
 
-function BurgerConstructor() {
-  const ingredients = data.filter((el) => el.type !== 'bun')
-  const buns = data.filter((el) => el.type === 'bun')
-  const cost = ingredients.reduce((acc, el) => (acc += el.price), 0) + buns[1].price * 2
+
+function BurgerConstructor({ ingredients }) {  
+  
+  const nonBunsIngredients = ingredients.filter((el) => el.type !== 'bun')
+  const cost = nonBunsIngredients.reduce((acc, el) => (acc += el.price), 0) + 2510
 
   return (
     <section className={'pt-25 ' + burgerConstructorStyle.constructor}>
@@ -57,19 +57,19 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={buns[1].name}
-            price={buns[1].price}
-            thumbnail={buns[1].image}
+            text='Краторная булка N-200i'
+            price={1255}
+            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
           />
         </div>
-        <Ingridients ingredients={ingredients} />
+        <Ingridients ingredients={nonBunsIngredients} />
         <div className={'pl-7 ' + burgerConstructorStyle.element}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={buns[1].name}
-            price={buns[1].price}
-            thumbnail={buns[1].image}
+            text='Краторная булка N-200i'
+            price={1255}
+            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
           />
         </div>
       </div>
