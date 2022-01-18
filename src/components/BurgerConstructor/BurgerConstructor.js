@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   ConstructorElement,
@@ -8,6 +8,7 @@ import {
 import burgerConstructorStyle from './BurgerConstructor.module.css'
 import currencyIcon from '../../images/currencyIcon.svg'
 import Modal from '../Modal/Modal'
+import OrderDetails from '../OrderDetails/OrderDetails'
 
 const Ingridients = (props) => {
   return (
@@ -44,7 +45,7 @@ const PlaceOrder = ({ cost }) => {
       <Button type="primary" size="large" onClick={modalOpenHandler}>
         Оформить заказ
       </Button>
-      {isModalOpen && <Modal onClose={modalCloseHandler} />}
+      {isModalOpen && <Modal onClose={modalCloseHandler}><OrderDetails orderNumber={Math.floor(Math.random()*10**6)} /></Modal>}
     </div>
   )
 }

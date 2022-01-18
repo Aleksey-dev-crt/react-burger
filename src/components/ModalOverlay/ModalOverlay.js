@@ -1,16 +1,31 @@
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import ModalOverlayStyle from './ModalOverlay.module.css'
+import ModalOverlayStyles from './ModalOverlay.module.css'
 
 function ModalOverlay(props) {
+
+  useEffect(() => {
+    document.addEventListener('click', closeByOverlay)
+    return () => {
+      document.removeEventListener('click', closeByOverlay)
+    }
+  })
+
+  const closeByOverlay = (e) => {
+    if (e.target.className.includes('overlay')) {
+      props.onClose()
+    }
+  }
+
   return (
-    <div className={ModalOverlayStyle.overlay} onClick={props.onClose}>
+    <div className={ModalOverlayStyles.overlay} onClick={closeByOverlay}>
       {props.children}
     </div>
   )
 }
 
 ModalOverlay.propTypes = {
-    onClose: PropTypes.func,
+    onClose: PropTypes.func.isRequired,
     children: PropTypes.element,
   }
 
