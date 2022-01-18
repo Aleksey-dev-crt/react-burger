@@ -39,6 +39,10 @@
   max-width: 272px;
 }
 
+.ingredient:hover{
+  cursor: pointer;
+}
+
 .price {
   display: flex;
   gap: 8px;

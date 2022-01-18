@@ -8,6 +8,9 @@ import { getData } from './utils/Api'
 function App() {
   const [data, setData] = useState([])
 
+  const handleClose = () => {}
+
+
   useEffect(() => {
     getData()
       .then((res) => setData(res.data))
@@ -19,7 +22,7 @@ function App() {
       <AppHeader />
       <main className="content">
         <BurgerIngredients ingredients={data} />
-        <BurgerConstructor ingredients={data} />
+        <BurgerConstructor ingredients={data} />       
       </main>
     </div>
   )

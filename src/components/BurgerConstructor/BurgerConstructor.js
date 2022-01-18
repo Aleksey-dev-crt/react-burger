@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   ConstructorElement,
@@ -6,6 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorStyle from './BurgerConstructor.module.css'
 import currencyIcon from '../../images/currencyIcon.svg'
+import Modal from '../Modal/Modal'
 
 const Ingridients = (props) => {
   return (
@@ -22,16 +24,27 @@ const Ingridients = (props) => {
   )
 }
 
-const PlaceOrder = (props) => {
+const PlaceOrder = ({ cost }) => {
+  const [isModalOpen, setModalOpen] = useState(false)
+
+  const modalOpenHandler = () => {
+    setModalOpen(true)
+  }
+
+  const modalCloseHandler = () => {
+    setModalOpen(false)
+  }
+
   return (
     <div className={'mr-4 mt-10 ' + burgerConstructorStyle.order}>
       <div className={burgerConstructorStyle.price}>
-        <p className="text text_type_digits-medium">{props.cost}</p>
+        <p className="text text_type_digits-medium">{cost}</p>
         <img src={currencyIcon} alt="Значок валюты" />
       </div>
-      <Button type="primary" size="large">
+      <Button type="primary" size="large" onClick={modalOpenHandler}>
         Оформить заказ
       </Button>
+      {isModalOpen && <Modal onClose={modalCloseHandler} />}
     </div>
   )
 }
@@ -44,6 +57,9 @@ PlaceOrder.propTypes = {
   cost: PropTypes.number.isRequired,
 }
 
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.array.isRequired,
+}
 
 function BurgerConstructor({ ingredients }) {  
   

@@ -1,10 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import Modal from '../Modal/Modal'
+import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
 const Tabs = () => {
-  const [current, setCurrent] = React.useState('bun')
+  const [current, setCurrent] = useState('bun')
 
   const setTab = (tab) => {
     setCurrent(tab)
@@ -14,15 +16,15 @@ const Tabs = () => {
 
   return (
     <div style={{ display: 'flex' }}>
-        <Tab value="bun" active={current === 'bun'} onClick={() => setTab('bun')}>
-          Булки
-        </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={() => setTab('sauce')}>
-          Соусы
-        </Tab>
-        <Tab value="main" active={current === 'main'} onClick={() => setTab('main')}>
-          Начинки
-        </Tab>
+      <Tab value="bun" active={current === 'bun'} onClick={() => setTab('bun')}>
+        Булки
+      </Tab>
+      <Tab value="sauce" active={current === 'sauce'} onClick={() => setTab('sauce')}>
+        Соусы
+      </Tab>
+      <Tab value="main" active={current === 'main'} onClick={() => setTab('main')}>
+        Начинки
+      </Tab>
     </div>
   )
 }
@@ -33,19 +35,32 @@ const Count = (props) => {
   } else return null
 }
 
-const Ingredient = (props) => {
+const Ingredient = ({ ingredient }) => {
+  const [isModalOpen, setModalOpen] = useState(false)
+
+  const modalOpenHandler = () => {
+    setModalOpen(true)
+  }
+
+  const modalCloseHandler = () => {
+    setModalOpen(false)
+  }
+
   return (
-    <li className={'mt-6 ' + BurgerIngredientsStyles.ingredient}>
-      <img className="ml-4 mr-4" src={props.ingredient.image} alt={props.ingredient.name} />
-      <div className={BurgerIngredientsStyles.price}>
-        <p className="text text_type_digits-default">{props.ingredient.price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className="text text_type_main-default" style={{ textAlign: 'center' }}>
-        {props.ingredient.name}
-      </p>
-      <Count show={props.ingredient.__v > 0}>{props.ingredient.__v}</Count>
-    </li>
+    <>
+      <li className={'mt-6 ' + BurgerIngredientsStyles.ingredient} onClick={modalOpenHandler}>
+        <img className="ml-4 mr-4" src={ingredient.image} alt={ingredient.name} />
+        <div className={BurgerIngredientsStyles.price}>
+          <p className="text text_type_digits-default">{ingredient.price}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className="text text_type_main-default" style={{ textAlign: 'center' }}>
+          {ingredient.name}
+        </p>
+        <Count show={ingredient.__v > 0}>{ingredient.__v}</Count>
+      </li>
+      {isModalOpen && <Modal onClose={modalCloseHandler}><IngredientDetails {...ingredient} /></Modal>}
+    </>
   )
 }
 

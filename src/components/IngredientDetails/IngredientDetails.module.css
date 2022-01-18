@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.image { 
+  align-self: center;
+}
+
+.title {
+  align-self: center;
+}
+
+.description {
+  list-style: none;
+  margin: 0;
+  padding: 32px 0 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.description__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
