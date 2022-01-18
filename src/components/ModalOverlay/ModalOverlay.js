@@ -12,7 +12,7 @@ function ModalOverlay(props) {
   })
 
   const closeByOverlay = (e) => {
-    if (e.target.className.includes('overlay')) {
+    if (e.target.className.baseVal !== '' && e.target.className.includes('overlay')) {
       props.onClose()
     }
   }

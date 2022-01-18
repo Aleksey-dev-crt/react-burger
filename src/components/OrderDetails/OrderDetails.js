@@ -10,7 +10,7 @@ function OrderDetails({ orderNumber }) {
   return (
     <div className={OrderDetailsStyles.container}>
       <h2 className={'text text_type_digits-large pt-20 pb-8'}>{orderNumber}</h2>
-      <h3 className={'text text_type_main-medium' + OrderDetailsStyles.title}>
+      <h3 className={'text text_type_main-medium'}>
         идентификатор заказа
       </h3>
       <img className="pt-15 pb-15" src={done} alt="Заказ принят" />
