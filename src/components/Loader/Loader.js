@@ -1,6 +1,6 @@
 import LoaderStyles from './Loader.module.css'
 
-function Loader(props) {
+function Loader() {
   return (
     <div className={LoaderStyles.spinner}>
       <div></div>
