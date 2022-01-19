@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import AppHeaderStyles from './AppHeader.module.css';
 
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,9 +7,9 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
-  const [typeBurger, setTypeBurger] = React.useState('primary');
-  const [typeList, setTypeList] = React.useState('primary');
-  const [typeAccount, setTypeAccount] = React.useState('primary');
+  const [typeBurger, setTypeBurger] = useState('primary');
+  const [typeList, setTypeList] = useState('primary');
+  const [typeAccount, setTypeAccount] = useState('primary');
 
   const setPrimary = (e) => {
     if (e.currentTarget.lastChild.textContent === 'Конструктор') setTypeBurger('primary');

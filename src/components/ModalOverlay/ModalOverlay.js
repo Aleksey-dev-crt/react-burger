@@ -2,11 +2,6 @@ import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ModalOverlayStyles from './ModalOverlay.module.css'
 
-ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element,
-}
-
 function ModalOverlay(props) {
   useEffect(() => {
     document.addEventListener('click', closeByOverlay)
@@ -26,6 +21,11 @@ function ModalOverlay(props) {
       {props.children}
     </div>
   )
+}
+
+ModalOverlay.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.element,
 }
 
 export default ModalOverlay

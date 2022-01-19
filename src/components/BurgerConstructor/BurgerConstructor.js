@@ -50,18 +50,6 @@ const PlaceOrder = ({ cost }) => {
   )
 }
 
-Ingridients.propTypes = {
-  ingredients: PropTypes.array.isRequired,
-}
-
-PlaceOrder.propTypes = {
-  cost: PropTypes.number.isRequired,
-}
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array.isRequired,
-}
-
 function BurgerConstructor({ ingredients }) {  
   
   const nonBunsIngredients = ingredients.filter((el) => el.type !== 'bun')
@@ -93,6 +81,18 @@ function BurgerConstructor({ ingredients }) {
       <PlaceOrder cost={cost} />
     </section>
   )
+}
+
+Ingridients.propTypes = {
+  ingredients: PropTypes.array.isRequired,
+}
+
+PlaceOrder.propTypes = {
+  cost: PropTypes.number.isRequired,
+}
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.array.isRequired,
 }
 
 export default BurgerConstructor

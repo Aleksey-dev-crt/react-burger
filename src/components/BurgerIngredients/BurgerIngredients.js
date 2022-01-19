@@ -83,6 +83,26 @@ const IngredientsCategory = (props) => {
   )
 }
 
+function BurgerIngredients({ ingredients }) {
+  const categories = [
+    { type: 'bun', text: 'Булки' },
+    { type: 'sauce', text: 'Соусы' },
+    { type: 'main', text: 'Начинки' },
+  ]
+
+  return (
+    <section className={BurgerIngredientsStyles.burgerIngredients}>
+      <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
+      <Tabs />
+      <ul className={'mt-10 ' + BurgerIngredientsStyles.container}>
+        {categories.map((el, i) => (
+          <IngredientsCategory key={i} type={el.type} text={el.text} ingredients={ingredients} />
+        ))}
+      </ul>
+    </section>
+  )
+}
+
 Ingredient.propTypes = {
   ingredient: PropTypes.shape({
     _id: PropTypes.string,
@@ -108,26 +128,6 @@ IngredientsCategory.propTypes = {
 
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.array.isRequired,
-}
-
-function BurgerIngredients({ ingredients }) {
-  const categories = [
-    { type: 'bun', text: 'Булки' },
-    { type: 'sauce', text: 'Соусы' },
-    { type: 'main', text: 'Начинки' },
-  ]
-
-  return (
-    <section className={BurgerIngredientsStyles.burgerIngredients}>
-      <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
-      <Tabs />
-      <ul className={'mt-10 ' + BurgerIngredientsStyles.container}>
-        {categories.map((el, i) => (
-          <IngredientsCategory key={i} type={el.type} text={el.text} ingredients={ingredients} />
-        ))}
-      </ul>
-    </section>
-  )
 }
 
 export default BurgerIngredients

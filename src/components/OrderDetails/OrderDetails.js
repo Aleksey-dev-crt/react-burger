@@ -2,10 +2,6 @@ import PropTypes from 'prop-types'
 import OrderDetailsStyles from './OrderDetails.module.css'
 import done from '../../images/done.svg'
 
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
-}
-
 function OrderDetails({ orderNumber }) {
   return (
     <div className={OrderDetailsStyles.container}>
@@ -20,6 +16,10 @@ function OrderDetails({ orderNumber }) {
       </p>
     </div>
   )
+}
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number,
 }
 
 export default OrderDetails

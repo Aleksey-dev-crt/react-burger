@@ -1,20 +1,6 @@
 import PropTypes from 'prop-types'
 import IngredientDetailsStyles from './IngredientDetails.module.css'
 
-IngredientDetails.propTypes = {
-  image_large: PropTypes.string,
-  name: PropTypes.string,
-  calories: PropTypes.number,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-}
-
-DescriptionItem.propTypes = {
-  description: PropTypes.string,
-  value: PropTypes.number,  
-}
-
 const DescriptionItem = (props) => {
   return (
     <li className={IngredientDetailsStyles.description__item}>
@@ -46,6 +32,20 @@ function IngredientDetails(props) {
       </ul>
     </div>
   )
+}
+
+IngredientDetails.propTypes = {
+  image_large: PropTypes.string,
+  name: PropTypes.string,
+  calories: PropTypes.number,
+  proteins: PropTypes.number,
+  fat: PropTypes.number,
+  carbohydrates: PropTypes.number,
+}
+
+DescriptionItem.propTypes = {
+  description: PropTypes.string,
+  value: PropTypes.number,  
 }
 
 export default IngredientDetails
