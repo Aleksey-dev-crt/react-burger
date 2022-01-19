@@ -11,10 +11,14 @@ Modal.propTypes = {
 }
 
 function Modal(props) {
+  const modal = document.createElement('div')
+
   useEffect(() => {
     document.addEventListener('keydown', closeByEsc)
+    document.body.appendChild(modal)
     return () => {
       document.removeEventListener('keydown', closeByEsc)
+      document.body.removeChild(modal)
     }
   })
 
@@ -33,7 +37,7 @@ function Modal(props) {
         </div>
       </div>
     </ModalOverlay>,
-    document.getElementById('modal')
+    modal
   )
 }
 

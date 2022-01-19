@@ -8,9 +8,6 @@ import { getData } from './utils/Api'
 function App() {
   const [data, setData] = useState([])
 
-  const handleClose = () => {}
-
-
   useEffect(() => {
     getData()
       .then((res) => setData(res.data))

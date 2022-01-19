@@ -59,7 +59,11 @@ const Ingredient = ({ ingredient }) => {
         </p>
         <Count show={ingredient.__v > 0}>{ingredient.__v}</Count>
       </li>
-      {isModalOpen && <Modal onClose={modalCloseHandler}><IngredientDetails {...ingredient} /></Modal>}
+      {isModalOpen && (
+        <Modal onClose={modalCloseHandler}>
+          <IngredientDetails {...ingredient} />
+        </Modal>
+      )}
     </>
   )
 }
@@ -97,8 +101,13 @@ Ingredient.propTypes = {
 }
 
 IngredientsCategory.propTypes = {
+  ingredients: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+}
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.array.isRequired,
 }
 
 function BurgerIngredients({ ingredients }) {

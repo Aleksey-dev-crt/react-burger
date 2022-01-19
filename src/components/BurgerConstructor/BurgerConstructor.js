@@ -10,10 +10,10 @@ import currencyIcon from '../../images/currencyIcon.svg'
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 
-const Ingridients = (props) => {
+const Ingridients = ({ ingredients }) => {
   return (
     <ul className={burgerConstructorStyle.ingridients}>
-      {props.ingredients.map((el, i) => (
+      {ingredients.map((el, i) => (
         <li className={burgerConstructorStyle.element} key={i}>
           <div className={burgerConstructorStyle.dragIcon}>
             <DragIcon type="primary" />
