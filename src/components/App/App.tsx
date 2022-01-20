@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import AppHeader from '../AppHeader/AppHeader'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
-import Loader from '../Loader/Loader'
+import Loader from '../Auxiliary/Loader/Loader'
 import './App.css'
 import { getData } from '../../utils/Api'
 
