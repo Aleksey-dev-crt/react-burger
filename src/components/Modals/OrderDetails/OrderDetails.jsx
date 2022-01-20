@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import OrderDetailsStyles from './OrderDetails.module.css'
-import done from '../../images/done.svg'
+import done from '../../../images/done.svg'
 
 function OrderDetails({ orderNumber }) {
   return (

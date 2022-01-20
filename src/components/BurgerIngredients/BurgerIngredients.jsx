@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../Modal/Modal'
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
+import Modal from '../Modals/Modal/Modal'
+import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails'
+import typeOfIngredient from '../../utils/propTypes'
 
 const Tabs = () => {
   const [current, setCurrent] = useState('bun')
@@ -38,13 +39,15 @@ const Count = (props) => {
 const Ingredient = ({ ingredient }) => {
   const [isModalOpen, setModalOpen] = useState(false)
 
-  const modalOpenHandler = () => {
-    setModalOpen(true)
-  }
+  const modalOpenHandler = useCallback(
+    () => setModalOpen(true),
+    []
+  );
 
-  const modalCloseHandler = () => {
-    setModalOpen(false)
-  }
+  const modalCloseHandler = useCallback(
+    () => setModalOpen(false),
+    []
+  );
 
   return (
     <>
@@ -57,7 +60,7 @@ const Ingredient = ({ ingredient }) => {
         <p className="text text_type_main-default" style={{ textAlign: 'center' }}>
           {ingredient.name}
         </p>
-        <Count show={ingredient.__v > 0}>{ingredient.__v}</Count>
+        <Count show={ingredient.proteins > 0}>{ingredient.proteins}</Count>
       </li>
       {isModalOpen && (
         <Modal onClose={modalCloseHandler}>
@@ -75,8 +78,8 @@ const IngredientsCategory = (props) => {
     <li id={props.type}>
       <h2 className="text text_type_main-medium">{props.text}</h2>
       <ul className={'pl-4 ' + BurgerIngredientsStyles.ingredients}>
-        {category.map((el, i) => (
-          <Ingredient key={i} ingredient={el} />
+        {category.map((el) => (
+          <Ingredient key={el._id} ingredient={el} />
         ))}
       </ul>
     </li>
@@ -85,9 +88,9 @@ const IngredientsCategory = (props) => {
 
 function BurgerIngredients({ ingredients }) {
   const categories = [
-    { type: 'bun', text: 'Булки' },
-    { type: 'sauce', text: 'Соусы' },
-    { type: 'main', text: 'Начинки' },
+    { type: 'bun', name: 'Булки' },
+    { type: 'sauce', name: 'Соусы' },
+    { type: 'main', name: 'Начинки' },
   ]
 
   return (
@@ -95,8 +98,8 @@ function BurgerIngredients({ ingredients }) {
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
       <Tabs />
       <ul className={'mt-10 ' + BurgerIngredientsStyles.container}>
-        {categories.map((el, i) => (
-          <IngredientsCategory key={i} type={el.type} text={el.text} ingredients={ingredients} />
+        {categories.map((el) => (          
+          <IngredientsCategory key={el.type} type={el.type} text={el.name} ingredients={ingredients} />
         ))}
       </ul>
     </section>
@@ -104,30 +107,17 @@ function BurgerIngredients({ ingredients }) {
 }
 
 Ingredient.propTypes = {
-  ingredient: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number,
-  }),
+  ingredient: PropTypes.shape(typeOfIngredient),
 }
 
 IngredientsCategory.propTypes = {
-  ingredients: PropTypes.array.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.array.isRequired,
+  ingredients:  PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
 }
 
 export default BurgerIngredients

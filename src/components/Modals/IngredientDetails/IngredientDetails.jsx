@@ -26,8 +26,8 @@ function IngredientDetails(props) {
         {props.name}
       </h3>
       <ul className={IngredientDetailsStyles.description}>
-        {descriptions.map((el, i) => (
-          <DescriptionItem key={i} description={el.description} value={el.value} />
+        {descriptions.map((el) => (
+          <DescriptionItem key={el.description} description={el.description} value={el.value} />
         ))}
       </ul>
     </div>

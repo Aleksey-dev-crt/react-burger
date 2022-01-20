@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import AppHeader from './components/AppHeader/AppHeader'
-import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients'
-import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor'
-import Loader from './components/Loader/Loader'
+import AppHeader from '../AppHeader/AppHeader'
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
+import Loader from '../Loader/Loader'
 import './App.css'
-import { getData } from './utils/Api'
+import { getData } from '../../utils/Api'
 
 function App() {
   const [data, setData] = useState([])

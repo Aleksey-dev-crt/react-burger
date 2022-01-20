@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import {
   ConstructorElement,
@@ -7,14 +7,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorStyle from './BurgerConstructor.module.css'
 import currencyIcon from '../../images/currencyIcon.svg'
-import Modal from '../Modal/Modal'
-import OrderDetails from '../OrderDetails/OrderDetails'
+import Modal from '../Modals/Modal/Modal'
+import OrderDetails from '../Modals/OrderDetails/OrderDetails'
+import typeOfIngredient from '../../utils/propTypes'
 
 const Ingridients = ({ ingredients }) => {
   return (
     <ul className={burgerConstructorStyle.ingridients}>
-      {ingredients.map((el, i) => (
-        <li className={burgerConstructorStyle.element} key={i}>
+      {ingredients.map((el) => (
+        <li className={burgerConstructorStyle.element} key={el._id}>
           <div className={burgerConstructorStyle.dragIcon}>
             <DragIcon type="primary" />
           </div>
@@ -28,13 +29,9 @@ const Ingridients = ({ ingredients }) => {
 const PlaceOrder = ({ cost }) => {
   const [isModalOpen, setModalOpen] = useState(false)
 
-  const modalOpenHandler = () => {
-    setModalOpen(true)
-  }
+  const modalOpenHandler = useCallback(() => setModalOpen(true), [])
 
-  const modalCloseHandler = () => {
-    setModalOpen(false)
-  }
+  const modalCloseHandler = useCallback(() => setModalOpen(false), [])
 
   return (
     <div className={'mr-4 mt-10 ' + burgerConstructorStyle.order}>
@@ -45,13 +42,16 @@ const PlaceOrder = ({ cost }) => {
       <Button type="primary" size="large" onClick={modalOpenHandler}>
         Оформить заказ
       </Button>
-      {isModalOpen && <Modal onClose={modalCloseHandler}><OrderDetails orderNumber={Math.floor(Math.random()*10**6)} /></Modal>}
+      {isModalOpen && (
+        <Modal onClose={modalCloseHandler}>
+          <OrderDetails orderNumber={Math.floor(Math.random() * 10 ** 6)} />
+        </Modal>
+      )}
     </div>
   )
 }
 
-function BurgerConstructor({ ingredients }) {  
-  
+function BurgerConstructor({ ingredients }) {
   const nonBunsIngredients = ingredients.filter((el) => el.type !== 'bun')
   const cost = nonBunsIngredients.reduce((acc, el) => (acc += el.price), 0) + 2510
 
@@ -62,7 +62,7 @@ function BurgerConstructor({ ingredients }) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text='Краторная булка N-200i'
+            text="Краторная булка N-200i (верх)"
             price={1255}
             thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
           />
@@ -72,7 +72,7 @@ function BurgerConstructor({ ingredients }) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text='Краторная булка N-200i'
+            text="Краторная булка N-200i (низ)"
             price={1255}
             thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
           />
@@ -84,7 +84,7 @@ function BurgerConstructor({ ingredients }) {
 }
 
 Ingridients.propTypes = {
-  ingredients: PropTypes.array.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
 }
 
 PlaceOrder.propTypes = {
@@ -92,7 +92,7 @@ PlaceOrder.propTypes = {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
 }
 
 export default BurgerConstructor
