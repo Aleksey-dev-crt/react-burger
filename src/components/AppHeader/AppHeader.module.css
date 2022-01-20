@@ -1,27 +1,32 @@
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 88px;
-    background-color: #1C1C21;
-  }
-  
-  .nav {
-    all: unset;
-    display: flex;
-    margin-right: 112px;
-  }
-  
-  .nav__link {
-    display: flex;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 88px;
+  background-color: #1c1c21;
+}
 
-  .nav__link:hover {
-    color: #8585AD;
-    cursor: pointer;
-  }
-  
-  .account {
-    composes: nav__link;
-    margin-left: 289px;
-  }
+.nav {
+  all: unset;
+  display: flex;
+  margin-right: 112px;
+}
+
+.nav__link {
+  all: unset;
+  display: flex;
+}
+
+.nav__link:hover {
+  color: #8585ad;
+  cursor: pointer;
+}
+
+.nav__link:hover > svg {
+  fill: #8585ad;
+}
+
+.account {
+  composes: nav__link;
+  margin-left: 289px;
+}
