@@ -1,10 +1,11 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useContext } from 'react'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../Modals/Modal/Modal'
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails'
 import typeOfIngredient from '../../utils/propTypes'
+import { ingredientsContext } from '../../services/appContext'
 
 const Tabs = () => {
   const [current, setCurrent] = useState('bun')
@@ -86,7 +87,9 @@ const IngredientsCategory = (props) => {
   )
 }
 
-function BurgerIngredients({ ingredients }) {
+function BurgerIngredients() {
+  const ingredients = useContext(ingredientsContext)
+
   const categories = [
     { type: 'bun', name: 'Булки' },
     { type: 'sauce', name: 'Соусы' },
@@ -116,8 +119,8 @@ IngredientsCategory.propTypes = {
   text: PropTypes.string.isRequired,
 }
 
-BurgerIngredients.propTypes = {
-  ingredients:  PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
-}
+// BurgerIngredients.propTypes = {
+//   ingredients:  PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
+// }
 
 export default BurgerIngredients

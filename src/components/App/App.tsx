@@ -4,33 +4,37 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import Loader from '../Auxiliary/Loader/Loader'
 import './App.css'
-import { getData } from '../../utils/Api'
+import { getIngredients } from '../../utils/Api'
+import { ingredientsContext } from '../../services/appContext'
+
 
 function App() {
-  const [data, setData] = useState([])
+  const [ingredients, setIngredients] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getData()
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err))
+    getIngredients()
+      .then((res) => setIngredients(res.data))
       .finally(() => setLoading(false))
+      .catch((err) => console.log(err))
   }, [])
 
   return (
-    <div className="App">
-      <AppHeader />
-      <main className="content">
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            <BurgerIngredients ingredients={data} />
-            <BurgerConstructor ingredients={data} />
-          </>
-        )}
-      </main>
-    </div>
+    <ingredientsContext.Provider value={ingredients}>
+      <div className="App">
+        <AppHeader />
+        <main className="content">
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </>
+          )}
+        </main>
+      </div>
+    </ingredientsContext.Provider>
   )
 }
 
