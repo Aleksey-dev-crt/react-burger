@@ -115,7 +115,7 @@ Ingredient.propTypes = {
 
 Count.propTypes = {
   show: PropTypes.bool.isRequired,
-  children: PropTypes.number.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 IngredientsCategory.propTypes = {
