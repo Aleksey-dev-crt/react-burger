@@ -23,7 +23,7 @@ export const placeOrder = (ingredients) => {
     method: "POST",
     headers: configAPI.headers,
     body: JSON.stringify({
-      ingredients: ingredients
+      ingredients
     })
   }).then(checkResponse);
 }

@@ -10,14 +10,14 @@ import currencyIcon from '../../images/currencyIcon.svg'
 import Modal from '../Modals/Modal/Modal'
 import OrderDetails from '../Modals/OrderDetails/OrderDetails'
 import typeOfIngredient from '../../utils/propTypes'
-import { ingredientsContext } from '../../services/appContext'
+import { IngredientsContext } from '../../services/appContext'
 import { placeOrder } from '../../utils/Api'
 import Loader from '../Auxiliary/Loader/Loader'
 import ModalOverlay from '../Modals/ModalOverlay/ModalOverlay'
 
-const Ingridients = ({ ingredients }) => {
+const Ingredients = ({ ingredients }) => {
   return (
-    <ul className={BurgerConstructorStyles.ingridients}>
+    <ul className={BurgerConstructorStyles.ingredients}>
       {ingredients.map((el) => (
         <li className={BurgerConstructorStyles.element} key={el._id}>
           <div className={BurgerConstructorStyles.dragIcon}>
@@ -30,7 +30,7 @@ const Ingridients = ({ ingredients }) => {
   )
 }
 
-const PlaceOrder = ({ cost, ingredientsIds }) => {
+const Order = ({ cost, ingredientsIds }) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const [orderDetails, setOrderDetails] = useState()
   const [loading, setLoading] = useState(false)
@@ -62,7 +62,7 @@ const PlaceOrder = ({ cost, ingredientsIds }) => {
       ) : (
         isModalOpen && (
           <Modal onClose={modalCloseHandler}>
-            <OrderDetails orderNumber={`${orderDetails.order.number}`.padStart(6, 0)} />
+            <OrderDetails orderNumber={`${orderDetails.order.number}`.padStart(6, '0')} />
           </Modal>
         )
       )}
@@ -74,27 +74,32 @@ const priceInitialState = { price: 0 }
 function reducer(state, action) {
   switch (action.type) {
     case 'calculate':
-      state =
-        action.nonBunsIngredients.reduce((acc, el) => (acc += el.price), 0) + action.buns.price * 2
-      return { price: state }
+      return {
+        price: action.nonBuns.reduce((acc, el) => (acc += el.price), 0) + action.buns.price * 2,
+      }
     default:
       throw new Error(`Wrong type of action: ${action.type}`)
   }
 }
 
 function BurgerConstructor() {
-  const ingredients = useContext(ingredientsContext)
+  const ingredients = useContext(IngredientsContext)
   const [priceState, priceDispatcher] = useReducer(reducer, priceInitialState)
-  const nonBunsIngredients = useMemo(
-    () => ingredients.filter((el) => el.type !== 'bun'),
+
+  const [buns, nonBuns] = useMemo(
+    () =>
+      ingredients.reduce(
+        (acc, el) => (el.type === 'bun' ? [[...acc[0], el], acc[1]] : [acc[0], [...acc[1], el]]),
+        [[], []]
+      ),
     [ingredients]
   )
-  const buns = useMemo(() => ingredients.filter((el) => el.type === 'bun'), [ingredients])
-  const ingredientsIds = useMemo(() => ingredients.map(e => e._id), [ingredients])
+
+  const ingredientsIds = useMemo(() => ingredients.map((e) => e._id), [ingredients])
 
   useEffect(() => {
-    priceDispatcher({ type: 'calculate', nonBunsIngredients: nonBunsIngredients, buns: buns[0] })
-  }, [nonBunsIngredients, buns])
+    priceDispatcher({ type: 'calculate', nonBuns: nonBuns, buns: buns[0] })
+  }, [nonBuns, buns])
 
   return (
     <section className={'pt-25 ' + BurgerConstructorStyles.constructor}>
@@ -108,7 +113,7 @@ function BurgerConstructor() {
             thumbnail={buns[0].image}
           />
         </div>
-        <Ingridients ingredients={nonBunsIngredients} />
+        <Ingredients ingredients={nonBuns} />
         <div className={'pl-7 ' + BurgerConstructorStyles.element}>
           <ConstructorElement
             type="bottom"
@@ -119,17 +124,18 @@ function BurgerConstructor() {
           />
         </div>
       </div>
-      <PlaceOrder ingredientsIds={ingredientsIds} cost={priceState.price} />
+      <Order ingredientsIds={ingredientsIds} cost={priceState.price} />
     </section>
   )
 }
 
-Ingridients.propTypes = {
+Ingredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
 }
 
-PlaceOrder.propTypes = {
+Order.propTypes = {
   cost: PropTypes.number.isRequired,
+  ingredientsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 // BurgerConstructor.propTypes = {

@@ -5,7 +5,7 @@ import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger
 import Modal from '../Modals/Modal/Modal'
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails'
 import typeOfIngredient from '../../utils/propTypes'
-import { ingredientsContext } from '../../services/appContext'
+import { IngredientsContext } from '../../services/appContext'
 
 const Tabs = () => {
   const [current, setCurrent] = useState('bun')
@@ -31,9 +31,9 @@ const Tabs = () => {
   )
 }
 
-const Count = (props) => {
-  if (props.show) {
-    return <Counter count={props.children} size="default" />
+const Count = ({show, children}) => {
+  if (show) {
+    return <Counter count={children} size="default" />
   } else return null
 }
 
@@ -88,7 +88,7 @@ const IngredientsCategory = (props) => {
 }
 
 function BurgerIngredients() {
-  const ingredients = useContext(ingredientsContext)
+  const ingredients = useContext(IngredientsContext)
 
   const categories = [
     { type: 'bun', name: 'Булки' },
@@ -111,6 +111,11 @@ function BurgerIngredients() {
 
 Ingredient.propTypes = {
   ingredient: PropTypes.shape(typeOfIngredient),
+}
+
+Count.propTypes = {
+  show: PropTypes.bool.isRequired,
+  children: PropTypes.number.isRequired,
 }
 
 IngredientsCategory.propTypes = {

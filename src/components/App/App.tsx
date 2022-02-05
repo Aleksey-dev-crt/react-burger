@@ -5,7 +5,7 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import Loader from '../Auxiliary/Loader/Loader'
 import './App.css'
 import { getIngredients } from '../../utils/Api'
-import { ingredientsContext } from '../../services/appContext'
+import { IngredientsContext } from '../../services/appContext'
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
   }, [])
 
   return (
-    <ingredientsContext.Provider value={ingredients}>
+    <IngredientsContext.Provider value={ingredients}>
       <div className="App">
         <AppHeader />
         <main className="content">
@@ -34,7 +34,7 @@ function App() {
           )}
         </main>
       </div>
-    </ingredientsContext.Provider>
+    </IngredientsContext.Provider>
   )
 }
 
