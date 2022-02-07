@@ -19,7 +19,7 @@ function OrderDetails({ orderNumber }) {
 }
 
 OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
+  orderNumber: PropTypes.string,
 }
 
 export default OrderDetails

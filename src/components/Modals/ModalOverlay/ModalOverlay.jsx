@@ -24,7 +24,7 @@ function ModalOverlay(props) {
 }
 
 ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   children: PropTypes.element,
 }
 
