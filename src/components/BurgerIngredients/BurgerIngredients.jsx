@@ -1,58 +1,64 @@
-import { useState, useCallback, useContext } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../Modals/Modal/Modal'
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails'
 import typeOfIngredient from '../../utils/propTypes'
-import { IngredientsContext } from '../../services/appContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { setCategory, getIngredientDetails } from '../../services/actions'
+import { useDrag } from 'react-dnd'
 
-const Tabs = () => {
-  const [current, setCurrent] = useState('bun')
-
+const Tabs = ({ currentCategory, bun, sauce, main }) => {
   const setTab = (tab) => {
-    setCurrent(tab)
     const element = document.getElementById(tab)
     if (element) element.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <div style={{ display: 'flex' }}>
-      <Tab value="bun" active={current === 'bun'} onClick={() => setTab('bun')}>
+      <Tab value="bun" active={currentCategory === 'bun'} onClick={() => setTab(bun)}>
         Булки
       </Tab>
-      <Tab value="sauce" active={current === 'sauce'} onClick={() => setTab('sauce')}>
+      <Tab value="sauce" active={currentCategory === 'sauce'} onClick={() => setTab(sauce)}>
         Соусы
       </Tab>
-      <Tab value="main" active={current === 'main'} onClick={() => setTab('main')}>
+      <Tab value="main" active={currentCategory === 'main'} onClick={() => setTab(main)}>
         Начинки
       </Tab>
     </div>
   )
 }
 
-const Count = ({show, children}) => {
+const Count = ({ show, children }) => {
   if (show) {
     return <Counter count={children} size="default" />
   } else return null
 }
 
 const Ingredient = ({ ingredient }) => {
-  const [isModalOpen, setModalOpen] = useState(false)
+  const [isModalOpen, setModalOpen] = useState(false) 
+  const dispatch = useDispatch()
 
-  const modalOpenHandler = useCallback(
-    () => setModalOpen(true),
-    []
-  );
+  const modalOpenHandler = useCallback(() => {
+    dispatch(getIngredientDetails(ingredient))
+    setModalOpen(true)
+  }, [dispatch, ingredient])
 
-  const modalCloseHandler = useCallback(
-    () => setModalOpen(false),
-    []
-  );
+  const modalCloseHandler = useCallback(() => setModalOpen(false), [])
+
+  const [, drag] = useDrag(() => ({
+    type: 'ingredient',
+    item: ingredient,    
+  }))
 
   return (
     <>
-      <li className={'mt-6 ' + BurgerIngredientsStyles.ingredient} onClick={modalOpenHandler}>
+      <li
+        className={'mt-6 ' + BurgerIngredientsStyles.ingredient}
+        onClick={modalOpenHandler}
+        ref={drag}
+      >
         <img className="ml-4 mr-4" src={ingredient.image} alt={ingredient.name} />
         <div className={BurgerIngredientsStyles.price}>
           <p className="text text_type_digits-default">{ingredient.price}</p>
@@ -61,7 +67,7 @@ const Ingredient = ({ ingredient }) => {
         <p className="text text_type_main-default" style={{ textAlign: 'center' }}>
           {ingredient.name}
         </p>
-        <Count show={ingredient.proteins > 0}>{ingredient.proteins}</Count>
+        <Count show={ingredient.count > 0}>{ingredient.count}</Count>
       </li>
       {isModalOpen && (
         <Modal onClose={modalCloseHandler}>
@@ -72,12 +78,12 @@ const Ingredient = ({ ingredient }) => {
   )
 }
 
-const IngredientsCategory = (props) => {
-  const category = props.ingredients.filter((el) => el.type === props.type)
+const IngredientsCategory = ({ ingredients, type, text }) => {
+  const category = ingredients.filter((el) => el.type === type)
 
   return (
-    <li id={props.type}>
-      <h2 className="text text_type_main-medium">{props.text}</h2>
+    <li id={type}>
+      <h2 className="text text_type_main-medium">{text}</h2>
       <ul className={'pl-4 ' + BurgerIngredientsStyles.ingredients}>
         {category.map((el) => (
           <Ingredient key={el._id} ingredient={el} />
@@ -88,7 +94,11 @@ const IngredientsCategory = (props) => {
 }
 
 function BurgerIngredients() {
-  const ingredients = useContext(IngredientsContext)
+  const dispatch = useDispatch()
+  const { category } = useSelector((store) => store.ingredientsReducer)
+  const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
+  
+  const refContainer = useRef()    
 
   const categories = [
     { type: 'bun', name: 'Булки' },
@@ -96,13 +106,39 @@ function BurgerIngredients() {
     { type: 'main', name: 'Начинки' },
   ]
 
+  const onScroll = () => { 
+    const bunCategory = document.querySelector('#bun')
+    const sauceCategory = document.querySelector('#sauce')
+    const mainCategory = document.querySelector('#main')   
+    const scrollTop = refContainer.current.scrollTop
+    if (scrollTop <= bunCategory.offsetTop) dispatch(setCategory('bun'))
+    if (scrollTop >= sauceCategory.offsetTop - bunCategory.offsetTop - 50)
+      dispatch(setCategory('sauce'))
+    if (scrollTop >= mainCategory.offsetTop - bunCategory.offsetTop - 50)
+      dispatch(setCategory('main'))
+  }
+
   return (
     <section className={BurgerIngredientsStyles.burgerIngredients}>
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
-      <Tabs />
-      <ul className={'mt-10 ' + BurgerIngredientsStyles.container}>
-        {categories.map((el) => (          
-          <IngredientsCategory key={el.type} type={el.type} text={el.name} ingredients={ingredients} />
+      <Tabs
+        currentCategory={category}
+        bun={'bun'}
+        sauce={'sauce'}
+        main={'main'}
+      />
+      <ul
+        className={'mt-10 ' + BurgerIngredientsStyles.container}
+        ref={refContainer}
+        onScroll={onScroll}
+      >
+        {categories.map((el) => (
+          <IngredientsCategory
+            key={el.type}
+            type={el.type}
+            text={el.name}
+            ingredients={modifyedIngredients}
+          />
         ))}
       </ul>
     </section>
@@ -115,7 +151,7 @@ Ingredient.propTypes = {
 
 Count.propTypes = {
   show: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 }
 
 IngredientsCategory.propTypes = {

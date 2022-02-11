@@ -22,7 +22,7 @@ function Modal(props) {
       props.onClose()
     }
   }
-
+  
   return ReactDOM.createPortal(
     <ModalOverlay onClose={props.onClose}>
       <div className={ModalStyles.container}>

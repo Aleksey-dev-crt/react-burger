@@ -1,50 +1,133 @@
-import { useState, useCallback, useMemo, useEffect, useContext, useReducer } from 'react'
+import { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import {
   ConstructorElement,
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import update from 'immutability-helper'
 import BurgerConstructorStyles from './BurgerConstructor.module.css'
 import currencyIcon from '../../images/currencyIcon.svg'
 import Modal from '../Modals/Modal/Modal'
 import OrderDetails from '../Modals/OrderDetails/OrderDetails'
 import typeOfIngredient from '../../utils/propTypes'
-import { IngredientsContext } from '../../services/appContext'
-import { placeOrder } from '../../utils/Api'
 import Loader from '../Auxiliary/Loader/Loader'
 import ModalOverlay from '../Modals/ModalOverlay/ModalOverlay'
+import { useSelector, useDispatch } from 'react-redux'
+import { useDrag, useDrop } from 'react-dnd'
+import {
+  addToConstructor,
+  removeIngredient,
+  calculatePrice,
+  postOrder,
+  postOrderModal,
+  modifyStuffing
+} from '../../services/actions'
+
+const ConstrucorElement = ({ element, moveIngredient, findIngredient }) => {
+  const dispatch = useDispatch()  
+  const onDelete = (element) => {
+    dispatch(removeIngredient(element))
+    dispatch(calculatePrice())
+  } 
+
+  const originalIndex = findIngredient(element.constructorID).index
+
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: 'constructorElement',
+      item: { constructorID: element.constructorID, originalIndex },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+      end: (item, monitor) => {
+        const { constructorID: droppedId, originalIndex } = item
+        const didDrop = monitor.didDrop()
+        if (!didDrop) {
+          moveIngredient(droppedId, originalIndex)
+        }
+      },
+    }),
+    [element.constructorID, originalIndex, moveIngredient],
+  )
+  const [, drop] = useDrop(
+    () => ({
+      accept: 'constructorElement',
+      hover({ constructorID: draggedId }) {
+        if (draggedId !== element.constructorID) {
+          const { index: overIndex } = findIngredient(element.constructorID)
+          moveIngredient(draggedId, overIndex)
+        }
+      },
+    }),
+    [findIngredient, moveIngredient],
+  )
+
+  return (
+    <li className={BurgerConstructorStyles.element} style={{opacity: isDragging ? 0 : 1}} ref={(node) => drag(drop(node))}>
+      <div className={BurgerConstructorStyles.dragIcon}>
+        <DragIcon type="primary" />
+      </div>
+      <ConstructorElement
+        text={element.name}
+        price={element.price}
+        thumbnail={element.image}
+        handleClose={() => onDelete(element)}
+      />
+    </li>
+  )
+}
 
 const Ingredients = ({ ingredients }) => {
+  const { stuffing } = useSelector((store) => store.constructorReducer)
+  const dispatch = useDispatch()
+
+  const findIngredient = useCallback(
+    (id) => {
+      const element = stuffing.filter((el) => el.constructorID === id)[0]
+      return {
+        element,
+        index: stuffing.indexOf(element),
+      }
+    },
+    [stuffing],
+  )
+  const moveIngredient = useCallback(
+    (constructorID, atIndex) => {
+      const { element, index } = findIngredient(constructorID)     
+      dispatch(modifyStuffing(update(stuffing, {
+        $splice: [
+          [index, 1],
+          [atIndex, 0, element],
+        ],
+      })))      
+    },
+    [findIngredient, stuffing, dispatch],
+  )
+
+  const [ , drop] = useDrop(() => ({ accept: 'constructorElement' }))
+
+  
+
   return (
-    <ul className={BurgerConstructorStyles.ingredients}>
+    <ul className={BurgerConstructorStyles.ingredients} ref={drop}>
       {ingredients.map((el) => (
-        <li className={BurgerConstructorStyles.element} key={el._id}>
-          <div className={BurgerConstructorStyles.dragIcon}>
-            <DragIcon type="primary" />
-          </div>
-          <ConstructorElement text={el.name} price={el.price} thumbnail={el.image} />
-        </li>
+        <ConstrucorElement element={el} key={el.constructorID} moveIngredient={moveIngredient} findIngredient={findIngredient} />
       ))}
     </ul>
   )
 }
 
-const Order = ({ cost, ingredientsIds }) => {
-  const [isModalOpen, setModalOpen] = useState(false)
-  const [orderDetails, setOrderDetails] = useState()
-  const [loading, setLoading] = useState(false)
+const Order = ({ cost, ingredients }) => {
+  const dispatch = useDispatch()
+  const { isModalOpen, orderDetails } = useSelector((store) => store.constructorReducer)
+  const loading = useSelector((store) => store.commonReducer.loadingOnPostOrder)
 
   const modalOpenHandler = useCallback(() => {
-    setLoading(true)
-    placeOrder(ingredientsIds)
-      .then((res) => setOrderDetails(res))
-      .then(() => setModalOpen(true))
-      .finally(() => setLoading(false))
-      .catch((err) => console.log(err))
-  }, [ingredientsIds])
+    dispatch(postOrder(ingredients))
+  }, [dispatch, ingredients])
 
-  const modalCloseHandler = useCallback(() => setModalOpen(false), [])
+  const modalCloseHandler = useCallback(() => dispatch(postOrderModal(false)), [dispatch])
 
   return (
     <div className={'mr-4 mt-10 ' + BurgerConstructorStyles.order}>
@@ -70,61 +153,67 @@ const Order = ({ cost, ingredientsIds }) => {
   )
 }
 
-const priceInitialState = { price: 0 }
-function reducer(state, action) {
-  switch (action.type) {
-    case 'calculate':
-      return {
-        price: action.nonBuns.reduce((acc, el) => (acc += el.price), 0) + action.buns.price * 2,
-      }
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`)
-  }
-}
-
 function BurgerConstructor() {
-  const ingredients = useContext(IngredientsContext)
-  const [priceState, priceDispatcher] = useReducer(reducer, priceInitialState)
-
-  const [buns, nonBuns] = useMemo(
-    () =>
-      ingredients.reduce(
-        (acc, el) => (el.type === 'bun' ? [[...acc[0], el], acc[1]] : [acc[0], [...acc[1], el]]),
-        [[], []]
-      ),
-    [ingredients]
+  const dispatch = useDispatch()
+  const { stuffing, bun, price, constructorIngredients } = useSelector(
+    (store) => store.constructorReducer
   )
 
-  const ingredientsIds = useMemo(() => ingredients.map((e) => e._id), [ingredients])
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: 'ingredient',
+    drop(item) {
+      onDropHandler(item)
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  }))
 
-  useEffect(() => {
-    priceDispatcher({ type: 'calculate', nonBuns: nonBuns, buns: buns[0] })
-  }, [nonBuns, buns])
+  const onDropHandler = (item) => {
+    dispatch(addToConstructor(item))
+    dispatch(calculatePrice())
+  }
 
   return (
     <section className={'pt-25 ' + BurgerConstructorStyles.constructor}>
-      <div className={BurgerConstructorStyles.container}>
-        <div className={'pl-7 ' + BurgerConstructorStyles.element}>
+      <div
+        ref={drop}
+        className={
+          !bun.count
+          ? BurgerConstructorStyles.container_empty
+          : BurgerConstructorStyles.container          
+        }
+        style={{border: isOver ? '2px solid lightgreen' : 'none'}}
+      >{
+        bun.count 
+        ? <>
+          <div className={'pl-7 ' + BurgerConstructorStyles.element}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${buns[0].name} (верх)`}
-            price={buns[0].price}
-            thumbnail={buns[0].image}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
-        <Ingredients ingredients={nonBuns} />
+        <Ingredients ingredients={stuffing} />
         <div className={'pl-7 ' + BurgerConstructorStyles.element}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${buns[0].name} (низ)`}
-            price={buns[0].price}
-            thumbnail={buns[0].image}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
           />
-        </div>
+        </div></>
+        : <>
+            <h2 style={{textAlign: 'center'}} className="mb-10 text text_type_main-large">Начните собирать свой бургер!</h2>
+            <p style={{textAlign: 'center'}} className=" text text_type_main-medium">Перетаскивайте компоненты из левой части. Начинайте с выбора булки.</p>
+          </> 
+      }
+      
       </div>
-      <Order ingredientsIds={ingredientsIds} cost={priceState.price} />
+      <Order ingredients={constructorIngredients} cost={price} />
     </section>
   )
 }
@@ -133,9 +222,15 @@ Ingredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
 }
 
+ConstrucorElement.propTypes = {
+  element: PropTypes.object.isRequired,
+  moveIngredient: PropTypes.func.isRequired,
+  findIngredient: PropTypes.func.isRequired,
+}
+
 Order.propTypes = {
   cost: PropTypes.number.isRequired,
-  ingredientsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 // BurgerConstructor.propTypes = {

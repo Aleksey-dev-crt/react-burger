@@ -11,6 +11,7 @@ const DescriptionItem = (props) => {
 }
 
 function IngredientDetails(props) {
+
   const descriptions = [
     { description: 'Калории, ккал', value: props.calories },
     { description: 'Белки, г', value: props.proteins },

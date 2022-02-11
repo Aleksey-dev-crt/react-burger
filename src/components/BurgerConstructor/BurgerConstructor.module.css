@@ -9,6 +9,15 @@
   max-height: 656px;
 }
 
+.container_empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+
 .ingredients {
   composes: container;
   list-style: none;
@@ -33,6 +42,7 @@
   justify-content: center;
   gap: 8px;
   align-self: auto;
+  cursor: grab;
 }
 
 .dragIcon {
