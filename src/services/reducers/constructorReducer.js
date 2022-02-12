@@ -2,6 +2,7 @@ import {
   ADD_STUFFING,
   ADD_BUN,
   REMOVE_INGREDIENT,
+  CLEAR_CONSTRUCTOR,
   CALCULATE_PRICE,
   POST_ORDER,
   POST_ORDER_MODAL,
@@ -75,6 +76,17 @@ export default function constructorReducer(state = initialState, action) {
               : el
           ),
         constructorIngredients: [action.payload, ...state.stuffing],
+      }
+      case CLEAR_CONSTRUCTOR:
+      return {
+        ...state,
+        constructorIngredients: [],
+        bun: {},
+        stuffing: [],
+        price: 0,
+        modifyedIngredients: state.modifyedIngredients.map(
+          (el) => (el = { ...el, count: 0, constructorID: '' })
+        ),       
       }
     case REMOVE_INGREDIENT:
       return {

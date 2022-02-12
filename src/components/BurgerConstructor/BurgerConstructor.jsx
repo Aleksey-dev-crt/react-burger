@@ -191,7 +191,7 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name} (верх)`}
             price={bun.price}
             thumbnail={bun.image}
           />
@@ -201,7 +201,7 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name} (низ)`}
             price={bun.price}
             thumbnail={bun.image}
           />
@@ -219,7 +219,7 @@ function BurgerConstructor() {
 }
 
 Ingredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient).isRequired).isRequired,
 }
 
 ConstrucorElement.propTypes = {
@@ -230,7 +230,7 @@ ConstrucorElement.propTypes = {
 
 Order.propTypes = {
   cost: PropTypes.number.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 }
 
 // BurgerConstructor.propTypes = {

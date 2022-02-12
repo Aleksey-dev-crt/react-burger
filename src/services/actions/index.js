@@ -6,6 +6,7 @@ import {
   ADD_STUFFING,
   ADD_BUN,
   REMOVE_INGREDIENT,
+  CLEAR_CONSTRUCTOR,
   CALCULATE_PRICE,
   POST_ORDER,
   POST_ORDER_MODAL,
@@ -47,6 +48,7 @@ export const postOrder = (payload) => {
     placeOrder(payload)
       .then((res) => dispatch({ type: POST_ORDER, payload: res }))
       .then(() => dispatch(postOrderModal(true)))
+      .then(() => dispatch({ type: CLEAR_CONSTRUCTOR }))
       .finally(() => dispatch({ type: SET_LOADER_ON_POST_ORDER, payload: false }))
       .catch((err) => console.log(err))
   }

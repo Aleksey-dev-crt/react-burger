@@ -3,7 +3,7 @@ import AppHeader from '../AppHeader/AppHeader'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import Loader from '../Auxiliary/Loader/Loader'
-import './App.css'
+import AppStyles from './App.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestIngredients } from '../../services/actions'
 import { DndProvider } from "react-dnd";
@@ -24,7 +24,7 @@ function App() {
   return (
       <div className="App">
         <AppHeader />
-        <main className="content">
+        <main className={AppStyles.content}>
           {loading ? (
             <Loader />
           ) : (

@@ -151,11 +151,11 @@ Ingredient.propTypes = {
 
 Count.propTypes = {
   show: PropTypes.bool.isRequired,
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 }
 
 IngredientsCategory.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient).isRequired).isRequired,
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 }
