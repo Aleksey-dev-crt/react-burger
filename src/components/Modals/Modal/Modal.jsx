@@ -6,14 +6,15 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function Modal(props) {
-  const modal = document.createElement('div')
+  //const modal = document.createElement('div')
+  const modal = document.querySelector('#modals')
 
   useEffect(() => {
     document.addEventListener('keydown', closeByEsc)
-    document.body.appendChild(modal)
+   // document.body.appendChild(modal)
     return () => {
       document.removeEventListener('keydown', closeByEsc)
-      document.body.removeChild(modal)
+     // document.body.removeChild(modal)
     }
   })
 
@@ -22,7 +23,7 @@ function Modal(props) {
       props.onClose()
     }
   }
-
+  
   return ReactDOM.createPortal(
     <ModalOverlay onClose={props.onClose}>
       <div className={ModalStyles.container}>

@@ -1,40 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import AppHeader from '../AppHeader/AppHeader'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import Loader from '../Auxiliary/Loader/Loader'
-import './App.css'
-import { getIngredients } from '../../utils/Api'
-import { IngredientsContext } from '../../services/appContext'
+import AppStyles from './App.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { requestIngredients } from '../../services/actions'
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 
-function App() {
-  const [ingredients, setIngredients] = useState([])
-  const [loading, setLoading] = useState(true)
+
+
+function App() { 
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    getIngredients()
-      .then((res) => setIngredients(res.data))
-      .finally(() => setLoading(false))
-      .catch((err) => console.log(err))
-  }, [])
+    dispatch(requestIngredients())
+  }, [dispatch])
+
+  const loading = useSelector(store => (store as any).commonReducer.loadingOnReguestIngredients)
 
   return (
-    <IngredientsContext.Provider value={ingredients}>
       <div className="App">
         <AppHeader />
-        <main className="content">
+        <main className={AppStyles.content}>
           {loading ? (
             <Loader />
           ) : (
-            <>
+            <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
               <BurgerConstructor />
-            </>
+            </DndProvider>
           )}
         </main>
       </div>
-    </IngredientsContext.Provider>
   )
 }
 
