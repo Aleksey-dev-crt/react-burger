@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -104,8 +104,8 @@ function BurgerIngredients() {
     { type: 'bun', name: 'Булки' },
     { type: 'sauce', name: 'Соусы' },
     { type: 'main', name: 'Начинки' },
-  ]
-
+  ]  
+  
   const onScroll = () => { 
     const bunCategory = document.querySelector('#bun')
     const sauceCategory = document.querySelector('#sauce')
