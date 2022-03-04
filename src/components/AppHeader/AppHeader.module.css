@@ -7,9 +7,9 @@
 }
 
 .nav {
-  all: unset;
   display: flex;
   margin-right: 112px;
+  gap: 50px;
 }
 
 .nav__link {
