@@ -1,0 +1,41 @@
+.content {
+  margin-left: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.container {
+  display: flex;
+  gap: 60px;
+}
+
+.links__container {
+  margin-top: 120px;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.link {
+  all: unset;
+}
+
+.link:hover {
+  color: #8585ad;
+  cursor: pointer;
+}
+
+.form__container {
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.text {
+  max-width: 320px;
+  color: #8585AD;
+}

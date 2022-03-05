@@ -31,13 +31,13 @@ export function Login() {
           <p className="text text_type_main-default text_color_inactive">
             Вы - новый пользователь?
           </p>
-          <Link className={"text text_type_main-default " + LoginStyles.link} to="/">
+          <Link className={"text text_type_main-default " + LoginStyles.link} to="/register">
             Зарегистрироваться
           </Link>
         </div>
         <div className={LoginStyles.password}>
           <p className="text text_type_main-default text_color_inactive">Забыли пароль?</p>
-          <Link className={"text text_type_main-defaul " + LoginStyles.link} to="/">
+          <Link className={"text text_type_main-defaul " + LoginStyles.link} to="/forgot-password">
             Восстановить пароль
           </Link>
         </div>
