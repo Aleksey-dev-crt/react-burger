@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 export function HomePage() {
-  const loading = useSelector((store) => store.commonReducer.loadingOnReguestIngredients)
+  const loading = useSelector((store) => store.commonReducer.loadingWithoutOverlay)
 
   return loading ? (
     <Loader />

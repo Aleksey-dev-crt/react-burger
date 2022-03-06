@@ -28,4 +28,37 @@ export const placeOrder = (ingredients) => {
   }).then(checkResponse);
 }
 
+export const forgotPassword = (email) => {
+  return fetch(`${configAPI.baseUrl}/password-reset`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      email
+    })
+  }).then(checkResponse);
+}
+
+export const resetPassword = ({password, token}) => {
+  return fetch(`${configAPI.baseUrl}/password-reset/reset`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      password,
+      token
+    })    
+  }).then(checkResponse);
+}
+
+export const register = ({email, password, name}) => {
+  return fetch(`${configAPI.baseUrl}/auth/register`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      email,
+      password,
+      name
+    })
+  }).then(checkResponse);
+}
+
 

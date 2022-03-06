@@ -6,19 +6,23 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import RegisterStyles from './register.module.css'
+import Loader from '../../components/Auxiliary/Loader/Loader'
+import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { newUser } from '../../services/actions'
 
 export function Register() {
-  const [name, setName] = useState('')
-  const inputRef = useRef(null)
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
-    alert('Icon Click Callback')
-  }
+  const dispatch = useDispatch()
+  const { user } = useSelector((store) => store.registrationReducer)
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
-  const [mail, setMail] = useState('')
+  const [name, setName] = useState('')
+  const inputNameRef = useRef(null)
+
+  const [email, setEmail] = useState('')
   const onChangeMail = (e) => {
-    setMail(e.target.value)
+    setEmail(e.target.value)
   }
 
   const [password, setPassword] = useState('')
@@ -26,9 +30,19 @@ export function Register() {
     setPassword(e.target.value)
   }
 
+  const registerSubmit = (e) => {
+    e.preventDefault()
+    if (password) dispatch(newUser({email, password, name}))
+    setName('')
+    setEmail('')
+    setPassword('')
+  }
+
+  console.log(user)
+
   return (
     <section className={RegisterStyles.content}>
-      <form name="register" className={RegisterStyles.form__container}>
+      <form name="register" className={RegisterStyles.form__container} onSubmit={registerSubmit}>
         <h1 className="text text_type_main-medium">Регистрация</h1>
         <Input
           type={'text'}
@@ -37,12 +51,11 @@ export function Register() {
           value={name}
           name={'name'}
           error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
+          ref={inputNameRef}
           errorText={'Ошибка'}
           size={'default'}
         />
-        <EmailInput onChange={onChangeMail} value={mail} name={'email'} />
+        <EmailInput onChange={onChangeMail} value={email} name={'email'} />
         <PasswordInput onChange={onChangePassword} value={password} name={'password'} />
         <Button>Зарегистрироваться</Button>
       </form>
@@ -56,6 +69,11 @@ export function Register() {
           </Link>
         </div>      
       </div>
+      {loading && (
+        <ModalOverlay>
+          <Loader />
+        </ModalOverlay>
+      )}
     </section>
   )
 }

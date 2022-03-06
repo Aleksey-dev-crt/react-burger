@@ -1,22 +1,22 @@
-import { SET_LOADER_ON_INGREDIENTS, SET_LOADER_ON_POST_ORDER } from '../actions/actionTypes'
+import { SET_LOADER_WITHOUT_OVERLAY, SET_LOADER_WITH_OVERLAY } from '../actions/actionTypes'
 
 
 const initialState = {
-  loadingOnReguestIngredients: false,
-  loadingOnPostOrder: false,
+  loadingWithoutOverlay: false,
+  loadingWithOverlay: false,
 }
 
 export default function commonReducer(state = initialState, action) {
   switch (action.type) {    
-     case SET_LOADER_ON_INGREDIENTS:
+     case SET_LOADER_WITHOUT_OVERLAY:
       return {
         ...state,
-        loadingOnReguestIngredients: action.payload,
+        loadingWithoutOverlay: action.payload,
       } 
-      case SET_LOADER_ON_POST_ORDER:
+      case SET_LOADER_WITH_OVERLAY:
       return {
         ...state,
-        loadingOnPostOrder: action.payload,
+        loadingWithOverlay: action.payload,
       }        
     default:
       return state

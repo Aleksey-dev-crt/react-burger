@@ -121,7 +121,7 @@ const Ingredients = ({ ingredients }) => {
 const Order = ({ cost, ingredients }) => {
   const dispatch = useDispatch()
   const { isModalOpen, orderDetails } = useSelector((store) => store.constructorReducer)
-  const loading = useSelector((store) => store.commonReducer.loadingOnPostOrder)
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const modalOpenHandler = useCallback(() => {
     dispatch(postOrder(ingredients))

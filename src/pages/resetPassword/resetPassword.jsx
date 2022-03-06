@@ -3,10 +3,18 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import Loader from '../../components/Auxiliary/Loader/Loader'
+import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import ResetPasswordStyles from './resetPassword.module.css'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { changePassword } from '../../services/actions'
 
 export function ResetPassword() {
+  const dispatch = useDispatch()
+  const { setNewPassword } = useSelector((store) => store.registrationReducer)
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
+
   const [password, setPassword] = useState('')
   const [showPass, setshowPass] = useState('password')
   const [showIcon, setshowIcon] = useState('ShowIcon')
@@ -17,12 +25,21 @@ export function ResetPassword() {
     showPass === 'password' ? setshowPass('text') : setshowPass('password')
   }
 
-  const [code, setCode] = useState('')
-  const inputCodeRef = useRef(null)  
+  const [token, setToken] = useState('')
+  const inputCodeRef = useRef(null) 
+  
+  const resetPasswordSubmit = (e) => {
+    e.preventDefault()
+    if (password && token) dispatch(changePassword({password, token}))
+    setPassword('')
+    setToken('')
+  }
+
+  console.log(setNewPassword)
 
   return (
     <section className={ResetPasswordStyles.content}>
-      <form name="reset-password" className={ResetPasswordStyles.form__container}>
+      <form name="resetPassword" className={ResetPasswordStyles.form__container} onSubmit={resetPasswordSubmit}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <Input
           type={showPass}
@@ -40,9 +57,9 @@ export function ResetPassword() {
         <Input
           type={'text'}
           placeholder={'Введите код из письма'}
-          onChange={(e) => setCode(e.target.value)}
-          value={code}
-          name={'code'}
+          onChange={(e) => setToken(e.target.value)}
+          value={token}
+          name={'token'}
           error={false}
           ref={inputCodeRef}
           errorText={'Ошибка'}
@@ -60,6 +77,11 @@ export function ResetPassword() {
           </Link>
         </div>      
       </div>
+      {loading && (
+        <ModalOverlay>
+          <Loader />
+        </ModalOverlay>
+      )}
     </section>
   )
 }
