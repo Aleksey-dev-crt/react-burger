@@ -16,5 +16,8 @@ export const POST_ORDER_MODAL = 'POST_ORDER_MODAL'
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD'
 export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD'
 export const REGISTER_NEW_USER = 'REGISTER_NEW_USER'
+export const LOGIN = 'LOGIN'
+export const LOGOUT = 'LOGOUT'
+export const GET_USER_DATA = 'GET_USER_DATA'
 
 

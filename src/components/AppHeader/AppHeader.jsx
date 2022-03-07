@@ -5,8 +5,10 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function AppHeader() {  
+  const { authorized } = useSelector((store) => store.registrationReducer)
 
   return (
     <header className={AppHeaderStyles.header}>
@@ -25,7 +27,7 @@ function AppHeader() {
           </Link>
       </nav>
       <Logo />
-      <Link to='/login'
+      <Link to={authorized ? '/profile': '/login'}
         className={AppHeaderStyles.account}        
       >
         <ProfileIcon  />

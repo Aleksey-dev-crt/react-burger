@@ -5,6 +5,7 @@ import { ForgotPassword } from './forgotPassword/forgotPassword';
 import { ResetPassword } from './resetPassword/resetPassword';
 import { Profile } from './profile/profile';
 import { OrderFeed } from './orderFeed/orderFeed';
+import { Orders } from './orders/orders';
 import { NotFoundPage } from './notFoundPage/notFoundPage';
 
-export { HomePage, Login, OrderFeed, Register, ForgotPassword, ResetPassword, Profile, NotFoundPage };
+export { HomePage, Login, OrderFeed, Orders, Register, ForgotPassword, ResetPassword, Profile, NotFoundPage };

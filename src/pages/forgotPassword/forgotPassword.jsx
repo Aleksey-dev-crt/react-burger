@@ -21,13 +21,11 @@ export function ForgotPassword() {
     setEmail('')
   }
 
-if (resetPassword.success) {
-  return (
-    <Redirect to='/reset-password' />
-  )
-}
+  if (resetPassword.success) {
+    return <Redirect to="/reset-password" />
+  }
 
-  return (    
+  return (
     <section className={ForgotPasswordStyles.content}>
       <form
         name="forgotPassword"
@@ -51,10 +49,7 @@ if (resetPassword.success) {
       <div className={ForgotPasswordStyles.questions__container}>
         <div className={ForgotPasswordStyles.registration}>
           <p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
-          <Link
-            className={'text text_type_main-default ' + ForgotPasswordStyles.link}
-            to="/login"
-          >
+          <Link className={'text text_type_main-default ' + ForgotPasswordStyles.link} to="/login">
             Войти
           </Link>
         </div>
@@ -64,6 +59,6 @@ if (resetPassword.success) {
           <Loader />
         </ModalOverlay>
       )}
-    </section>    
+    </section>
   )
 }

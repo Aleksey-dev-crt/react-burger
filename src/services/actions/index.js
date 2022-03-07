@@ -14,7 +14,10 @@ import {
   MODIFY_INGREDIENTS,
   FORGOT_PASSWORD,
   SET_NEW_PASSWORD,
-  REGISTER_NEW_USER
+  REGISTER_NEW_USER,
+  LOGIN,
+  LOGOUT,
+  GET_USER_DATA
 } from './actionTypes'
 import {
   getIngredients,
@@ -22,6 +25,10 @@ import {
   register,
   forgotPassword,
   resetPassword,
+  login,
+  logout,
+  getUserData,
+  token
 } from '../../utils/Api'
 
 export const requestIngredients = () => {
@@ -91,6 +98,35 @@ export const newUser = (payload) => {
     register(payload)
       .then((res) => dispatch({ type: REGISTER_NEW_USER, payload: res }))
       .finally(() => dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: false }))
+      .catch((err) => console.log(err))
+  }
+}
+
+export const authorization = (payload) => {
+  return (dispatch) => {
+    dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
+    login(payload)
+      .then((res) => dispatch({ type: LOGIN, payload: res }))
+      .finally(() => dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: false }))
+      .catch((err) => console.log(err))
+  }
+}
+
+export const exit = (payload) => {
+  console.log('exit', payload)
+  return (dispatch) => {
+    dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
+    logout(payload)
+      .then((res) => dispatch({ type: LOGOUT, payload: res }))
+      .finally(() => dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: false }))
+      .catch((err) => console.log(err))
+  }
+}
+
+export const requestUserData = (payload) => {
+  return (dispatch) => {
+    getUserData(payload)
+      .then((res) => dispatch({ type: GET_USER_DATA, payload: res }))
       .catch((err) => console.log(err))
   }
 }
