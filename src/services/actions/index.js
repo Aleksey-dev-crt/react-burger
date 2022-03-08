@@ -149,7 +149,7 @@ export const saveUserData = (payload) => {
     token(payload.refreshToken)
     .then((res) => {
       setCookie('refreshToken', res.refreshToken)
-      updateUserData({token: res.accessToken, email: payload.login, name: payload.name})
+      updateUserData({token: res.accessToken, email: payload.login, name: payload.name, password: payload.password})
       .then((res) => dispatch({ type: UPDATE_USER_DATA, payload: res }))
       .catch((err) => console.log(err))
     })
@@ -157,13 +157,3 @@ export const saveUserData = (payload) => {
     .catch((err) => console.log(err))   
   }
 }
-
-// export const saveUserData = (payload) => {
-//   return (dispatch) => {
-//     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
-//     updateUserData(payload)
-//       .then((res) => dispatch({ type: UPDATE_USER_DATA, payload: res }))
-//       .finally(() => dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: false }))
-//       .catch((err) => console.log(err))
-//   }
-// }

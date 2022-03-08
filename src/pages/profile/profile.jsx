@@ -49,7 +49,7 @@ export function Profile() {
 
   const profileSubmit = (e) => {
     e.preventDefault()
-    if (name && login) dispatch(saveUserData({ refreshToken, name, login }))
+    if (name && login) dispatch(saveUserData({ refreshToken, name, login, password }))
   }
 
   const onCancel = (e) => {

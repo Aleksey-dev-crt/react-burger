@@ -98,13 +98,14 @@ export const getUserData = (token) => {
   }).then(checkResponse);
 }
 
-export const updateUserData = ({token, email, name}) => {
+export const updateUserData = ({token, email, name, password}) => {
   return fetch(`${configAPI.baseUrl}/auth/user`, {
     method: "PATCH",
     headers: {authorization: token, ...configAPI.headers},
     body: JSON.stringify({
       email,
       name,
+      password
     })
   }).then(checkResponse);
 }
