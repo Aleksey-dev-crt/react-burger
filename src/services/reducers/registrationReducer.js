@@ -1,4 +1,4 @@
-import { FORGOT_PASSWORD, SET_NEW_PASSWORD, REGISTER_NEW_USER, LOGIN, LOGOUT, GET_USER_DATA } from '../actions/actionTypes'
+import { FORGOT_PASSWORD, SET_NEW_PASSWORD, REGISTER_NEW_USER, LOGIN, LOGOUT, GET_USER_DATA, UPDATE_USER_DATA } from '../actions/actionTypes'
 
 const initialState = {
   resetPassword: {},
@@ -36,12 +36,17 @@ export default function registrationReducer(state = initialState, action) {
           return {
             ...state,
             authorized: false
-          }
+          }         
           case GET_USER_DATA:
             return {
               ...state,
               userData: action.payload,
-              authorized: action.payload.success
+              authorized: true
+            }
+            case UPDATE_USER_DATA:
+            return {
+              ...state,
+              userData: action.payload,
             }
     
     default:

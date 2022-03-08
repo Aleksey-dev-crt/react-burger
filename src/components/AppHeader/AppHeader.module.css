@@ -17,6 +17,14 @@
   display: flex;
 }
 
+.nav__link_active {
+  color: #8585ad;
+}
+
+.nav__link_active > svg {
+  fill: #8585ad;
+}
+
 .nav__link:hover {
   color: #8585ad;
   cursor: pointer;

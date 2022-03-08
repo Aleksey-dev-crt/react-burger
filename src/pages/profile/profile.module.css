@@ -22,6 +22,10 @@
   all: unset;
 }
 
+.link_active {
+  color: #8585ad;
+}
+
 .link:hover {
   color: #8585ad;
   cursor: pointer;
@@ -38,4 +42,9 @@
 .text {
   max-width: 320px;
   color: #8585AD;
+}
+
+.buttons__container {
+  display: flex;
+  gap: 15px;
 }

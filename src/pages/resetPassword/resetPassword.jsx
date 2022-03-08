@@ -12,7 +12,6 @@ import { changePassword } from '../../services/actions'
 
 export function ResetPassword() {
   const dispatch = useDispatch()
-  const { setNewPassword } = useSelector((store) => store.registrationReducer)
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [password, setPassword] = useState('')
@@ -34,8 +33,6 @@ export function ResetPassword() {
     setPassword('')
     setToken('')
   }
-
-  console.log(setNewPassword)
 
   return (
     <section className={ResetPasswordStyles.content}>

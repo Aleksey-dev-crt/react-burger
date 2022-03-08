@@ -10,11 +10,10 @@ import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { useDispatch, useSelector } from 'react-redux'
 import { authorization } from '../../services/actions'
-import { setCookie } from '../../utils/cookies'
 
 export function Login() {
   const dispatch = useDispatch()
-  const { authorizedUser, userData, authorized } = useSelector((store) => store.registrationReducer)
+  const { authorized } = useSelector((store) => store.registrationReducer)
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [email, setEmail] = useState('')
@@ -35,8 +34,6 @@ export function Login() {
   }
 
   if (authorized) {
-    setCookie('refreshToken', authorizedUser.refreshToken)
-    setCookie('accessToken', authorizedUser.accessToken)
     return <Redirect to="/react-burger" />
   }
 
