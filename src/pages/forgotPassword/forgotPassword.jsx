@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import ForgotPasswordStyles from './forgotPassword.module.css'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +10,8 @@ import { passwordChangeRequest } from '../../services/actions'
 export function ForgotPassword() {
   const dispatch = useDispatch()
   const { resetPassword } = useSelector((store) => store.registrationReducer)
+  const { authorized } = useSelector((store) => store.registrationReducer)
+  const location = useLocation()
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [email, setEmail] = useState('')
@@ -22,6 +24,7 @@ export function ForgotPassword() {
   }
 
   if (resetPassword.success) return <Redirect to="/reset-password" />
+   if (authorized) return <Redirect to={location.state ? location.state.from : '/react-burger'} />
 
   return (
     <section className={ForgotPasswordStyles.content}>

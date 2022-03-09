@@ -8,11 +8,14 @@ import {
 import RegisterStyles from './register.module.css'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { newUser } from '../../services/actions'
 
 export function Register() {
+  const { authorized } = useSelector((store) => store.registrationReducer)
+  const location = useLocation()
+
   const dispatch = useDispatch()
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
@@ -36,6 +39,8 @@ export function Register() {
     setEmail('')
     setPassword('')
   }
+
+  if (authorized) return <Redirect to={location.state ? location.state.from : '/react-burger'} />
 
   return (
     <section className={RegisterStyles.content}>

@@ -6,12 +6,15 @@ import {
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import ResetPasswordStyles from './resetPassword.module.css'
-import { Link } from 'react-router-dom'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { changePassword } from '../../services/actions'
 
 export function ResetPassword() {
   const dispatch = useDispatch()
+  const { authorized } = useSelector((store) => store.registrationReducer)
+  const { resetPassword } = useSelector((store) => store.registrationReducer)
+  const location = useLocation()
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [password, setPassword] = useState('')
@@ -33,6 +36,9 @@ export function ResetPassword() {
     setPassword('')
     setToken('')
   }
+
+  if (authorized) return <Redirect to={location.state ? location.state.from : '/react-burger'} />
+  if (!resetPassword.success) return <Redirect to="/forgot-password" />
 
   return (
     <section className={ResetPasswordStyles.content}>

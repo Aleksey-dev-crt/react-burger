@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
-import { ProtectProfile } from '../ProtectProfile/ProtectProfile'
-import { ProtectResetPassword } from '../ProtectResetPassword/ProtectResetPassword'
-import { useDispatch, useSelector } from 'react-redux'
+import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
+import { useDispatch } from 'react-redux'
 import { requestIngredients, requestUserData } from '../../../services/actions'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import {
@@ -13,13 +12,12 @@ import {
   ForgotPassword,
   ResetPassword,
   Profile,
-  IngredientDetails
+  IngredientDetails,
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 
 export function Routes() {
   const dispatch = useDispatch()
-  const { authorized } = useSelector((store) => store.registrationReducer)
 
   useEffect(() => {
     dispatch(requestIngredients())
@@ -27,7 +25,7 @@ export function Routes() {
     if (refreshToken) dispatch(requestUserData(refreshToken))
   }, [dispatch])
 
-  let routes = (
+  return (
     <Switch>
       <Route path="/react-burger" exact={true}>
         <HomePage />
@@ -41,12 +39,12 @@ export function Routes() {
       <Route path="/forgot-password" exact={true}>
         <ForgotPassword />
       </Route>
-      <ProtectResetPassword path="/reset-password" exact={true}>
+      <Route path="/reset-password" exact={true}>
         <ResetPassword />
-      </ProtectResetPassword>
-      <ProtectProfile path="/profile" exact={true}>
+      </Route>
+      <ProtectedRoute path="/profile" exact={true}>
         <Profile />
-      </ProtectProfile>
+      </ProtectedRoute>
       <Route path="/profile/orders" exact={true}>
         <Orders />
       </Route>
@@ -60,30 +58,4 @@ export function Routes() {
       <Redirect to="/react-burger" />
     </Switch>
   )
-
-  if (authorized) {
-    routes = (
-      <Switch>
-        <Route path="/react-burger" exact={true}>
-          <HomePage />
-        </Route>
-        <ProtectProfile path="/profile" exact={true}>
-          <Profile />
-        </ProtectProfile>
-        <Route path="/profile/orders" exact={true}>
-          <Orders />
-        </Route>
-        <Route path="/orderFeed" exact={true}>
-          <OrderFeed />
-        </Route>
-        <Route path="/ingredients/:id" exact={true}>
-          <IngredientDetails />
-        </Route>
-
-        <Redirect to="/react-burger" />
-      </Switch>
-    )
-  }
-
-  return <>{routes}</>
 }

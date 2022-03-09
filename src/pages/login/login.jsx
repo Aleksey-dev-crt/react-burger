@@ -5,7 +5,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import LoginStyles from './login.module.css'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +15,7 @@ export function Login() {
   const dispatch = useDispatch()
   const { authorized } = useSelector((store) => store.registrationReducer)
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
+  const location = useLocation()
 
   const [email, setEmail] = useState('')
   const onChangeMail = (e) => {
@@ -33,7 +34,7 @@ export function Login() {
     setPassword('')
   }
 
-  if (authorized) return <Redirect to="/react-burger" />
+  if (authorized) return <Redirect to={location.state ? location.state.from : '/react-burger'} />
 
   return (
     <section className={LoginStyles.content}>
