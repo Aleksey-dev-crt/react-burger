@@ -21,9 +21,7 @@ export function ForgotPassword() {
     setEmail('')
   }
 
-  if (resetPassword.success) {
-    return <Redirect to="/reset-password" />
-  }
+  if (resetPassword.success) return <Redirect to="/reset-password" />
 
   return (
     <section className={ForgotPasswordStyles.content}>

@@ -2,7 +2,7 @@ import { SET_CATEGORY, GET_INGREDIENT_DETAILS } from '../actions/actionTypes'
 
 const initialState = {
   category: 'bun',
-  ingredientsDetails: { Калории: 0, Белки: 0, Жиры: 0, Углеводы: 0 },
+  ingredientsDetails: {},
 }
 
 export default function ingredientsReducer(state = initialState, action) {
@@ -15,12 +15,7 @@ export default function ingredientsReducer(state = initialState, action) {
     case GET_INGREDIENT_DETAILS:
       return {
         ...state,
-        ingredientsDetails: {
-          Калории: action.payload.calories,
-          Белки: action.payload.proteins,
-          Жиры: action.payload.fat,
-          Углеводы: action.payload.carbohydrates,
-        },
+        ingredientsDetails: action.payload,
       }
     default:
       return state

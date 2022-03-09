@@ -254,8 +254,4 @@ Order.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 }
 
-// BurgerConstructor.propTypes = {
-//   ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
-// }
-
 export default BurgerConstructor

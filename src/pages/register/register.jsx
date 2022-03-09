@@ -14,7 +14,6 @@ import { newUser } from '../../services/actions'
 
 export function Register() {
   const dispatch = useDispatch()
-  const { user } = useSelector((store) => store.registrationReducer)
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [name, setName] = useState('')
@@ -37,8 +36,6 @@ export function Register() {
     setEmail('')
     setPassword('')
   }
-
-  console.log(user)
 
   return (
     <section className={RegisterStyles.content}>

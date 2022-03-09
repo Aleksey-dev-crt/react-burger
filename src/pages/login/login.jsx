@@ -33,9 +33,7 @@ export function Login() {
     setPassword('')
   }
 
-  if (authorized) {
-    return <Redirect to="/react-burger" />
-  }
+  if (authorized) return <Redirect to="/react-burger" />
 
   return (
     <section className={LoginStyles.content}>
