@@ -7,14 +7,22 @@
 }
 
 .nav {
-  all: unset;
   display: flex;
   margin-right: 112px;
+  gap: 50px;
 }
 
 .nav__link {
   all: unset;
   display: flex;
+}
+
+.nav__link_active {
+  color: #8585ad;
+}
+
+.nav__link_active > svg {
+  fill: #8585ad;
 }
 
 .nav__link:hover {

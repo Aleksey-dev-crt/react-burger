@@ -1,13 +1,12 @@
-import { useState, useCallback, useRef } from 'react'
+import { useRef } from 'react'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../Modals/Modal/Modal'
-import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails'
 import typeOfIngredient from '../../utils/propTypes'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategory, getIngredientDetails } from '../../services/actions'
+import { setCategory } from '../../services/actions'
 import { useDrag } from 'react-dnd'
+import { Link, useLocation } from 'react-router-dom'
 
 const Tabs = ({ currentCategory, bun, sauce, main }) => {
   const setTab = (tab) => {
@@ -37,26 +36,22 @@ const Count = ({ show, children }) => {
 }
 
 const Ingredient = ({ ingredient }) => {
-  const [isModalOpen, setModalOpen] = useState(false) 
-  const dispatch = useDispatch()
-
-  const modalOpenHandler = useCallback(() => {
-    dispatch(getIngredientDetails(ingredient))
-    setModalOpen(true)
-  }, [dispatch, ingredient])
-
-  const modalCloseHandler = useCallback(() => setModalOpen(false), [])
+  let location = useLocation()
 
   const [, drag] = useDrag(() => ({
     type: 'ingredient',
-    item: ingredient,    
+    item: ingredient,
   }))
 
   return (
     <>
-      <li
+      <Link
         className={'mt-6 ' + BurgerIngredientsStyles.ingredient}
-        onClick={modalOpenHandler}
+        key={ingredient._id}
+        to={{
+          pathname: `/ingredients/${ingredient._id}`,
+          state: { background: location },
+        }}
         ref={drag}
       >
         <img className="ml-4 mr-4" src={ingredient.image} alt={ingredient.name} />
@@ -68,12 +63,7 @@ const Ingredient = ({ ingredient }) => {
           {ingredient.name}
         </p>
         <Count show={ingredient.count > 0}>{ingredient.count}</Count>
-      </li>
-      {isModalOpen && (
-        <Modal onClose={modalCloseHandler}>
-          <IngredientDetails {...ingredient} />
-        </Modal>
-      )}
+      </Link>
     </>
   )
 }
@@ -97,8 +87,8 @@ function BurgerIngredients() {
   const dispatch = useDispatch()
   const { category } = useSelector((store) => store.ingredientsReducer)
   const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
-  
-  const refContainer = useRef()    
+
+  const refContainer = useRef()
 
   const categories = [
     { type: 'bun', name: 'Булки' },
@@ -106,10 +96,10 @@ function BurgerIngredients() {
     { type: 'main', name: 'Начинки' },
   ]
 
-  const onScroll = () => { 
+  const onScroll = () => {
     const bunCategory = document.querySelector('#bun')
     const sauceCategory = document.querySelector('#sauce')
-    const mainCategory = document.querySelector('#main')   
+    const mainCategory = document.querySelector('#main')
     const scrollTop = refContainer.current.scrollTop
     if (scrollTop <= bunCategory.offsetTop) dispatch(setCategory('bun'))
     if (scrollTop >= sauceCategory.offsetTop - bunCategory.offsetTop - 50)
@@ -121,12 +111,7 @@ function BurgerIngredients() {
   return (
     <section className={BurgerIngredientsStyles.burgerIngredients}>
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
-      <Tabs
-        currentCategory={category}
-        bun={'bun'}
-        sauce={'sauce'}
-        main={'main'}
-      />
+      <Tabs currentCategory={category} bun={'bun'} sauce={'sauce'} main={'main'} />
       <ul
         className={'mt-10 ' + BurgerIngredientsStyles.container}
         ref={refContainer}
@@ -159,9 +144,5 @@ IngredientsCategory.propTypes = {
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 }
-
-// BurgerIngredients.propTypes = {
-//   ingredients:  PropTypes.arrayOf(PropTypes.shape(typeOfIngredient)).isRequired,
-// }
 
 export default BurgerIngredients

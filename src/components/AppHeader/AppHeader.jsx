@@ -4,32 +4,36 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import {NavLink} from 'react-router-dom'
 
 function AppHeader() {  
 
   return (
     <header className={AppHeaderStyles.header}>
       <nav className={AppHeaderStyles.nav}>
-          <a href='/'
-            className={'mt-4 mb-4 mr-2 pl-5 pr-5 ' + AppHeaderStyles.nav__link}          
+          <NavLink to='/react-burger'
+            className={AppHeaderStyles.nav__link} 
+            activeClassName={AppHeaderStyles.nav__link_active}         
           >
             <BurgerIcon  />
             <p className="pl-2 text text_type_main-default">Конструктор</p>
-          </a>
-          <a href='/'
-            className={'mt-4 mb-4 mr-2 pl-5 pr-5 ' + AppHeaderStyles.nav__link}            
+          </NavLink>
+          <NavLink to='/orderFeed'
+            className={AppHeaderStyles.nav__link} 
+            activeClassName={AppHeaderStyles.nav__link_active}           
           >
-            <ListIcon  />
+            <ListIcon />
             <p className="pl-2 text text_type_main-default">Лента заказов</p>
-          </a>
+          </NavLink>
       </nav>
       <Logo />
-      <a href='/'
-        className={'mt-4 mb-4 mr-2 pl-5 pr-5 ' + AppHeaderStyles.account}        
+      <NavLink to='/profile'
+        className={AppHeaderStyles.account} 
+        activeClassName={AppHeaderStyles.nav__link_active}       
       >
-        <ProfileIcon  />
+        <ProfileIcon />
         <p className="pl-2 text text_type_main-default">Личный кабинет</p>
-      </a>
+      </NavLink>
     </header>
   );
 }

@@ -28,4 +28,88 @@ export const placeOrder = (ingredients) => {
   }).then(checkResponse);
 }
 
+export const forgotPassword = (email) => {
+  return fetch(`${configAPI.baseUrl}/password-reset`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      email
+    })
+  }).then(checkResponse);
+}
+
+export const resetPassword = ({password, token}) => {
+  return fetch(`${configAPI.baseUrl}/password-reset/reset`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      password,
+      token
+    })    
+  }).then(checkResponse);
+}
+
+export const register = ({email, password, name}) => {
+  return fetch(`${configAPI.baseUrl}/auth/register`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      email,
+      password,
+      name
+    })
+  }).then(checkResponse);
+}
+
+export const login = ({email, password}) => {
+  return fetch(`${configAPI.baseUrl}/auth/login`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      email,
+      password,
+    })
+  }).then(checkResponse);
+}
+
+export const logout = (refreshToken) => {
+  return fetch(`${configAPI.baseUrl}/auth/logout`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      token : refreshToken,
+    })
+  }).then(checkResponse);
+}
+
+export const token = (refreshToken) => {
+  return fetch(`${configAPI.baseUrl}/auth/token`, {
+    method: "POST",
+    headers: configAPI.headers,
+    body: JSON.stringify({
+      token : refreshToken,
+    })
+  }).then(checkResponse);
+}
+
+export const getUserData = (token) => {
+  return fetch(`${configAPI.baseUrl}/auth/user`, {
+    headers: {authorization: token, ...configAPI.headers},    
+  }).then(checkResponse);
+}
+
+export const updateUserData = ({token, email, name, password}) => {
+  return fetch(`${configAPI.baseUrl}/auth/user`, {
+    method: "PATCH",
+    headers: {authorization: token, ...configAPI.headers},
+    body: JSON.stringify({
+      email,
+      name,
+      password
+    })
+  }).then(checkResponse);
+}
+
+
+
 
