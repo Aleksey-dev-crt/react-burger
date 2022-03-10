@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 import IngredientDetailsStyles from './IngredientDetails.module.css'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const DescriptionItem = (props) => {
   return (
@@ -10,21 +12,24 @@ const DescriptionItem = (props) => {
   )
 }
 
-function IngredientDetails(props) {
+function IngredientDetailsModal() {
+  const params = useParams()
+  const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
+  const ingredient = modifyedIngredients.find(el => el._id === params.id) || {} 
 
   const descriptions = [
-    { description: 'Калории, ккал', value: props.calories },
-    { description: 'Белки, г', value: props.proteins },
-    { description: 'Жиры, г', value: props.fat },
-    { description: 'Углеводы, г', value: props.carbohydrates },
+    { description: 'Калории, ккал', value: ingredient.calories },
+    { description: 'Белки, г', value: ingredient.proteins },
+    { description: 'Жиры, г', value: ingredient.fat },
+    { description: 'Углеводы, г', value: ingredient.carbohydrates },
   ]
 
   return (
     <div className={IngredientDetailsStyles.container}>
       <h2 className={'text text_type_main-large pt-3'}>Детали ингредиента</h2>
-      <img className={IngredientDetailsStyles.image} src={props.image_large} alt={props.name} />
+      <img className={IngredientDetailsStyles.image} src={ingredient.image_large} alt={ingredient.name} />
       <h3 className={'text text_type_main-medium pt-4 ' + IngredientDetailsStyles.title}>
-        {props.name}
+        {ingredient.name}
       </h3>
       <ul className={IngredientDetailsStyles.description}>
         {descriptions.map((el) => (
@@ -35,7 +40,7 @@ function IngredientDetails(props) {
   )
 }
 
-IngredientDetails.propTypes = {
+IngredientDetailsModal.propTypes = {
   image_large: PropTypes.string,
   name: PropTypes.string,
   calories: PropTypes.number,
@@ -49,4 +54,4 @@ DescriptionItem.propTypes = {
   value: PropTypes.number,  
 }
 
-export default IngredientDetails
+export default IngredientDetailsModal

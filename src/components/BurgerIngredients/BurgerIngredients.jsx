@@ -1,13 +1,12 @@
-import { useState, useCallback, useRef } from 'react'
+import { useRef } from 'react'
 import PropTypes from 'prop-types'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../Modals/Modal/Modal'
-import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails'
 import typeOfIngredient from '../../utils/propTypes'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategory, getIngredientDetails } from '../../services/actions'
+import { setCategory } from '../../services/actions'
 import { useDrag } from 'react-dnd'
+import { Link, useLocation } from 'react-router-dom'
 
 const Tabs = ({ currentCategory, bun, sauce, main }) => {
   const setTab = (tab) => {
@@ -37,19 +36,7 @@ const Count = ({ show, children }) => {
 }
 
 const Ingredient = ({ ingredient }) => {
-  const [isModalOpen, setModalOpen] = useState(false)
-  const dispatch = useDispatch()
-
-  const modalOpenHandler = useCallback(() => {
-    dispatch(getIngredientDetails(ingredient))
-    setModalOpen(true)
-    window.history.replaceState(null, '', `/ingredients/${ingredient._id}`)
-  }, [dispatch, ingredient])
-
-  const modalCloseHandler = useCallback(() => {
-    setModalOpen(false)
-    window.history.replaceState(null, '', '/react-burger')
-  }, [])
+  let location = useLocation()
 
   const [, drag] = useDrag(() => ({
     type: 'ingredient',
@@ -58,9 +45,13 @@ const Ingredient = ({ ingredient }) => {
 
   return (
     <>
-      <li
+      <Link
         className={'mt-6 ' + BurgerIngredientsStyles.ingredient}
-        onClick={modalOpenHandler}
+        key={ingredient._id}
+        to={{
+          pathname: `/ingredients/${ingredient._id}`,
+          state: { background: location },
+        }}
         ref={drag}
       >
         <img className="ml-4 mr-4" src={ingredient.image} alt={ingredient.name} />
@@ -72,12 +63,7 @@ const Ingredient = ({ ingredient }) => {
           {ingredient.name}
         </p>
         <Count show={ingredient.count > 0}>{ingredient.count}</Count>
-      </li>
-      {isModalOpen && (
-        <Modal onClose={modalCloseHandler}>
-          <IngredientDetails {...ingredient} />
-        </Modal>
-      )}
+      </Link>
     </>
   )
 }

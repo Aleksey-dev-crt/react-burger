@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
 import { useDispatch } from 'react-redux'
 import { requestIngredients, requestUserData } from '../../../services/actions'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom'
 import {
   HomePage,
   Login,
@@ -15,9 +15,14 @@ import {
   IngredientDetails,
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
+import Modal from '../../Modals/Modal/Modal'
+import IngredientDetailsModal from '../../Modals/IngredientDetails/IngredientDetailsModal'
 
 export function Routes() {
   const dispatch = useDispatch()
+  let location = useLocation()
+  let history = useHistory()
+  let background = location.state && location.state.background
 
   useEffect(() => {
     dispatch(requestIngredients())
@@ -25,37 +30,50 @@ export function Routes() {
     if (refreshToken) dispatch(requestUserData(refreshToken))
   }, [dispatch])
 
-  return (
-    <Switch>
-      <Route path="/react-burger" exact={true}>
-        <HomePage />
-      </Route>
-      <Route path="/login" exact={true}>
-        <Login />
-      </Route>
-      <Route path="/register" exact={true}>
-        <Register />
-      </Route>
-      <Route path="/forgot-password" exact={true}>
-        <ForgotPassword />
-      </Route>
-      <Route path="/reset-password" exact={true}>
-        <ResetPassword />
-      </Route>
-      <ProtectedRoute path="/profile" exact={true}>
-        <Profile />
-      </ProtectedRoute>
-      <Route path="/profile/orders" exact={true}>
-        <Orders />
-      </Route>
-      <Route path="/orderFeed" exact={true}>
-        <OrderFeed />
-      </Route>
-      <Route path="/ingredients/:id" exact={true}>
-        <IngredientDetails />
-      </Route>
+  const back = () => {
+    history.goBack()
+  }
 
-      <Redirect to="/react-burger" />
-    </Switch>
+  return (
+    <>
+      <Switch>
+        <Route path="/react-burger" exact={true}>
+          <HomePage />
+        </Route>
+        <Route path="/login" exact={true}>
+          <Login />
+        </Route>
+        <Route path="/register" exact={true}>
+          <Register />
+        </Route>
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPassword />
+        </Route>
+        <Route path="/reset-password" exact={true}>
+          <ResetPassword />
+        </Route>
+        <ProtectedRoute path="/profile" exact={true}>
+          <Profile />
+        </ProtectedRoute>
+        <Route path="/profile/orders" exact={true}>
+          <Orders />
+        </Route>
+        <Route path="/orderFeed" exact={true}>
+          <OrderFeed />
+        </Route>
+        <Route path="/ingredients/:id" exact={true}>
+          <IngredientDetails />
+        </Route>
+
+        <Redirect to="/react-burger" />
+      </Switch>
+      {background && (
+        <Route path="/ingredients/:id">
+          <Modal onClose={back}>
+            <IngredientDetailsModal  />
+          </Modal>
+        </Route>
+      )}
+    </>
   )
 }
