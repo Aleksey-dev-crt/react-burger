@@ -12,7 +12,7 @@ const DescriptionItem = (props) => {
   )
 }
 
-export function IngredientDetails() {
+export function IngredientDetails({ modal }) {
   const params = useParams()
   const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
   const ingredient = modifyedIngredients.find(el => el._id === params.id) || {}  
@@ -25,7 +25,7 @@ export function IngredientDetails() {
   ]
 
   return (
-    <div className={IngredientDetailsStyles.container}>
+    <div className={modal ? IngredientDetailsStyles.container_modal : IngredientDetailsStyles.container}>
       <h2 className={'text text_type_main-large pt-3'}>Детали ингредиента</h2>
       <img className={IngredientDetailsStyles.image} src={ingredient.image_large} alt={ingredient.name} />
       <h3 className={'text text_type_main-medium pt-4 ' + IngredientDetailsStyles.title}>

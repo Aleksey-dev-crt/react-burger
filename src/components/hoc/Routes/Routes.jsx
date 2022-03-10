@@ -16,7 +16,6 @@ import {
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 import Modal from '../../Modals/Modal/Modal'
-import IngredientDetailsModal from '../../Modals/IngredientDetails/IngredientDetailsModal'
 
 export function Routes() {
   const dispatch = useDispatch()
@@ -70,7 +69,7 @@ export function Routes() {
       {background && (
         <Route path="/ingredients/:id">
           <Modal onClose={back}>
-            <IngredientDetailsModal  />
+            <IngredientDetails modal={true} />
           </Modal>
         </Route>
       )}

@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.container_modal {
+  display: flex;
+  flex-direction: column;
+}
+
 .image { 
   align-self: center;
 }
