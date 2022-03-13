@@ -6,7 +6,7 @@ import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-d
 import {
   HomePage,
   Login,
-  OrderFeed,
+  Feed,
   Orders,
   Register,
   ForgotPassword,
@@ -57,8 +57,8 @@ export function Routes() {
         <Route path="/profile/orders" exact={true}>
           <Orders />
         </Route>
-        <Route path="/orderFeed" exact={true}>
-          <OrderFeed />
+        <Route path="/feed" exact={true}>
+          <Feed />
         </Route>
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />

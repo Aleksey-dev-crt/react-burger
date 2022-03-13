@@ -18,7 +18,7 @@ function AppHeader() {
             <BurgerIcon  />
             <p className="pl-2 text text_type_main-default">Конструктор</p>
           </NavLink>
-          <NavLink to='/orderFeed'
+          <NavLink to='/feed'
             className={AppHeaderStyles.nav__link} 
             activeClassName={AppHeaderStyles.nav__link_active}           
           >
