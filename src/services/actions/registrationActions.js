@@ -6,8 +6,10 @@ import {
   LOGIN,
   LOGOUT,
   GET_USER_DATA,
-  UPDATE_USER_DATA
+  UPDATE_USER_DATA,
 } from './actionTypes'
+ 
+import {  WS_CONNECTION_START } from './wsActionTypes'
 import {
   register,
   forgotPassword,

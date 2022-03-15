@@ -16,18 +16,30 @@ import {
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 import Modal from '../../Modals/Modal/Modal'
+import { WS_CONNECTION_START } from '../../../services/actions/wsActionTypes'
 
 export function Routes() {
   const dispatch = useDispatch()
-  let location = useLocation()
-  let history = useHistory()
+  const location = useLocation()
+  const history = useHistory()
   let background = location.state && location.state.background
 
   useEffect(() => {
     dispatch(requestIngredients())
-    const refreshToken = getCookie('refreshToken')
-    if (refreshToken) dispatch(requestUserData(refreshToken))
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(requestIngredients())
+    const refreshToken = getCookie('refreshToken')
+    if (refreshToken) dispatch(requestUserData(refreshToken))  
+  }, [dispatch])
+
+  useEffect(
+    () => {
+        dispatch({ type: WS_CONNECTION_START });
+    },
+    [] 
+  )
 
   const back = () => {
     history.goBack()
