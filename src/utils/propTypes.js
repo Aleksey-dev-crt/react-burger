@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const typeOfIngredient = {
+export const typeOfIngredient = {
   _id: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
@@ -15,4 +15,13 @@ const typeOfIngredient = {
   __v: PropTypes.number,
 }
 
-export default typeOfIngredient
+export const typeOfOrder = {
+  createdAt: PropTypes.string,
+  ingredients: PropTypes.arrayOf(PropTypes.string),
+  name: PropTypes.string,
+  number: PropTypes.number,
+  status: PropTypes.string,
+  updatedAt: PropTypes.string,
+  _id: PropTypes.string,  
+}
+

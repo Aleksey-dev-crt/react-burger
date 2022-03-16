@@ -13,6 +13,7 @@ import {
   ResetPassword,
   Profile,
   IngredientDetails,
+  OrderDetails
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 import Modal from '../../Modals/Modal/Modal'
@@ -72,12 +73,22 @@ export function Routes() {
         <Route path="/feed" exact={true}>
           <Feed />
         </Route>
+        <Route path="/feed/:id" exact={true}>
+          <OrderDetails />
+        </Route>
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />
         </Route>
 
         <Redirect to="/react-burger" />
       </Switch>
+      {background && (
+        <Route path="/feed/:id">
+          <Modal onClose={back}>
+            <OrderDetails modal={true} />
+          </Modal>
+        </Route>
+      )}
       {background && (
         <Route path="/ingredients/:id">
           <Modal onClose={back}>
