@@ -1,7 +1,10 @@
 import OrderDetailsStyles from './orderDetails.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useParams, useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { WS_CONNECTION_START, WS_CONNECTION_USER_START } from '../../services/actions/wsActionTypes'
+
 
 const IngredientDescription = ({ ingredient }) => {
   return (
@@ -18,6 +21,19 @@ const IngredientDescription = ({ ingredient }) => {
 }
 
 export function OrderDetails({ modal }) {
+  const dispatch = useDispatch()
+  const { token } = useSelector((store) => store.registrationReducer)
+  const { pathname } = useLocation()
+
+  useEffect(() => {   
+    if (pathname.includes('profile') && token) {
+      dispatch({ type: WS_CONNECTION_USER_START })
+    } 
+     if (pathname.includes('feed')) {
+      dispatch({ type: WS_CONNECTION_START })
+    }
+  }, [dispatch, pathname, token])   
+
   const params = useParams()
   const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
   const { messages } = useSelector((store) => store.wsReducer)
@@ -42,7 +58,8 @@ export function OrderDetails({ modal }) {
     if (ingredient) {
       ingredients.push(ingredient)
       ingredient.orderCount = ingredientsObj[element]
-      ingredientsPrice += ingredient.price
+      let price = ingredient.price * ingredientsObj[element]
+      ingredientsPrice += price
     }
   })
 

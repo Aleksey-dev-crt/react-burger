@@ -18,10 +18,10 @@ export const getIngredients = () => {
   }).then(checkResponse)
 }
 
-export const placeOrder = (ingredients) => {
+export const placeOrder = ({token, ingredients}) => {
   return fetch(`${configAPI.baseUrl}/orders`, {
     method: "POST",
-    headers: configAPI.headers,
+    headers: {authorization: token, ...configAPI.headers},
     body: JSON.stringify({
       ingredients
     })

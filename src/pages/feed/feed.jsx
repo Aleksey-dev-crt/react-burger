@@ -1,10 +1,19 @@
 import FeedStyles from './feed.module.css'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Orders } from '../../components/Orders/Orders'
 import { OrdersDescription } from '../../components/OrdersDescription/OrdersDescription'
+import { WS_CONNECTION_START } from '../../services/actions/wsActionTypes'
 
 export function Feed() {
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START })
+  }, [dispatch])
+  
   const { messages } = useSelector((store) => store.wsReducer)
+
   let ordersInfo = {orders: [], total: 0, totalToday: 0}
   if (messages.orders) {
     ordersInfo.orders = messages.orders

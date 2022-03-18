@@ -1,0 +1,21 @@
+.content {
+  margin-left: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  gap: 60px;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  max-width: 320px;
+  color: #8585AD;
+}
+

@@ -7,9 +7,9 @@ import {
   LOGOUT,
   GET_USER_DATA,
   UPDATE_USER_DATA,
+  GET_ACCESS_TOKEN
 } from './actionTypes'
  
-import {  WS_CONNECTION_START } from './wsActionTypes'
 import {
   register,
   forgotPassword,
@@ -80,7 +80,8 @@ export const requestUserData = (payload) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     token(payload)
     .then((res) => {
-      setCookie('refreshToken', res.refreshToken)
+      setCookie('refreshToken', res.refreshToken)      
+      dispatch({ type: GET_ACCESS_TOKEN, payload: res.accessToken })
       getUserData(res.accessToken)
       .then((res) => dispatch({ type: GET_USER_DATA, payload: res }))
       .catch((err) => console.log(err))
@@ -96,6 +97,7 @@ export const saveUserData = (payload) => {
     token(payload.refreshToken)
     .then((res) => {
       setCookie('refreshToken', res.refreshToken)
+      dispatch({ type: GET_ACCESS_TOKEN, payload: res.accessToken })
       updateUserData({token: res.accessToken, email: payload.login, name: payload.name, password: payload.password})
       .then((res) => dispatch({ type: UPDATE_USER_DATA, payload: res }))
       .catch((err) => console.log(err))

@@ -134,11 +134,12 @@ const Order = ({ cost, ingredients }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { isModalOpen, orderDetails } = useSelector((store) => store.constructorReducer)
+  const { token } = useSelector((store) => store.registrationReducer)
   const { authorized } = useSelector((store) => store.registrationReducer)
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const modalOpenHandler = useCallback(() => {
-    dispatch(postOrder(ingredients))
+    dispatch(postOrder({token, ingredients}))
   }, [dispatch, ingredients])
 
   const modalCloseHandler = useCallback(() => dispatch(postOrderModal(false)), [dispatch])

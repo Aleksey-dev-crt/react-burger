@@ -5,11 +5,16 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     return (next) => (action) => {
       const { dispatch, getState } = store
       const { type, payload } = action
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions
-      //const { user } = getState()
+      const { wsInit, wsInitUser, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions
+      const { token } = getState().registrationReducer
+      
       if (type === wsInit) {
-        socket = new WebSocket(`${wsUrl}`)
+        socket = new WebSocket(`${wsUrl}/all`)
       }
+      if (type === wsInitUser && token) {
+        socket = new WebSocket(`${wsUrl}?token=${token.split(' ')[1]}`)
+      }
+
       if (socket) {
         socket.onopen = (event) => {
           dispatch({ type: onOpen, payload: event })
@@ -31,9 +36,9 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           dispatch({ type: onClose, payload: event })
         }
 
-        if (type === wsSendMessage) {
-          const message = { ...payload}
-          socket.send(JSON.stringify(message))
+       if (type === wsSendMessage) {
+          const message = { ...payload, token: token };
+          socket.send(JSON.stringify(message));
         }
       }
 

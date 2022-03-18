@@ -1,6 +1,5 @@
 import {
   SET_LOADER_WITHOUT_OVERLAY,
-  SET_LOADER_WITH_OVERLAY,
   SET_CATEGORY,
   GET_INGREDIENT_DETAILS,
   ADD_STUFFING,
@@ -47,14 +46,12 @@ export const postOrderModal = (payload) => ({ type: POST_ORDER_MODAL, payload })
 
 export const postOrder = (payload) => {
   return (dispatch) => {
-    dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
+    dispatch(postOrderModal(true))
     placeOrder(payload)
       .then((res) => dispatch({ type: POST_ORDER, payload: res }))
-      .then(() => dispatch(postOrderModal(true)))
       .then(() => dispatch({ type: CLEAR_CONSTRUCTOR }))
-      .finally(() => dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: false }))
       .catch((err) => console.log(err))
+    }
   }
-}
 
 export const modifyStuffing = (payload) => ({ type: MODIFY_STUFFING, payload })
