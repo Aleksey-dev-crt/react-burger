@@ -3,13 +3,16 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Orders } from '../../components/Orders/Orders'
 import { OrdersDescription } from '../../components/OrdersDescription/OrdersDescription'
-import { WS_CONNECTION_START } from '../../services/actions/wsActionTypes'
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsActionTypes'
 
 export function Feed() {
   const dispatch = useDispatch()
   
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START })
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED })
+    }
   }, [dispatch])
   
   const { messages } = useSelector((store) => store.wsReducer)

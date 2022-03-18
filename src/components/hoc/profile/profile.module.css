@@ -1,5 +1,5 @@
 .content {
-  margin-left: 380px;
+  margin-left: calc(30% + 5px);
   display: flex;
   flex-direction: column;
 }

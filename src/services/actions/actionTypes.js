@@ -21,5 +21,6 @@ export const LOGOUT = 'LOGOUT'
 export const GET_USER_DATA = 'GET_USER_DATA'
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA'
 export const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN'
+export const SET_ORDER_PENDING = 'SET_ORDER_PENDING'
 
 

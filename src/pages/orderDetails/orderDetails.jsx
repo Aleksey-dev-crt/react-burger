@@ -3,7 +3,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useParams, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { WS_CONNECTION_START, WS_CONNECTION_USER_START } from '../../services/actions/wsActionTypes'
+import { WS_CONNECTION_START, WS_CONNECTION_USER_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsActionTypes'
 
 
 const IngredientDescription = ({ ingredient }) => {
@@ -31,6 +31,9 @@ export function OrderDetails({ modal }) {
     } 
      if (pathname.includes('feed')) {
       dispatch({ type: WS_CONNECTION_START })
+    }
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED })
     }
   }, [dispatch, pathname, token])   
 

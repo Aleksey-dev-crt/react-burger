@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { WS_CONNECTION_USER_START } from '../../services/actions/wsActionTypes'
+import { WS_CONNECTION_USER_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsActionTypes'
 import { Orders } from '../../components/Orders/Orders'
 
 export function HistoryOrders() {
@@ -17,6 +17,9 @@ export function HistoryOrders() {
 
     useEffect(() => {
         if (token) dispatch({ type: WS_CONNECTION_USER_START })
+        return () => {
+          dispatch({ type: WS_CONNECTION_CLOSED })
+        }
       }, [dispatch, token])
 
     return ( 
