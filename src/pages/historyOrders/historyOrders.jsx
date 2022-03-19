@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import HistoryOrdersStyles from './historyOrders.module.css'
-import {
-  WS_CONNECTION_USER_START,
-  WS_CONNECTION_CLOSED,
-} from '../../services/actions/wsActionTypes'
 import { Orders } from '../../components/Orders/Orders'
+import {
+  wsConnectionAuthOpen,
+  wsConnectionClosed,
+} from '../../services/actions/wsActions'
 
 export function HistoryOrders() {
   const dispatch = useDispatch()
@@ -20,9 +20,9 @@ export function HistoryOrders() {
   }
 
   useEffect(() => {
-    if (token) dispatch({ type: WS_CONNECTION_USER_START })
+    if (token) dispatch(wsConnectionAuthOpen())
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED })
+      dispatch(wsConnectionClosed())
     }
   }, [dispatch, token])
 
