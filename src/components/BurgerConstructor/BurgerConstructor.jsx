@@ -10,7 +10,7 @@ import BurgerConstructorStyles from './BurgerConstructor.module.css'
 import currencyIcon from '../../images/currencyIcon.svg'
 import Modal from '../Modals/Modal/Modal'
 import OrderDetails from '../Modals/OrderDetails/OrderDetails'
-import typeOfIngredient from '../../utils/propTypes'
+import { typeOfIngredient } from '../../utils/propTypes'
 import Loader from '../Auxiliary/Loader/Loader'
 import ModalOverlay from '../Modals/ModalOverlay/ModalOverlay'
 import { useSelector, useDispatch } from 'react-redux'
@@ -134,13 +134,15 @@ const Order = ({ cost, ingredients }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { isModalOpen, orderDetails } = useSelector((store) => store.constructorReducer)
+  const { orderPending } = useSelector((store) => store.commonReducer)
+  const { token } = useSelector((store) => store.registrationReducer)
   const { authorized } = useSelector((store) => store.registrationReducer)
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
-
+  
   const modalOpenHandler = useCallback(() => {
-    dispatch(postOrder(ingredients))
-  }, [dispatch, ingredients])
-
+    dispatch(postOrder({token, ingredients}))
+  }, [dispatch, ingredients, token])
+  
   const modalCloseHandler = useCallback(() => dispatch(postOrderModal(false)), [dispatch])
 
   return (
@@ -153,6 +155,7 @@ const Order = ({ cost, ingredients }) => {
         type="primary"
         size="large"
         onClick={() => (authorized ? modalOpenHandler() : history.push('/login'))}
+        disabled={orderPending ? true : false}       
       >
         Оформить заказ
       </Button>
@@ -163,7 +166,7 @@ const Order = ({ cost, ingredients }) => {
       ) : (
         isModalOpen && (
           <Modal onClose={modalCloseHandler}>
-            <OrderDetails orderNumber={`${orderDetails.order.number}`.padStart(6, '0')} />
+            <OrderDetails orderNumber={orderDetails.order ? `${orderDetails.order.number}`.padStart(6, '0') : null} />
           </Modal>
         )
       )}

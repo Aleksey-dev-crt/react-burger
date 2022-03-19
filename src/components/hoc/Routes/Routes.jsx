@@ -1,34 +1,36 @@
 import { useEffect } from 'react'
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
+import { Profile } from '../profile/profile'
 import { useDispatch } from 'react-redux'
 import { requestIngredients, requestUserData } from '../../../services/actions'
 import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom'
 import {
   HomePage,
   Login,
-  OrderFeed,
-  Orders,
+  Feed,
+  HistoryOrders,
+  ProfileForm,
   Register,
   ForgotPassword,
   ResetPassword,
-  Profile,
   IngredientDetails,
+  OrderDetails,
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 import Modal from '../../Modals/Modal/Modal'
 
 export function Routes() {
   const dispatch = useDispatch()
-  let location = useLocation()
-  let history = useHistory()
+  const location = useLocation()
+  const history = useHistory()
   let background = location.state && location.state.background
-
+  
   useEffect(() => {
     dispatch(requestIngredients())
     const refreshToken = getCookie('refreshToken')
     if (refreshToken) dispatch(requestUserData(refreshToken))
-  }, [dispatch])
-
+  }, [dispatch])  
+ 
   const back = () => {
     history.goBack()
   }
@@ -52,13 +54,23 @@ export function Routes() {
           <ResetPassword />
         </Route>
         <ProtectedRoute path="/profile" exact={true}>
-          <Profile />
+          <Profile>
+            <ProfileForm />
+          </Profile>
         </ProtectedRoute>
         <Route path="/profile/orders" exact={true}>
-          <Orders />
+          <Profile>
+            <HistoryOrders />
+          </Profile>
         </Route>
-        <Route path="/orderFeed" exact={true}>
-          <OrderFeed />
+        <Route path="/profile/orders/:id" exact={true}>
+          <OrderDetails />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <Feed />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <OrderDetails />
         </Route>
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />
@@ -66,6 +78,20 @@ export function Routes() {
 
         <Redirect to="/react-burger" />
       </Switch>
+      {background && (
+        <Route path="/feed/:id">
+          <Modal onClose={back}>
+            <OrderDetails modal={true} />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <Route path="/profile/orders/:id">
+          <Modal onClose={back}>
+            <OrderDetails modal={true} />
+          </Modal>
+        </Route>
+      )}
       {background && (
         <Route path="/ingredients/:id">
           <Modal onClose={back}>

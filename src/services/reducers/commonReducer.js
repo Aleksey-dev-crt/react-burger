@@ -1,9 +1,10 @@
-import { SET_LOADER_WITHOUT_OVERLAY, SET_LOADER_WITH_OVERLAY } from '../actions/actionTypes'
+import { SET_LOADER_WITHOUT_OVERLAY, SET_LOADER_WITH_OVERLAY, SET_ORDER_PENDING } from '../actions/actionTypes'
 
 
 const initialState = {
   loadingWithoutOverlay: false,
   loadingWithOverlay: false,
+  orderPending: false,
 }
 
 export default function commonReducer(state = initialState, action) {
@@ -17,7 +18,13 @@ export default function commonReducer(state = initialState, action) {
       return {
         ...state,
         loadingWithOverlay: action.payload,
-      }        
+      }     
+      case SET_ORDER_PENDING:
+      return {
+        ...state,
+        orderPending: action.payload,
+      }    
+
     default:
       return state
   }

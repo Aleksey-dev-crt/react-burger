@@ -4,7 +4,7 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import {NavLink} from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 function AppHeader() {  
 
@@ -18,7 +18,7 @@ function AppHeader() {
             <BurgerIcon  />
             <p className="pl-2 text text_type_main-default">Конструктор</p>
           </NavLink>
-          <NavLink to='/orderFeed'
+          <NavLink to='/feed'
             className={AppHeaderStyles.nav__link} 
             activeClassName={AppHeaderStyles.nav__link_active}           
           >
@@ -26,7 +26,7 @@ function AppHeader() {
             <p className="pl-2 text text_type_main-default">Лента заказов</p>
           </NavLink>
       </nav>
-      <Logo />
+      <Link to='/react-burger'><Logo /></Link>
       <NavLink to='/profile'
         className={AppHeaderStyles.account} 
         activeClassName={AppHeaderStyles.nav__link_active}       

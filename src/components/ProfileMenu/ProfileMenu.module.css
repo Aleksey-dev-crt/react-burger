@@ -1,0 +1,20 @@
+.links__container {
+  margin-top: 120px;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.link {
+  all: unset;
+}
+
+.link_active {
+  color: #8585ad;
+}
+
+.link:hover {
+  color: #8585ad;
+  cursor: pointer;
+}
