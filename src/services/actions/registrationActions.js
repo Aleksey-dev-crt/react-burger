@@ -58,6 +58,7 @@ export const authorization = (payload) => {
     login(payload)
       .then((res) => {
         setCookie('refreshToken', res.refreshToken)
+        dispatch({ type: GET_ACCESS_TOKEN, payload: res.accessToken })
         dispatch({ type: LOGIN, payload: res })
     })
       .finally(() => dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: false }))
