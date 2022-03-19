@@ -166,7 +166,7 @@ const Order = ({ cost, ingredients }) => {
       ) : (
         isModalOpen && (
           <Modal onClose={modalCloseHandler}>
-            <OrderDetails orderNumber={orderDetails.order ? `${orderDetails.order.number + 1}`.padStart(6, '0') : null} />
+            <OrderDetails orderNumber={orderDetails.order ? `${orderDetails.order.number}`.padStart(6, '0') : null} />
           </Modal>
         )
       )}
