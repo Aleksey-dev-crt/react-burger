@@ -81,10 +81,8 @@ export const requestUserData = (payload) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     token(payload)
       .then((res) => {
-        setCookie('refreshToken', res.refreshToken, { path: '/react-burger' })
-        setCookie('refreshToken', res.refreshToken, { path: '/feed' })
-        setCookie('refreshToken', res.refreshToken, { path: '/profile' })
-        setCookie('refreshToken', res.refreshToken, { path: '/profile/orders' })
+        setCookie('refreshToken', res.refreshToken, { path: '/', expires: 1200 })
+        setCookie('refreshToken', res.refreshToken, { path: '/profile', expires: 1200 })
         dispatch({ type: GET_ACCESS_TOKEN, payload: res.accessToken })
         getUserData(res.accessToken)
           .then((res) => dispatch({ type: GET_USER_DATA, payload: res }))
