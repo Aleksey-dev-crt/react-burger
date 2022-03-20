@@ -46,7 +46,9 @@ export const postOrder = (payload) => {
   return (dispatch) => {
     dispatch({ type: SET_ORDER_PENDING, payload: true })
     placeOrder(payload)
-      .then((res) => dispatch({ type: POST_ORDER, payload: res }))
+      .then((res) => {
+        dispatch({ type: POST_ORDER, payload: res })
+      })
       .then(() => dispatch(postOrderModal(true)))
       .then(() => dispatch({ type: CLEAR_CONSTRUCTOR }))
       .finally(() => dispatch({ type: SET_ORDER_PENDING, payload: false }))

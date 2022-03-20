@@ -54,7 +54,7 @@ export default function constructorReducer(state = initialState, action) {
               }
             : el
         ) : state.modifyedIngredients,
-        constructorIngredients: [state.bun, ...state.stuffing, action.payload],
+        constructorIngredients: [state.bun, ...state.stuffing, action.payload, state.bun],
       }
     case ADD_BUN:
       return {
@@ -75,7 +75,7 @@ export default function constructorReducer(state = initialState, action) {
                 }
               : el
           ),
-        constructorIngredients: [action.payload, ...state.stuffing],
+        constructorIngredients: [action.payload, ...state.stuffing, action.payload],
       }
       case CLEAR_CONSTRUCTOR:
       return {
