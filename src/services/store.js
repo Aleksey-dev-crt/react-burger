@@ -3,6 +3,7 @@ import { rootReducer } from '../services/reducers'
 import { socketMiddleware } from '../utils/socketMiddleware'
 import {
   WS_CONNECTION_CLOSED,
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_USER_START,
@@ -20,6 +21,7 @@ const wsActions = {
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
+  close: WS_CONNECTION_CLOSE,
   onError: WS_CONNECTION_ERROR,
   onMessage: WS_GET_MESSAGE
 }

@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import {
   wsConnectionOpen,
   wsConnectionAuthOpen,
-  wsConnectionClosed,
+  wsConnectionClose,
 } from '../../services/actions/wsActions'
 
 const IngredientDescription = ({ ingredient }) => {
@@ -28,20 +28,22 @@ export function OrderDetails({ modal }) {
   const dispatch = useDispatch()
   const { token } = useSelector((store) => store.registrationReducer)
   const { pathname } = useLocation()
+  const params = useParams()
 
   useEffect(() => {
-    if (pathname.includes('profile') && token) {
-      dispatch(wsConnectionAuthOpen())
-    }
-    if (pathname.includes('feed')) {
-      dispatch(wsConnectionOpen())
+    if (!modal) {
+      if (pathname.includes(`profile/orders/${params.id}`) && token) {
+        dispatch(wsConnectionAuthOpen())
+      }
+      if (pathname.includes(`feed/${params.id}`)) {
+        dispatch(wsConnectionOpen())
+      }      
     }
     return () => {
-      dispatch(wsConnectionClosed())
+      dispatch(wsConnectionClose())
     }
-  }, [dispatch, pathname, token])
+  }, [dispatch, params.id, token, pathname, modal])
 
-  const params = useParams()
   const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
   const { messages } = useSelector((store) => store.wsReducer)
   let order = { ingredients: [] }

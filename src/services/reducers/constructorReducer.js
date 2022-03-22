@@ -61,7 +61,7 @@ export default function constructorReducer(state = initialState, action) {
         ...state,
         bun: {
           ...action.payload,
-          count: 1,
+          count: 2,
           constructorID: action.payload._id + 1,
         },
         modifyedIngredients: [...state.modifyedIngredients]
@@ -70,7 +70,7 @@ export default function constructorReducer(state = initialState, action) {
             el._id === action.payload._id
               ? {
                   ...action.payload,
-                  count: 1,
+                  count: 2,
                   constructorID: action.payload._id + 1,
                 }
               : el

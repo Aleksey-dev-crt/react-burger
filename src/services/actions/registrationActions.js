@@ -83,6 +83,7 @@ export const requestUserData = (payload) => {
       .then((res) => {
         setCookie('refreshToken', res.refreshToken, { path: '/', expires: 1200 })
         setCookie('refreshToken', res.refreshToken, { path: '/profile', expires: 1200 })
+        setCookie('refreshToken', res.refreshToken, { path: '/feed', expires: 1200 })
         dispatch({ type: GET_ACCESS_TOKEN, payload: res.accessToken })
         getUserData(res.accessToken)
           .then((res) => dispatch({ type: GET_USER_DATA, payload: res }))

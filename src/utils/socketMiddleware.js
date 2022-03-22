@@ -5,7 +5,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     return (next) => (action) => {
       const { dispatch, getState } = store
       const { type, payload } = action
-      const { wsInit, wsInitUser, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions
+      const { wsInit, wsInitUser, wsSendMessage, onOpen, onClose, close, onError, onMessage } = wsActions
       const { token } = getState().registrationReducer
       
       if (type === wsInit) {
@@ -34,6 +34,10 @@ export const socketMiddleware = (wsUrl, wsActions) => {
 
         socket.onclose = (event) => {
           dispatch({ type: onClose, payload: event })
+        }
+
+        if (type === close) {
+          socket.close()
         }
 
        if (type === wsSendMessage) {

@@ -6,7 +6,7 @@ import { Orders } from '../../components/Orders/Orders'
 import { OrdersDescription } from '../../components/OrdersDescription/OrdersDescription'
 import {
   wsConnectionOpen,
-  wsConnectionClosed,
+  wsConnectionClose,
 } from '../../services/actions/wsActions'
 
 export function Feed() {
@@ -15,7 +15,7 @@ export function Feed() {
   useEffect(() => {
     dispatch(wsConnectionOpen())
     return () => {
-      dispatch(wsConnectionClosed())
+      dispatch(wsConnectionClose())
     }
   }, [dispatch])
 

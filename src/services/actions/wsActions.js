@@ -1,7 +1,7 @@
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
-  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_CLOSE,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
   WS_CONNECTION_START,
@@ -16,7 +16,7 @@ export const wsConnectionSuccess = () => ({ type: WS_CONNECTION_SUCCESS })
 
 export const wsConnectionError = () => ({ type: WS_CONNECTION_ERROR })
 
-export const wsConnectionClosed = () => ({ type: WS_CONNECTION_CLOSED })
+export const wsConnectionClose = () => ({ type: WS_CONNECTION_CLOSE })
 
 export const wsGetMessage = (message) => ({ type: WS_GET_MESSAGE, payload: message })
 

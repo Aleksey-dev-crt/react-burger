@@ -24,13 +24,13 @@ export function Routes() {
   const location = useLocation()
   const history = useHistory()
   let background = location.state && location.state.background
-  
+
   useEffect(() => {
     dispatch(requestIngredients())
     const refreshToken = getCookie('refreshToken')
     if (refreshToken) dispatch(requestUserData(refreshToken))
-  }, [dispatch])  
- 
+  }, [dispatch, location])
+
   const back = () => {
     history.goBack()
   }
