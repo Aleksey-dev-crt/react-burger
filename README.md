@@ -1,3 +1,14 @@
+**Технологии**
+
+- React
+- Redux
+- React dnd
+- React router
+- cookie
+- WebSockets
+
+#
+
 **Ссылка на страницу**
 
 - [React-burger](https://aleksey-dev-crt.github.io/react-burger/)
