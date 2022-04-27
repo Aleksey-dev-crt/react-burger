@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, FC } from 'react'
 import {
   Input,
   Button,
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changePassword } from '../../services/actions'
 import { ILocationState } from '../../utils/types'
 
-export function ResetPassword() {
+export const ResetPassword: FC = () => {
   const dispatch = useDispatch()
   const { authorized } = useSelector((store: any) => store.registrationReducer)
   const { resetPassword } = useSelector((store: any) => store.registrationReducer)
@@ -22,7 +22,7 @@ export function ResetPassword() {
   const [showPass, setshowPass] = useState<'password' | 'text'>('password')
   const [showIcon, setshowIcon] = useState<'ShowIcon' | 'HideIcon'>('ShowIcon')
   const inputPassRef = useRef<HTMLInputElement>(null)
-  
+
   const onIconClick = () => {
     setTimeout(() => inputPassRef.current!.focus(), 0)
     showIcon === 'ShowIcon' ? setshowIcon('HideIcon') : setshowIcon('ShowIcon')

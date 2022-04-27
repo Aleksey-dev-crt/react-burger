@@ -1,4 +1,4 @@
-import { FC, Children } from 'react'
+import { FC, Children, ReactNode } from 'react'
 import ProfileStyles from './profile.module.css'
 import { NavLink } from 'react-router-dom'
 import Loader from '../../components/Auxiliary/Loader/Loader'
@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { exit } from '../../services/actions'
 import { getCookie, deleteCookie } from '../../utils/cookies'
 
-export const Profile: FC = () => {
+interface IProfileProps {
+  children: ReactNode
+}
+
+export const Profile: FC<IProfileProps> = () => {
   const dispatch = useDispatch()
   const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
 
