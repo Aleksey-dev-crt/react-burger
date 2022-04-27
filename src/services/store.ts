@@ -1,5 +1,5 @@
 import { createStore, compose, applyMiddleware } from 'redux'
-import { rootReducer } from '../services/reducers'
+import { rootReducer } from './reducers'
 import { socketMiddleware } from '../utils/socketMiddleware'
 import {
   WS_CONNECTION_CLOSED,
@@ -10,7 +10,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE
-} from '../services/actions/wsActionTypes'
+} from './actions/wsActionTypes'
 import thunk from 'redux-thunk'
 
 const wsUrl = "wss://norma.nomoreparties.space/orders"
@@ -26,9 +26,12 @@ const wsActions = {
   onMessage: WS_GET_MESSAGE
 }
 
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions))))
