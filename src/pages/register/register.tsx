@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, FC } from 'react'
 import {
   EmailInput,
   Input,
@@ -11,28 +11,29 @@ import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { Link, useLocation, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { newUser } from '../../services/actions'
+import { ILocationState } from '../../utils/types'
 
-export function Register() {
-  const { authorized } = useSelector((store) => store.registrationReducer)
-  const location = useLocation()
+export const Register: FC = () => {
+  const { authorized } = useSelector((store: any) => store.registrationReducer)
+  const location = useLocation<ILocationState>()
 
   const dispatch = useDispatch()
-  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
+  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
 
   const [name, setName] = useState('')
-  const inputNameRef = useRef(null)
+  const inputNameRef = useRef<HTMLInputElement>(null)
 
   const [email, setEmail] = useState('')
-  const onChangeMail = (e) => {
+  const onChangeMail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
   const [password, setPassword] = useState('')
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
-  const registerSubmit = (e) => {
+  const registerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (password) dispatch(newUser({email, password, name}))
     setName('')

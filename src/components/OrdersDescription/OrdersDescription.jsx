@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import OrdersDescriptionStyles from './OrdersDescription.module.css'
-import { typeOfOrder } from '../../utils/propTypes'
+import { typeOfOrder } from '../../utils/types'
 
 export function OrdersDescription({ ordersInfo }) {
   return (

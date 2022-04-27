@@ -3,7 +3,7 @@ import OrdersStyles from './Orders.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
-import { typeOfOrder } from '../../utils/propTypes'
+import { typeOfOrder } from '../../utils/types'
 
 const Order = ({ order, historyOrders }) => {
   const { modifyedIngredients } = useSelector((store) => store.constructorReducer)

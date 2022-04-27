@@ -1,30 +1,30 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, FC } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import ProfileFormStyles from './profileForm.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestUserData, saveUserData } from '../../services/actions'
 import { getCookie } from '../../utils/cookies'
 
-export function ProfileForm() {
+export const ProfileForm: FC = () => {
   const dispatch = useDispatch()
-  const { userData } = useSelector((store) => store.registrationReducer)
+  const { userData } = useSelector((store: any) => store.registrationReducer)
 
   const [name, setName] = useState('')
-  const inputNameRef = useRef(null)
+  const inputNameRef = useRef<HTMLInputElement>(null)
   const onIconNameClick = () => {
-    setTimeout(() => inputNameRef.current.focus(), 0)
+    setTimeout(() => inputNameRef.current!.focus(), 0)
   }
 
   const [login, setLogin] = useState('')
-  const inputLoginRef = useRef(null)
+  const inputLoginRef = useRef<HTMLInputElement>(null)
   const onIconLoginClick = () => {
-    setTimeout(() => inputLoginRef.current.focus(), 0)
+    setTimeout(() => inputLoginRef.current!.focus(), 0)
   }
 
   const [password, setPassword] = useState('')
-  const inputPassRef = useRef(null)
+  const inputPassRef = useRef<HTMLInputElement>(null)
   const onIconPassClick = () => {
-    setTimeout(() => inputPassRef.current.focus(), 0)
+    setTimeout(() => inputPassRef.current!.focus(), 0)
   }
 
   const refreshToken = getCookie('refreshToken')
@@ -36,14 +36,14 @@ export function ProfileForm() {
     } else {
       if (refreshToken) dispatch(requestUserData(refreshToken))
     }
-  }, [dispatch, userData])
+  }, [dispatch, userData, refreshToken])
 
-  const profileSubmit = (e) => {
+  const profileSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (name && login) dispatch(saveUserData({ refreshToken, name, login, password }))
   }
 
-  const onCancel = (e) => {
+  const onCancel = (e: React.SyntheticEvent<Element, Event>) => {
     e.preventDefault()
     setName(userData.user.name)
     setLogin(userData.user.email)

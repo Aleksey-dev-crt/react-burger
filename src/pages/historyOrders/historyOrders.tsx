@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import HistoryOrdersStyles from './historyOrders.module.css'
 import { Orders } from '../../components/Orders/Orders'
+import { IOrdersInfo } from '../../utils/types'
 import { wsConnectionAuthOpen, wsConnectionClose } from '../../services/actions/wsActions'
 
-export function HistoryOrders() {
+export const HistoryOrders: FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -14,9 +15,9 @@ export function HistoryOrders() {
     }
   }, [dispatch])
 
-  const { messages } = useSelector((store) => store.wsReducer)
+  const { messages } = useSelector((store: any) => store.wsReducer)
 
-  let ordersInfo = { orders: [], total: 0, totalToday: 0 }
+  let ordersInfo: IOrdersInfo = { orders: [], total: 0, totalToday: 0 }
   if (messages.orders) {
     ordersInfo.orders = messages.orders
     ordersInfo.total = messages.total

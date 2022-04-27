@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, FC } from 'react'
 import {
   EmailInput,
   PasswordInput,
@@ -9,25 +9,26 @@ import { Link, Redirect, useLocation } from 'react-router-dom'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { useDispatch, useSelector } from 'react-redux'
+import { ILocationState } from '../../utils/types'
 import { authorization } from '../../services/actions'
 
-export function Login() {
+export const Login: FC = () => {
   const dispatch = useDispatch()
-  const { authorized } = useSelector((store) => store.registrationReducer)
-  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
-  const location = useLocation()
+  const { authorized } = useSelector((store: any) => store.registrationReducer)
+  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
+  const location = useLocation<ILocationState>()
 
   const [email, setEmail] = useState('')
-  const onChangeMail = (e) => {
+  const onChangeMail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
   const [password, setPassword] = useState('')
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
-  const authorizationSubmit = (e) => {
+  const authorizationSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (email && password) dispatch(authorization({email, password}))
     setEmail('')

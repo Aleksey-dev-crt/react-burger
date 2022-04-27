@@ -3,14 +3,19 @@ import Loader from '../../components/Auxiliary/Loader/Loader'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useParams, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, FC } from 'react'
+import { IIngredient, IParams, IModalDetailsProps, ILocationState, IOrder } from '../../utils/types'
 import {
   wsConnectionOpen,
   wsConnectionAuthOpen,
   wsConnectionClose,
 } from '../../services/actions/wsActions'
 
-const IngredientDescription = ({ ingredient }) => {
+interface IIngredientDescriptionProps {
+  ingredient: IIngredient,
+}
+
+const IngredientDescription: FC<IIngredientDescriptionProps> = ({ ingredient }) => {
   return (
     <li className={OrderDetailsStyles.description__item}>
       <img className={OrderDetailsStyles.image} src={ingredient.image} alt={ingredient.name} />
@@ -24,11 +29,11 @@ const IngredientDescription = ({ ingredient }) => {
   )
 }
 
-export function OrderDetails({ modal }) {
+export const OrderDetails: FC<IModalDetailsProps> = ({ modal }) => {
   const dispatch = useDispatch()
-  const { token } = useSelector((store) => store.registrationReducer)
-  const { pathname } = useLocation()
-  const params = useParams()
+  const { token } = useSelector((store: any) => store.registrationReducer)
+  const { pathname } = useLocation<ILocationState>()
+  const params = useParams<IParams>()
 
   useEffect(() => {
     if (!modal) {
@@ -44,25 +49,34 @@ export function OrderDetails({ modal }) {
     }
   }, [dispatch, params.id, token, pathname, modal])
 
-  const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
-  const { messages } = useSelector((store) => store.wsReducer)
-  let order = { ingredients: [] }
+  const { modifyedIngredients } = useSelector((store: any) => store.constructorReducer)
+  const { messages } = useSelector((store: any) => store.wsReducer)
 
-  if (messages.orders) {
-    order = messages.orders.find((el) => el._id === params.id)
+  let order: IOrder = {
+    createdAt: '',
+    ingredients: [],
+    name: '',
+    number: 0,
+    status: '',
+    updatedAt: '',
+    _id: ''
   }
-
+  
+  if (messages.orders) {
+    order = messages.orders.find((el: IOrder) => el._id === params.id)
+  }
+  
   const date = new Date(order.createdAt).toLocaleString()
 
-  const ingredientsObj = order.ingredients.reduce((acc, el) => {
+  const ingredientsObj = order.ingredients.reduce((acc: {[el: string]: number}, el: string) => {
     acc[el] = (acc[el] || 0) + 1
     return acc
   }, {})
 
-  const ingredients = []
+  const ingredients: IIngredient[] = []
   let ingredientsPrice = 0
   Object.keys(ingredientsObj).forEach((element) => {
-    const ingredient = modifyedIngredients.find((el) => el._id === element)
+    const ingredient = modifyedIngredients.find((el: IIngredient) => el._id === element)
     if (ingredient) {
       ingredients.push(ingredient)
       ingredient.orderCount = ingredientsObj[element]
@@ -90,7 +104,7 @@ export function OrderDetails({ modal }) {
             Состав:
           </h3>
           <ul className={OrderDetailsStyles.description}>
-            {ingredients.map((el, i) => (
+            {ingredients.map((el: IIngredient, i: number) => (
               <IngredientDescription key={i} ingredient={el} />
             ))}
           </ul>

@@ -9,28 +9,30 @@ import ResetPasswordStyles from './resetPassword.module.css'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { changePassword } from '../../services/actions'
+import { ILocationState } from '../../utils/types'
 
 export function ResetPassword() {
   const dispatch = useDispatch()
-  const { authorized } = useSelector((store) => store.registrationReducer)
-  const { resetPassword } = useSelector((store) => store.registrationReducer)
-  const location = useLocation()
-  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
+  const { authorized } = useSelector((store: any) => store.registrationReducer)
+  const { resetPassword } = useSelector((store: any) => store.registrationReducer)
+  const location = useLocation<ILocationState>()
+  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
 
   const [password, setPassword] = useState('')
-  const [showPass, setshowPass] = useState('password')
-  const [showIcon, setshowIcon] = useState('ShowIcon')
-  const inputPassRef = useRef(null)
+  const [showPass, setshowPass] = useState<'password' | 'text'>('password')
+  const [showIcon, setshowIcon] = useState<'ShowIcon' | 'HideIcon'>('ShowIcon')
+  const inputPassRef = useRef<HTMLInputElement>(null)
+  
   const onIconClick = () => {
-    setTimeout(() => inputPassRef.current.focus(), 0)
+    setTimeout(() => inputPassRef.current!.focus(), 0)
     showIcon === 'ShowIcon' ? setshowIcon('HideIcon') : setshowIcon('ShowIcon')
     showPass === 'password' ? setshowPass('text') : setshowPass('password')
   }
 
   const [token, setToken] = useState('')
-  const inputCodeRef = useRef(null) 
+  const inputCodeRef = useRef<HTMLInputElement>(null) 
   
-  const resetPasswordSubmit = (e) => {
+  const resetPasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (password && token) dispatch(changePassword({password, token}))
     setPassword('')

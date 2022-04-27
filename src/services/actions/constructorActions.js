@@ -13,7 +13,7 @@ import {
   MODIFY_INGREDIENTS,
   SET_ORDER_PENDING
 } from './actionTypes'
-import { getIngredients, placeOrder } from '../../utils/Api'
+import { getIngredients, placeOrder } from '../../utils/Api.js'
 
 export const requestIngredients = () => {
   return (dispatch) => {
