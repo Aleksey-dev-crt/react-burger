@@ -18,11 +18,12 @@ import {
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 import Modal from '../../Modals/Modal/Modal'
+import { ILocationState } from '../../../utils/types'
 
 export function Routes() {
   const dispatch = useDispatch()
-  const location = useLocation()
-  const history = useHistory()
+  const location = useLocation<ILocationState>()
+  const history = useHistory<History>()
   let background = location.state && location.state.background
 
   useEffect(() => {

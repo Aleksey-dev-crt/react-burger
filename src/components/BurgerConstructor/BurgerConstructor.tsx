@@ -1,5 +1,4 @@
-import { useCallback } from 'react'
-import PropTypes from 'prop-types'
+import { useCallback, FC } from 'react'
 import {
   ConstructorElement,
   DragIcon,
@@ -10,7 +9,7 @@ import BurgerConstructorStyles from './BurgerConstructor.module.css'
 import currencyIcon from '../../images/currencyIcon.svg'
 import Modal from '../Modals/Modal/Modal'
 import OrderDetails from '../Modals/OrderDetails/OrderDetails'
-import { typeOfIngredient } from '../../utils/types'
+import { IIngredient } from '../../utils/types'
 import Loader from '../Auxiliary/Loader/Loader'
 import ModalOverlay from '../Modals/ModalOverlay/ModalOverlay'
 import { useSelector, useDispatch } from 'react-redux'
@@ -25,9 +24,22 @@ import {
   modifyStuffing,
 } from '../../services/actions'
 
-const ConstrucorElement = ({ element, moveIngredient, findIngredient }) => {
+interface IConstrucorElementProps {
+  element: IIngredient
+  moveIngredient: (constructorID: string, atIndex: number) => void
+  findIngredient: (id: string) => {
+    element: IIngredient
+    index: number
+  }
+}
+
+const ConstrucorElement: FC<IConstrucorElementProps> = ({
+  element,
+  moveIngredient,
+  findIngredient,
+}) => {
   const dispatch = useDispatch()
-  const onDelete = (element) => {
+  const onDelete = (element: IIngredient) => {
     dispatch(removeIngredient(element))
     dispatch(calculatePrice())
   }
@@ -51,10 +63,13 @@ const ConstrucorElement = ({ element, moveIngredient, findIngredient }) => {
     }),
     [element.constructorID, originalIndex, moveIngredient]
   )
+
+  type THover = { constructorID: string }
+
   const [, drop] = useDrop(
     () => ({
       accept: 'constructorElement',
-      hover({ constructorID: draggedId }) {
+      hover({ constructorID: draggedId }: THover) {
         if (draggedId !== element.constructorID) {
           const { index: overIndex } = findIngredient(element.constructorID)
           moveIngredient(draggedId, overIndex)
@@ -83,13 +98,17 @@ const ConstrucorElement = ({ element, moveIngredient, findIngredient }) => {
   )
 }
 
-const Ingredients = ({ ingredients }) => {
-  const { stuffing } = useSelector((store) => store.constructorReducer)
+interface IIngredientsProps {
+  ingredients: ReadonlyArray<IIngredient>
+}
+
+const Ingredients: FC<IIngredientsProps> = ({ ingredients }) => {
+  const { stuffing } = useSelector((store: any) => store.constructorReducer)
   const dispatch = useDispatch()
 
   const findIngredient = useCallback(
     (id) => {
-      const element = stuffing.filter((el) => el.constructorID === id)[0]
+      const element = stuffing.filter((el: IIngredient) => el.constructorID === id)[0]
       return {
         element,
         index: stuffing.indexOf(element),
@@ -118,7 +137,7 @@ const Ingredients = ({ ingredients }) => {
 
   return (
     <ul className={BurgerConstructorStyles.ingredients} ref={drop}>
-      {ingredients.map((el) => (
+      {ingredients.map((el: IIngredient) => (
         <ConstrucorElement
           element={el}
           key={el.constructorID}
@@ -130,19 +149,24 @@ const Ingredients = ({ ingredients }) => {
   )
 }
 
-const Order = ({ cost, ingredients }) => {
+interface IOrderProps {
+  cost: number
+  ingredients: ReadonlyArray<IIngredient>
+}
+
+const Order: FC<IOrderProps> = ({ cost, ingredients }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
-  const { isModalOpen, orderDetails } = useSelector((store) => store.constructorReducer)
-  const { orderPending } = useSelector((store) => store.commonReducer)
-  const { token } = useSelector((store) => store.registrationReducer)
-  const { authorized } = useSelector((store) => store.registrationReducer)
-  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
-  
+  const history = useHistory<History>()
+  const { isModalOpen, orderDetails } = useSelector((store: any) => store.constructorReducer)
+  const { orderPending } = useSelector((store: any) => store.commonReducer)
+  const { token } = useSelector((store: any) => store.registrationReducer)
+  const { authorized } = useSelector((store: any) => store.registrationReducer)
+  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
+
   const modalOpenHandler = useCallback(() => {
-    dispatch(postOrder({token, ingredients}))
+    dispatch(postOrder({ token, ingredients }))
   }, [dispatch, ingredients, token])
-  
+
   const modalCloseHandler = useCallback(() => dispatch(postOrderModal(false)), [dispatch])
 
   return (
@@ -155,7 +179,7 @@ const Order = ({ cost, ingredients }) => {
         type="primary"
         size="large"
         onClick={() => (authorized ? modalOpenHandler() : history.push('/login'))}
-        disabled={orderPending ? true : false}       
+        disabled={orderPending ? true : false}
       >
         Оформить заказ
       </Button>
@@ -166,7 +190,11 @@ const Order = ({ cost, ingredients }) => {
       ) : (
         isModalOpen && (
           <Modal onClose={modalCloseHandler}>
-            <OrderDetails orderNumber={orderDetails.order ? `${orderDetails.order.number}`.padStart(6, '0') : null} />
+            <OrderDetails
+              orderNumber={
+                orderDetails.order ? `${orderDetails.order.number}`.padStart(6, '0') : null
+              }
+            />
           </Modal>
         )
       )}
@@ -174,15 +202,15 @@ const Order = ({ cost, ingredients }) => {
   )
 }
 
-function BurgerConstructor() {
+const BurgerConstructor: FC = () => {
   const dispatch = useDispatch()
   const { stuffing, bun, price, constructorIngredients } = useSelector(
-    (store) => store.constructorReducer
+    (store: any) => store.constructorReducer
   )
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'ingredient',
-    drop(item) {
+    drop(item: IIngredient) {
       onDropHandler(item)
     },
     collect: (monitor) => ({
@@ -190,7 +218,7 @@ function BurgerConstructor() {
     }),
   }))
 
-  const onDropHandler = (item) => {
+  const onDropHandler = (item: IIngredient) => {
     dispatch(addToConstructor(item))
     dispatch(calculatePrice())
   }
@@ -240,21 +268,6 @@ function BurgerConstructor() {
       <Order ingredients={constructorIngredients} cost={price} />
     </section>
   )
-}
-
-Ingredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient).isRequired).isRequired,
-}
-
-ConstrucorElement.propTypes = {
-  element: PropTypes.object.isRequired,
-  moveIngredient: PropTypes.func.isRequired,
-  findIngredient: PropTypes.func.isRequired,
-}
-
-Order.propTypes = {
-  cost: PropTypes.number.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 }
 
 export default BurgerConstructor

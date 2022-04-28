@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types'
+import { FC } from 'react'
 import OrderDetailsStyles from './OrderDetails.module.css'
 import done from '../../../images/done.svg'
 
-function OrderDetails({ orderNumber }) {
+interface IOrderDetailsProps {
+  orderNumber: string | null
+}
+
+const OrderDetails: FC<IOrderDetailsProps> = ({ orderNumber }) => {
   return (
     <div className={OrderDetailsStyles.container}>
       <h2 className={'text text_type_digits-large pt-20 pb-8'}>{orderNumber}</h2>
@@ -16,10 +20,6 @@ function OrderDetails({ orderNumber }) {
       </p>
     </div>
   )
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.string,
 }
 
 export default OrderDetails

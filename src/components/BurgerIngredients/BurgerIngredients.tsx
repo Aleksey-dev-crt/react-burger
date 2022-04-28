@@ -1,15 +1,21 @@
-import { useRef } from 'react'
-import PropTypes from 'prop-types'
+import { useRef, FC } from 'react'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { typeOfIngredient } from '../../utils/types'
+import { IIngredient, ILocationState } from '../../utils/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategory } from '../../services/actions'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
 
-const Tabs = ({ currentCategory, bun, sauce, main }) => {
-  const setTab = (tab) => {
+interface ITabsProps {
+  currentCategory: string
+  bun: string
+  sauce: string
+  main: string
+}
+
+const Tabs: FC<ITabsProps> = ({ currentCategory, bun, sauce, main }) => {
+  const setTab = (tab: string) => {
     const element = document.getElementById(tab)
     if (element) element.scrollIntoView({ behavior: 'smooth' })
   }
@@ -29,14 +35,19 @@ const Tabs = ({ currentCategory, bun, sauce, main }) => {
   )
 }
 
-const Count = ({ show, children }) => {
-  if (show) {
-    return <Counter count={children} size="default" />
-  } else return null
+interface ICountProps {
+  children: number
 }
 
-const Ingredient = ({ ingredient }) => {
-  let location = useLocation()
+const Count: FC<ICountProps> = ({ children }) =>
+  children ? <Counter count={children} size="default" /> : null
+
+interface IIngredientProps {
+  ingredient: IIngredient
+}
+
+const Ingredient: FC<IIngredientProps> = ({ ingredient }) => {
+  let location = useLocation<ILocationState>()
 
   const [, drag] = useDrag(() => ({
     type: 'ingredient',
@@ -62,13 +73,19 @@ const Ingredient = ({ ingredient }) => {
         <p className="text text_type_main-default" style={{ textAlign: 'center' }}>
           {ingredient.name}
         </p>
-        <Count show={ingredient.count > 0}>{ingredient.count}</Count>
+        <Count>{ingredient.count}</Count>
       </Link>
     </>
   )
 }
 
-const IngredientsCategory = ({ ingredients, type, text }) => {
+interface IIngredientsCategoryProps {
+  ingredients: ReadonlyArray<IIngredient>
+  type: string
+  text: string
+}
+
+const IngredientsCategory: FC<IIngredientsCategoryProps> = ({ ingredients, type, text }) => {
   const category = ingredients.filter((el) => el.type === type)
 
   return (
@@ -83,12 +100,12 @@ const IngredientsCategory = ({ ingredients, type, text }) => {
   )
 }
 
-function BurgerIngredients() {
+const BurgerIngredients: FC = () => {
   const dispatch = useDispatch()
-  const { category } = useSelector((store) => store.ingredientsReducer)
-  const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
+  const { category } = useSelector((store: any) => store.ingredientsReducer)
+  const { modifyedIngredients } = useSelector((store: any) => store.constructorReducer)
 
-  const refContainer = useRef()
+  const refContainer = useRef<HTMLUListElement>(null)
 
   const categories = [
     { type: 'bun', name: 'Булки' },
@@ -97,14 +114,14 @@ function BurgerIngredients() {
   ]
 
   const onScroll = () => {
-    const bunCategory = document.querySelector('#bun')
-    const sauceCategory = document.querySelector('#sauce')
-    const mainCategory = document.querySelector('#main')
-    const scrollTop = refContainer.current.scrollTop
-    if (scrollTop <= bunCategory.offsetTop) dispatch(setCategory('bun'))
-    if (scrollTop >= sauceCategory.offsetTop - bunCategory.offsetTop - 50)
+    const bunCategory: HTMLElement | null = document.querySelector('#bun')
+    const sauceCategory: HTMLElement | null = document.querySelector('#sauce')
+    const mainCategory: HTMLElement | null = document.querySelector('#main')
+    const scrollTop = refContainer.current!.scrollTop
+    if (scrollTop <= bunCategory!.offsetTop) dispatch(setCategory('bun'))
+    if (scrollTop >= sauceCategory!.offsetTop - bunCategory!.offsetTop - 50)
       dispatch(setCategory('sauce'))
-    if (scrollTop >= mainCategory.offsetTop - bunCategory.offsetTop - 50)
+    if (scrollTop >= mainCategory!.offsetTop - bunCategory!.offsetTop - 50)
       dispatch(setCategory('main'))
   }
 
@@ -128,21 +145,6 @@ function BurgerIngredients() {
       </ul>
     </section>
   )
-}
-
-Ingredient.propTypes = {
-  ingredient: PropTypes.shape(typeOfIngredient),
-}
-
-Count.propTypes = {
-  show: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-}
-
-IngredientsCategory.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(typeOfIngredient).isRequired).isRequired,
-  type: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
 }
 
 export default BurgerIngredients

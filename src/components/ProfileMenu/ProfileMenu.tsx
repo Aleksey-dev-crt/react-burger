@@ -1,10 +1,11 @@
+import { FC } from 'react'
 import ProfileMenuStyles from './ProfileMenu.module.css'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { exit } from '../../services/actions'
 import { getCookie, deleteCookie } from '../../utils/cookies'
 
-export function ProfileMenu() {
+export const ProfileMenu: FC = () => {
   const dispatch = useDispatch()
 
   const refreshToken = getCookie('refreshToken')

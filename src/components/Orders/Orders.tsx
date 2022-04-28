@@ -1,19 +1,24 @@
-import PropTypes from 'prop-types'
+import { FC } from 'react'
 import OrdersStyles from './Orders.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
-import { typeOfOrder } from '../../utils/types'
+import { IIngredient, ILocationState, IOrder } from '../../utils/types'
 
-const Order = ({ order, historyOrders }) => {
-  const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
-  const location = useLocation()
+interface IOrderProps {
+  order: IOrder
+  historyOrders?: boolean
+}
+
+const Order: FC<IOrderProps> = ({ order, historyOrders }) => {
+  const { modifyedIngredients } = useSelector((store: any) => store.constructorReducer)
+  const location = useLocation<ILocationState>()
   const date = new Date(order.createdAt).toLocaleString()
-  const ingredients = []
-  let ingredientsPrice = 0
-  let path = '/feed'
+  const ingredients: Array<IIngredient> = []
+  let ingredientsPrice: number = 0
+  let path: string = '/feed'
   order.ingredients.forEach((element) => {
-    const ingredient = modifyedIngredients.find((el) => el._id === element)
+    const ingredient = modifyedIngredients.find((el: IIngredient) => el._id === element)
     if (ingredient) {
       ingredients.push(ingredient)
       ingredientsPrice += ingredient.price
@@ -48,7 +53,7 @@ const Order = ({ order, historyOrders }) => {
             className="text text_type_digits-small mt-2"
             style={{ color: order.status === 'done' ? '#00CCCC' : '#F2F2F3' }}
           >
-            {status[order.status]}
+            {(status as any)[order.status]}
           </p>
         ) : null}
       </div>
@@ -67,7 +72,12 @@ const Order = ({ order, historyOrders }) => {
   )
 }
 
-export function Orders({ orders, historyOrders }) {
+interface IOrdersProps {
+  orders: ReadonlyArray<IOrder>
+  historyOrders?: boolean
+}
+
+export const Orders: FC<IOrdersProps> = ({ orders, historyOrders }) => {
   return (
     <ul className={'mt-10 ' + OrdersStyles.ordersContainer}>
       {orders.map((el) => (
@@ -77,12 +87,3 @@ export function Orders({ orders, historyOrders }) {
   )
 }
 
-Orders.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.shape(typeOfOrder).isRequired).isRequired,
-  historyOrders: PropTypes.bool,
-}
-
-Order.propTypes = {
-  order: PropTypes.shape(typeOfOrder).isRequired,
-  historyOrders: PropTypes.bool,
-}

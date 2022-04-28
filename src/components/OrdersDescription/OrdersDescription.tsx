@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types'
+import { FC } from 'react'
 import OrdersDescriptionStyles from './OrdersDescription.module.css'
-import { typeOfOrder } from '../../utils/types'
+import { IOrdersInfo } from '../../utils/types'
 
-export function OrdersDescription({ ordersInfo }) {
+interface IOrdersDescriptionProps {
+  ordersInfo: IOrdersInfo
+}
+
+export const OrdersDescription: FC<IOrdersDescriptionProps> = ({ ordersInfo }) => {
   return (
     <div className={'mt-10 ' + OrdersDescriptionStyles.descriptionContainer}>
       <div className={OrdersDescriptionStyles.statuses}>
@@ -46,12 +50,4 @@ export function OrdersDescription({ ordersInfo }) {
       </div>
     </div>
   )
-}
-
-OrdersDescription.propTypes = {
-  ordersInfo: PropTypes.shape({
-    orders: PropTypes.arrayOf(PropTypes.shape(typeOfOrder).isRequired),
-    total: PropTypes.number.isRequired,
-    totalToday: PropTypes.number.isRequired
-  })
 }

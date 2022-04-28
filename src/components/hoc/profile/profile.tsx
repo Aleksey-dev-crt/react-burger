@@ -1,12 +1,16 @@
+import { FC, ReactNode } from 'react'
 import ProfileStyles from './profile.module.css'
 import Loader from '../../Auxiliary/Loader/Loader'
 import ModalOverlay from '../../Modals/ModalOverlay/ModalOverlay'
 import { useSelector } from 'react-redux'
 import { ProfileMenu } from '../../ProfileMenu/ProfileMenu'
 
+interface IProfileProps {
+  children: ReactNode
+}
 
-export function Profile({ children }) {
-  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
+export const Profile: FC<IProfileProps> = ({ children }) => {
+  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
 
   return (
     <section className={ProfileStyles.content}>

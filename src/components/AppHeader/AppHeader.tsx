@@ -1,12 +1,12 @@
-import AppHeaderStyles from './AppHeader.module.css';
-
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FC } from 'react'
+import AppHeaderStyles from './AppHeader.module.css'
+import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, Link } from 'react-router-dom'
 
-function AppHeader() {  
+const AppHeader: FC = () => {  
 
   return (
     <header className={AppHeaderStyles.header}>
@@ -15,14 +15,14 @@ function AppHeader() {
             className={AppHeaderStyles.nav__link} 
             activeClassName={AppHeaderStyles.nav__link_active}         
           >
-            <BurgerIcon  />
+            <BurgerIcon type={'primary'}  />
             <p className="pl-2 text text_type_main-default">Конструктор</p>
           </NavLink>
           <NavLink to='/feed'
             className={AppHeaderStyles.nav__link} 
             activeClassName={AppHeaderStyles.nav__link_active}           
           >
-            <ListIcon />
+            <ListIcon type={'primary'} />
             <p className="pl-2 text text_type_main-default">Лента заказов</p>
           </NavLink>
       </nav>
@@ -31,7 +31,7 @@ function AppHeader() {
         className={AppHeaderStyles.account} 
         activeClassName={AppHeaderStyles.nav__link_active}       
       >
-        <ProfileIcon />
+        <ProfileIcon type={'primary'} />
         <p className="pl-2 text text_type_main-default">Личный кабинет</p>
       </NavLink>
     </header>

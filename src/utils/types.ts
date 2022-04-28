@@ -1,31 +1,33 @@
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
+import { ReactNode } from 'react';
 
-export const typeOfIngredient = {
-  _id: PropTypes.string,
-  name: PropTypes.string,
-  type: PropTypes.string,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  calories: PropTypes.number,
-  price: PropTypes.number,
-  image: PropTypes.string,
-  image_mobile: PropTypes.string,
-  image_large: PropTypes.string,
-  __v: PropTypes.number,
-}
+// export const typeOfIngredient = {
+//   _id: PropTypes.string,
+//   name: PropTypes.string,
+//   type: PropTypes.string,
+//   proteins: PropTypes.number,
+//   fat: PropTypes.number,
+//   carbohydrates: PropTypes.number,
+//   calories: PropTypes.number,
+//   price: PropTypes.number,
+//   image: PropTypes.string,
+//   image_mobile: PropTypes.string,
+//   image_large: PropTypes.string,
+//   __v: PropTypes.number,
+// }
 
-export const typeOfOrder = {
-  createdAt: PropTypes.string,
-  ingredients: PropTypes.arrayOf(PropTypes.string),
-  name: PropTypes.string,
-  number: PropTypes.number,
-  status: PropTypes.string,
-  updatedAt: PropTypes.string,
-  _id: PropTypes.string,  
-}
+// export const typeOfOrder = {
+//   createdAt: PropTypes.string,
+//   ingredients: PropTypes.arrayOf(PropTypes.string),
+//   name: PropTypes.string,
+//   number: PropTypes.number,
+//   status: PropTypes.string,
+//   updatedAt: PropTypes.string,
+//   _id: PropTypes.string,  
+// }
 
 export interface ILocationState {
+  background?: ILocationState;
   from: {
     pathname: string;
   };
@@ -37,6 +39,11 @@ export interface IParams {
 
 export interface IModalDetailsProps {
   modal?: boolean,
+}
+
+export interface IModalProps {
+  onClose?: () => { type: string; payload: any; } | void
+  children: ReactNode
 }
 
 export interface IIngredient {
