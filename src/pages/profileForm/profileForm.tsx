@@ -36,7 +36,7 @@ export const ProfileForm: FC = () => {
     } else {
       if (refreshToken) dispatch(requestUserData(refreshToken))
     }
-  }, [dispatch, userData, refreshToken])
+  }, [dispatch, userData, refreshToken]) 
 
   const profileSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

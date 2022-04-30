@@ -19,21 +19,25 @@ import {
   getUserData,
   token,
   updateUserData,
+  TResetPassword,
+  TRegister,
+  TLogin,
 } from '../../utils/Api'
 import { setCookie } from '../../utils/cookies'
+import { ISaveUserData } from '../../utils/types'
 
-export const passwordChangeRequest = (payload) => {
-  return (dispatch) => {
+export const passwordChangeRequest = (payload: string) => {
+  return (dispatch: any) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     forgotPassword(payload)
-      .then((res) => dispatch({ type: FORGOT_PASSWORD, payload: res }))
+      .then((res): void => dispatch({ type: FORGOT_PASSWORD, payload: res }))
       .finally(() => dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: false }))
       .catch((err) => console.log(err))
   }
 }
 
-export const changePassword = (payload) => {
-  return (dispatch) => {
+export const changePassword = (payload: TResetPassword) => {
+  return (dispatch: any) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     resetPassword(payload)
       .then((res) => dispatch({ type: SET_NEW_PASSWORD, payload: res }))
@@ -42,8 +46,8 @@ export const changePassword = (payload) => {
   }
 }
 
-export const newUser = (payload) => {
-  return (dispatch) => {
+export const newUser = (payload: TRegister) => {
+  return (dispatch: any) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     register(payload)
       .then((res) => dispatch({ type: REGISTER_NEW_USER, payload: res }))
@@ -52,8 +56,8 @@ export const newUser = (payload) => {
   }
 }
 
-export const authorization = (payload) => {
-  return (dispatch) => {
+export const authorization = (payload: TLogin) => {
+  return (dispatch: any) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     login(payload)
       .then((res) => {
@@ -66,8 +70,8 @@ export const authorization = (payload) => {
   }
 }
 
-export const exit = (payload) => {
-  return (dispatch) => {
+export const exit = (payload: string) => {
+  return (dispatch: any) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     logout(payload)
       .then((res) => dispatch({ type: LOGOUT, payload: res }))
@@ -76,12 +80,12 @@ export const exit = (payload) => {
   }
 }
 
-export const requestUserData = (payload) => {
-  return (dispatch) => {
+export const requestUserData = (payload: string) => {
+  return (dispatch: any) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     token(payload)
       .then((res) => {
-        setCookie('refreshToken', res.refreshToken, { path: '/', expires: 1200 })
+        setCookie('refreshToken', res.refreshToken, { path: '/react-burger', expires: 1200 })
         setCookie('refreshToken', res.refreshToken, { path: '/profile', expires: 1200 })
         setCookie('refreshToken', res.refreshToken, { path: '/feed', expires: 1200 })
         dispatch({ type: GET_ACCESS_TOKEN, payload: res.accessToken })
@@ -94,8 +98,8 @@ export const requestUserData = (payload) => {
   }
 }
 
-export const saveUserData = (payload) => {
-  return (dispatch) => {
+export const saveUserData = (payload: ISaveUserData) => {
+  return (dispatch: any) => {
     dispatch({ type: SET_LOADER_WITH_OVERLAY, payload: true })
     token(payload.refreshToken)
       .then((res) => {

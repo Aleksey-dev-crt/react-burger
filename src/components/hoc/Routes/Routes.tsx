@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
 import { Profile } from '../profile/profile'
 import { useDispatch } from 'react-redux'
@@ -18,11 +18,18 @@ import {
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 import Modal from '../../Modals/Modal/Modal'
-import { ILocationState } from '../../../utils/types'
 
-export function Routes() {
+export const Routes: FC = () => {
+  type TBackground = {
+    hash: string
+    key: string
+    pathname: string
+    search: string
+    state: null
+  }
+
   const dispatch = useDispatch()
-  const location = useLocation<ILocationState>()
+  const location = useLocation<Location & {background: TBackground}>()
   const history = useHistory<History>()
   let background = location.state && location.state.background
 
@@ -38,7 +45,7 @@ export function Routes() {
 
   return (
     <>
-      <Switch>
+      <Switch location={background || location}>
         <Route path="/react-burger" exact={true}>
           <HomePage />
         </Route>

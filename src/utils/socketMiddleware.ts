@@ -1,8 +1,14 @@
-export const socketMiddleware = (wsUrl, wsActions) => {
-  return (store) => {
-    let socket = null
+export const socketMiddleware = (wsUrl: string, wsActions: any) => {
+  
+  type TAction = {
+    type: string
+    payload: any
+  }
 
-    return (next) => (action) => {
+  return (store: any) => {
+    let socket: WebSocket | null = null
+
+    return (next: (arg: TAction) => void) => (action: TAction) => {
       const { dispatch, getState } = store
       const { type, payload } = action
       const { wsInit, wsInitUser, wsSendMessage, onOpen, onClose, close, onError, onMessage } = wsActions
@@ -16,15 +22,15 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       }
 
       if (socket) {
-        socket.onopen = (event) => {
+        socket.onopen = (event: Event): void => {
           dispatch({ type: onOpen, payload: event })
         }
 
-        socket.onerror = (event) => {
+        socket.onerror = (event: Event): void => {
           dispatch({ type: onError, payload: event })
         }
 
-        socket.onmessage = (event) => {
+        socket.onmessage = (event: MessageEvent): void => {
           const { data } = event
           const parsedData = JSON.parse(data)
           const { success, ...restParsedData } = parsedData
@@ -32,7 +38,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           dispatch({ type: onMessage, payload: restParsedData })
         }
 
-        socket.onclose = (event) => {
+        socket.onclose = (event: CloseEvent): void => {
           dispatch({ type: onClose, payload: event })
         }
 

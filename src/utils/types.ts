@@ -80,3 +80,10 @@ export interface IOrder {
   _id: string
 }
 
+export interface ISaveUserData {
+  refreshToken: string
+  name: string 
+  login: string 
+  password: string 
+}
+

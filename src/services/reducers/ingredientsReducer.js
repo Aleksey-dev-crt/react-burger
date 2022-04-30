@@ -1,8 +1,7 @@
-import { SET_CATEGORY, GET_INGREDIENT_DETAILS } from '../actions/actionTypes'
+import { SET_CATEGORY } from '../actions/actionTypes'
 
 const initialState = {
   category: 'bun',
-  ingredientsDetails: {},
 }
 
 export default function ingredientsReducer(state = initialState, action) {
@@ -12,11 +11,7 @@ export default function ingredientsReducer(state = initialState, action) {
         ...state,
         category: action.payload,
       }
-    case GET_INGREDIENT_DETAILS:
-      return {
-        ...state,
-        ingredientsDetails: action.payload,
-      }
+  
     default:
       return state
   }
