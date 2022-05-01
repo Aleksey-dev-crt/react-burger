@@ -7,16 +7,16 @@ import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import ResetPasswordStyles from './resetPassword.module.css'
 import { Link, Redirect, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../utils/hooks'
 import { changePassword } from '../../services/actions'
-import { ILocationState } from '../../services/types/types'
+import { ILocation } from '../../services/types/types'
 
 export const ResetPassword: FC = () => {
   const dispatch = useDispatch()
-  const { authorized } = useSelector((store: any) => store.registrationReducer)
-  const { resetPassword } = useSelector((store: any) => store.registrationReducer)
-  const location = useLocation<ILocationState>()
-  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
+  const { authorized } = useSelector((store) => store.registrationReducer)
+  const { resetPassword } = useSelector((store) => store.registrationReducer)
+  const location = useLocation<ILocation>()
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [password, setPassword] = useState('')
   const [showPass, setshowPass] = useState<'password' | 'text'>('password')

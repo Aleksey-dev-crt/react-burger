@@ -74,7 +74,7 @@ export const modifyIngredients = (
 	payload,
 });
 
-export const requestIngredients = () => {
+export const requestIngredients: any = () => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithoutOverlay(true));
 		getIngredients()
@@ -94,7 +94,7 @@ export const addStuffing = (payload: IIngredient): IAddStuffing => ({
 	payload,
 });
 
-export const addToConstructor = (payload: IIngredient) => {
+export const addToConstructor: any = (payload: IIngredient) => {
 	return (dispatch: any) => {
 		if (payload.type === 'bun') dispatch(addBun(payload));
 		else dispatch(addStuffing(payload));
@@ -123,7 +123,7 @@ export const clearConstructor = (): IClearConstructor => ({
 	type: CLEAR_CONSTRUCTOR,
 });
 
-export const postOrder = (payload: {
+export const postOrder: any = (payload: {
 	token: string;
 	ingredients: ReadonlyArray<IIngredient>;
 }) => {

@@ -8,15 +8,15 @@ import LoginStyles from './login.module.css'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
-import { useDispatch, useSelector } from 'react-redux'
-import { ILocationState } from '../../services/types/types'
+import { useDispatch, useSelector } from '../../utils/hooks'
 import { authorization } from '../../services/actions'
+import { ILocation } from '../../services/types/types'
 
 export const Login: FC = () => {
   const dispatch = useDispatch()
-  const { authorized } = useSelector((store: any) => store.registrationReducer)
-  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
-  const location = useLocation<ILocationState>()
+  const { authorized } = useSelector((store) => store.registrationReducer)
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
+  const location = useLocation<ILocation>()
 
   const [email, setEmail] = useState('')
   const onChangeMail = (e: React.ChangeEvent<HTMLInputElement>) => {

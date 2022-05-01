@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import OrdersStyles from './Orders.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../utils/hooks'
 import { Link, useLocation } from 'react-router-dom'
-import { IIngredient, ILocationState, IOrder } from '../../services/types/types'
+import { IIngredient, ILocation, IOrder } from '../../services/types/types'
 
 interface IOrderProps {
   order: IOrder
@@ -11,8 +11,8 @@ interface IOrderProps {
 }
 
 const Order: FC<IOrderProps> = ({ order, historyOrders }) => {
-  const { modifyedIngredients } = useSelector((store: any) => store.constructorReducer)
-  const location = useLocation<ILocationState>()
+  const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
+  const location = useLocation<ILocation>()
   const date = new Date(order.createdAt).toLocaleString()
   const ingredients: Array<IIngredient> = []
   let ingredientsPrice: number = 0

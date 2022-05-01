@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../../utils/hooks'
 
 interface ICountProps {
   children: ReactNode
@@ -9,7 +9,7 @@ interface ICountProps {
 }
 
 export const ProtectedRoute: FC<ICountProps> = ({ children, ...rest }) => {
-  const { authorized } = useSelector((store: any) => store.registrationReducer)
+  const { authorized } = useSelector((store) => store.registrationReducer)
 
   return (
     <Route

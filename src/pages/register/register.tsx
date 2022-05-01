@@ -9,16 +9,16 @@ import RegisterStyles from './register.module.css'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { Link, useLocation, Redirect } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../utils/hooks'
 import { newUser } from '../../services/actions'
-import { ILocationState } from '../../services/types/types'
+import { ILocation } from '../../services/types/types'
 
 export const Register: FC = () => {
-  const { authorized } = useSelector((store: any) => store.registrationReducer)
-  const location = useLocation<ILocationState>()
+  const { authorized } = useSelector((store) => store.registrationReducer)
+  const location = useLocation<ILocation>()
 
   const dispatch = useDispatch()
-  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [name, setName] = useState('')
   const inputNameRef = useRef<HTMLInputElement>(null)

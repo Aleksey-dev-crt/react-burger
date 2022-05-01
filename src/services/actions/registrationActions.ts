@@ -143,7 +143,7 @@ export const updateUserDataAction = (payload: TResponseBody<"user", {
 	payload,
 });
 
-export const passwordChangeRequest = (payload: string) => {
+export const passwordChangeRequest: any = (payload: string) => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithOverlay(true));
 		forgotPassword(payload)
@@ -153,7 +153,7 @@ export const passwordChangeRequest = (payload: string) => {
 	};
 };
 
-export const changePassword = (payload: TResetPassword) => {
+export const changePassword: any = (payload: TResetPassword) => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithOverlay(true));
 		resetPassword(payload)
@@ -163,7 +163,7 @@ export const changePassword = (payload: TResetPassword) => {
 	};
 };
 
-export const newUser = (payload: TRegister) => {
+export const newUser: any = (payload: TRegister) => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithOverlay(true));
 		register(payload)
@@ -173,7 +173,7 @@ export const newUser = (payload: TRegister) => {
 	};
 };
 
-export const authorization = (payload: TLogin) => {
+export const authorization: any = (payload: TLogin) => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithOverlay(true));
 		login(payload)
@@ -187,7 +187,7 @@ export const authorization = (payload: TLogin) => {
 	};
 };
 
-export const exit = (payload: string) => {
+export const exit: any = (payload: string) => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithOverlay(true));
 		logout(payload)
@@ -197,7 +197,7 @@ export const exit = (payload: string) => {
 	};
 };
 
-export const requestUserData = (payload: string) => {
+export const requestUserData: any = (payload: string) => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithOverlay(true));
 		token(payload)
@@ -224,7 +224,7 @@ export const requestUserData = (payload: string) => {
 	};
 };
 
-export const saveUserData = (payload: ISaveUserData) => {
+export const saveUserData: any = (payload: ISaveUserData) => {
 	return (dispatch: any) => {
 		dispatch(setLoaderWithOverlay(true));
 		token(payload.refreshToken)

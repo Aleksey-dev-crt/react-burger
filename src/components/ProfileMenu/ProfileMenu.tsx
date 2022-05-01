@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import ProfileMenuStyles from './ProfileMenu.module.css'
 import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../utils/hooks'
 import { exit } from '../../services/actions'
 import { getCookie, deleteCookie } from '../../utils/cookies'
 

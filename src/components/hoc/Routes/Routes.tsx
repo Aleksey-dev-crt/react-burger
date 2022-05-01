@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
 import { Profile } from '../profile/profile'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../../utils/hooks'
 import { requestIngredients, requestUserData } from '../../../services/actions'
 import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom'
 import {
@@ -18,6 +18,7 @@ import {
 } from '../../../pages'
 import { getCookie } from '../../../utils/cookies'
 import Modal from '../../Modals/Modal/Modal'
+import { ILocation } from '../../../services/types/types'
 
 export const Routes: FC = () => {
   type TBackground = {
@@ -29,7 +30,7 @@ export const Routes: FC = () => {
   }
 
   const dispatch = useDispatch()
-  const location = useLocation<Location & {background: TBackground}>()
+  const location = useLocation<ILocation & {background: TBackground}>()
   const history = useHistory<History>()
   let background = location.state && location.state.background
 

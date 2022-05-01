@@ -12,7 +12,7 @@ import OrderDetails from '../Modals/OrderDetails/OrderDetails'
 import { IIngredient } from '../../services/types/types'
 import Loader from '../Auxiliary/Loader/Loader'
 import ModalOverlay from '../Modals/ModalOverlay/ModalOverlay'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from '../../utils/hooks'
 import { useHistory } from 'react-router-dom'
 import { useDrag, useDrop } from 'react-dnd'
 import {
@@ -103,7 +103,7 @@ interface IIngredientsProps {
 }
 
 const Ingredients: FC<IIngredientsProps> = ({ ingredients }) => {
-  const { stuffing } = useSelector((store: any) => store.constructorReducer)
+  const { stuffing } = useSelector((store) => store.constructorReducer)
   const dispatch = useDispatch()
 
   const findIngredient = useCallback(
@@ -157,11 +157,10 @@ interface IOrderProps {
 const Order: FC<IOrderProps> = ({ cost, ingredients }) => {
   const dispatch = useDispatch()
   const history = useHistory<History>()
-  const { isModalOpen, orderDetails } = useSelector((store: any) => store.constructorReducer)
-  const { orderPending } = useSelector((store: any) => store.commonReducer)
-  const { token } = useSelector((store: any) => store.registrationReducer)
-  const { authorized } = useSelector((store: any) => store.registrationReducer)
-  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
+  const { isModalOpen, orderDetails } = useSelector((store) => store.constructorReducer)
+  const { orderPending } = useSelector((store) => store.commonReducer)
+  const { token, authorized } = useSelector((store) => store.registrationReducer)
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const modalOpenHandler = useCallback(() => {
     dispatch(postOrder({ token, ingredients }))
@@ -205,7 +204,7 @@ const Order: FC<IOrderProps> = ({ cost, ingredients }) => {
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch()
   const { stuffing, bun, price, constructorIngredients } = useSelector(
-    (store: any) => store.constructorReducer
+    (store) => store.constructorReducer
   )
 
   const [{ isOver }, drop] = useDrop(() => ({

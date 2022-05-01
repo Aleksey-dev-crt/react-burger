@@ -1,4 +1,6 @@
-export const socketMiddleware = (wsUrl: string, wsActions: any) => {
+import { TwsActions } from '../services/store'
+
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActions) => {
   
   type TAction = {
     type: string

@@ -1,8 +1,8 @@
 import { useRef, FC } from 'react'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IIngredient, ILocationState } from '../../services/types/types'
-import { useSelector, useDispatch } from 'react-redux'
+import { IIngredient } from '../../services/types/types'
+import { useSelector, useDispatch } from '../../utils/hooks'
 import { setCategory } from '../../services/actions'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
@@ -47,7 +47,7 @@ interface IIngredientProps {
 }
 
 const Ingredient: FC<IIngredientProps> = ({ ingredient }) => {
-  let location = useLocation<ILocationState>()
+  let location = useLocation<Location>()
 
   const [, drag] = useDrag(() => ({
     type: 'ingredient',
@@ -102,8 +102,8 @@ const IngredientsCategory: FC<IIngredientsCategoryProps> = ({ ingredients, type,
 
 const BurgerIngredients: FC = () => {
   const dispatch = useDispatch()
-  const { category } = useSelector((store: any) => store.ingredientsReducer)
-  const { modifyedIngredients } = useSelector((store: any) => store.constructorReducer)
+  const { category } = useSelector((store) => store.ingredientsReducer)
+  const { modifyedIngredients } = useSelector((store) => store.constructorReducer)
 
   const refContainer = useRef<HTMLUListElement>(null)
 

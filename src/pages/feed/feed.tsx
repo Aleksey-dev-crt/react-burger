@@ -1,7 +1,7 @@
 import FeedStyles from './feed.module.css'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import { useEffect, FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../utils/hooks'
 import { Orders } from '../../components/Orders/Orders'
 import { IOrdersInfo } from '../../services/types/types'
 import { OrdersDescription } from '../../components/OrdersDescription/OrdersDescription'
@@ -20,7 +20,7 @@ export const Feed: FC = () => {
     }
   }, [dispatch])
 
-  const { messages } = useSelector((store: any) => store.wsReducer)
+  const { messages } = useSelector((store) => store.wsReducer)
 
   let ordersInfo: IOrdersInfo = { orders: [], total: 0, totalToday: 0 }
   if (messages.orders) {

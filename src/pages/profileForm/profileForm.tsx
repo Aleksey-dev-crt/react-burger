@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, FC } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import ProfileFormStyles from './profileForm.module.css'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../utils/hooks'
 import { requestUserData, saveUserData } from '../../services/actions'
 import { getCookie } from '../../utils/cookies'
 
 export const ProfileForm: FC = () => {
   const dispatch = useDispatch()
-  const { userData } = useSelector((store: any) => store.registrationReducer)
+  const { userData } = useSelector((store) => store.registrationReducer)
 
   const [name, setName] = useState('')
   const inputNameRef = useRef<HTMLInputElement>(null)

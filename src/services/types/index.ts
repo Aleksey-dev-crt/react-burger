@@ -7,9 +7,9 @@ import { TwsState } from '../reducers/wsReducer';
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = {
-	common: TCommonState;
-	ingredients: TIngredientsState;
-	constructor: TConstructorState;
-	registration: TRegistrationState;
-	webSockets: TwsState;
+	commonReducer: TCommonState;
+	ingredientsReducer: TIngredientsState;
+	constructorReducer: TConstructorState;
+	registrationReducer: TRegistrationState;
+	wsReducer: TwsState;
 };

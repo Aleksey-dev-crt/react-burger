@@ -5,15 +5,20 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
 } from '../actions/actionTypes'
+import { IOrdersInfo } from '../types/types'
 
 export type TwsState = {
   wsConnected: boolean
-  messages: {}
+  messages: IOrdersInfo
 }
 
 const initialState = {
   wsConnected: false,
-  messages: {},
+  messages: {
+    orders: [],
+    total: 0,
+    totalToday: 0
+  }
 }
 
 export const wsReducer = (state: TwsState = initialState, action: TwsActions) => {

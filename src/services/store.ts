@@ -15,6 +15,17 @@ import thunk from 'redux-thunk'
 
 const wsUrl = "wss://norma.nomoreparties.space/orders"
 
+export type TwsActions = {
+  wsInit: 'WS_CONNECTION_START'
+  wsInitUser: 'WS_CONNECTION_USER_START'
+  wsSendMessage: 'WS_SEND_MESSAGE'
+  onOpen: 'WS_CONNECTION_SUCCESS'
+  onClose: 'WS_CONNECTION_CLOSED'
+  close: 'WS_CONNECTION_CLOSE'
+  onError: 'WS_CONNECTION_ERROR'
+  onMessage: 'WS_GET_MESSAGE'
+}
+
 const wsActions = {
   wsInit: WS_CONNECTION_START,
   wsInitUser: WS_CONNECTION_USER_START,

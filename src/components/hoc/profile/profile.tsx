@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react'
 import ProfileStyles from './profile.module.css'
 import Loader from '../../Auxiliary/Loader/Loader'
 import ModalOverlay from '../../Modals/ModalOverlay/ModalOverlay'
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../../utils/hooks'
 import { ProfileMenu } from '../../ProfileMenu/ProfileMenu'
 
 interface IProfileProps {
@@ -10,7 +10,7 @@ interface IProfileProps {
 }
 
 export const Profile: FC<IProfileProps> = ({ children }) => {
-  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   return (
     <section className={ProfileStyles.content}>

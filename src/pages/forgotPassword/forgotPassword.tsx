@@ -2,18 +2,17 @@ import { useState, useRef, FC } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import ForgotPasswordStyles from './forgotPassword.module.css'
 import { Link, Redirect, useLocation } from 'react-router-dom'
-import { ILocationState } from '../../services/types/types'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../utils/hooks'
 import { passwordChangeRequest } from '../../services/actions'
+import { ILocation } from '../../services/types/types'
 
 export const ForgotPassword: FC = () => { 
   const dispatch = useDispatch()
-  const { resetPassword } = useSelector((store: any) => store.registrationReducer)
-  const { authorized } = useSelector((store: any) => store.registrationReducer)
-  const location = useLocation<ILocationState>()
-  const loading = useSelector((store: any) => store.commonReducer.loadingWithOverlay)
+  const { resetPassword, authorized } = useSelector((store) => store.registrationReducer)
+  const location = useLocation<ILocation>()
+  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [email, setEmail] = useState('')
   const inputEmailRef = useRef<HTMLInputElement>(null)
@@ -25,7 +24,7 @@ export const ForgotPassword: FC = () => {
   }
 
   if (resetPassword.success) return <Redirect to="/reset-password" />
-   if (authorized) return <Redirect to={location.state ? location.state.from : '/react-burger'} />
+  if (authorized) return <Redirect to={location.state ? location.state.from : '/react-burger'} />
 
   return (
     <section className={ForgotPasswordStyles.content}>

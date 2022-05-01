@@ -11,21 +11,51 @@ import {
 } from '../actions/actionTypes';
 
 export type TRegistrationState = {
-  resetPassword: string
-	setNewPassword: string
-	registeredUser: { email: string, name: string }
-	authorizedUser: { email: string, name: string }
-	userData: { email: string, name: string }
-	token: string
-	authorized: boolean
-}
+	resetPassword: {
+		message: string;
+		success: boolean;
+	};
+	setNewPassword: {
+		message: string;
+		success: boolean;
+	};
+	registeredUser: {
+		user: { email: string; name: string };
+		success: boolean;
+	};
+	authorizedUser: {
+		user: { email: string; name: string };
+		success: boolean;
+	};
+	userData: {
+		user: { email: string; name: string };
+		success: boolean;
+	};
+	token: string;
+	authorized: boolean;
+};
 
 const initialState = {
-	resetPassword: '',
-	setNewPassword: '',
-	registeredUser: { email: '', name: '' },
-	authorizedUser: { email: '', name: '' },
-	userData: { email: '', name: '' },
+	resetPassword: {
+		message: '',
+		success: false,
+	},
+	setNewPassword: {
+		message: '',
+		success: false,
+	},
+	registeredUser: {
+		user: { email: 'string', name: '' },
+		success: false,
+	},
+	authorizedUser: {
+		user: { email: 'string', name: '' },
+		success: false,
+	},
+	userData: {
+		user: { email: 'string', name: '' },
+		success: false,
+	},
 	token: '',
 	authorized: false,
 };
