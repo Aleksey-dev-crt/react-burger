@@ -1,16 +1,22 @@
+import { TwsActions } from '../actions'
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
-} from '../actions/wsActionTypes'
+} from '../actions/actionTypes'
+
+export type TwsState = {
+  wsConnected: boolean
+  messages: {}
+}
 
 const initialState = {
   wsConnected: false,
   messages: {},
 }
 
-export default function wsReducer(state = initialState, action) {
+export const wsReducer = (state: TwsState = initialState, action: TwsActions) => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

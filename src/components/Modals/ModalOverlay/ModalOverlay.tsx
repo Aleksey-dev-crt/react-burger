@@ -1,5 +1,5 @@
 import { FC, SyntheticEvent } from 'react'
-import { IModalProps } from '../../../utils/types'
+import { IModalProps } from '../../../services/types/types'
 import ModalOverlayStyles from './ModalOverlay.module.css'
 
 const ModalOverlay: FC<IModalProps> = ({ onClose, children }) => {

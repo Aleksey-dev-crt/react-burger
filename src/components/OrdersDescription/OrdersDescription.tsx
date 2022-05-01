@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import OrdersDescriptionStyles from './OrdersDescription.module.css'
-import { IOrdersInfo } from '../../utils/types'
+import { IOrdersInfo } from '../../services/types/types'
 
 interface IOrdersDescriptionProps {
   ordersInfo: IOrdersInfo

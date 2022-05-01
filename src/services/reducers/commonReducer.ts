@@ -1,5 +1,11 @@
 import { SET_LOADER_WITHOUT_OVERLAY, SET_LOADER_WITH_OVERLAY, SET_ORDER_PENDING } from '../actions/actionTypes'
+import { TCommonActions } from '../actions/commonActions'
 
+export type TCommonState = {
+  loadingWithoutOverlay: boolean
+  loadingWithOverlay: boolean
+  orderPending: boolean
+}
 
 const initialState = {
   loadingWithoutOverlay: false,
@@ -7,7 +13,7 @@ const initialState = {
   orderPending: false,
 }
 
-export default function commonReducer(state = initialState, action) {
+export const commonReducer = (state: TCommonState = initialState, action: TCommonActions) => {
   switch (action.type) {    
      case SET_LOADER_WITHOUT_OVERLAY:
       return {

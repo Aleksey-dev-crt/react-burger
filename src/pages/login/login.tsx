@@ -9,7 +9,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom'
 import Loader from '../../components/Auxiliary/Loader/Loader'
 import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { useDispatch, useSelector } from 'react-redux'
-import { ILocationState } from '../../utils/types'
+import { ILocationState } from '../../services/types/types'
 import { authorization } from '../../services/actions'
 
 export const Login: FC = () => {

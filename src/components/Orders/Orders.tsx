@@ -3,7 +3,7 @@ import OrdersStyles from './Orders.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
-import { IIngredient, ILocationState, IOrder } from '../../utils/types'
+import { IIngredient, ILocationState, IOrder } from '../../services/types/types'
 
 interface IOrderProps {
   order: IOrder

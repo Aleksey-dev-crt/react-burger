@@ -1,7 +1,7 @@
 import { useRef, FC } from 'react'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IIngredient, ILocationState } from '../../utils/types'
+import { IIngredient, ILocationState } from '../../services/types/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategory } from '../../services/actions'
 import { useDrag } from 'react-dnd'

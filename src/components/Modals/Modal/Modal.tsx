@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import ModalStyles from './Modal.module.css'
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IModalProps } from '../../../utils/types'
+import { IModalProps } from '../../../services/types/types'
 
 const Modal: FC<IModalProps> = ({ onClose, children }) => {
   //const modal = document.createElement('div')

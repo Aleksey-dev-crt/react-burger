@@ -2,7 +2,7 @@ import { FC } from 'react'
 import IngredientDetailsStyles from './ingredientDetails.module.css'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { IIngredient, IParams, IModalDetailsProps } from '../../utils/types'
+import { IIngredient, IParams, IModalDetailsProps } from '../../services/types/types'
 
 interface IDescriptionItemProps {
   description: string,

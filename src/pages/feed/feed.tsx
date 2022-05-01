@@ -3,7 +3,7 @@ import Loader from '../../components/Auxiliary/Loader/Loader'
 import { useEffect, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Orders } from '../../components/Orders/Orders'
-import { IOrdersInfo } from '../../utils/types'
+import { IOrdersInfo } from '../../services/types/types'
 import { OrdersDescription } from '../../components/OrdersDescription/OrdersDescription'
 import {
   wsConnectionOpen,

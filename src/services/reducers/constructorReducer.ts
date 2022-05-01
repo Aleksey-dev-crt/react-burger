@@ -1,3 +1,5 @@
+import { IIngredient, IOrder } from '../types/types'
+import { TConstructorActions } from '../actions'
 import {
   ADD_STUFFING,
   ADD_BUN,
@@ -10,17 +12,51 @@ import {
   MODIFY_INGREDIENTS,
 } from '../actions/actionTypes'
 
-const initialState = {
+export type TConstructorState = {
+  stuffing: ReadonlyArray<IIngredient>
+  bun: IIngredient
+  modifyedIngredients: ReadonlyArray<IIngredient> 
+  constructorIngredients: ReadonlyArray<IIngredient> 
+  price: number
+  isModalOpen: boolean
+  orderDetails: IOrder
+}
+
+const initialState: TConstructorState = {
   stuffing: [],
-  bun: {},
+  bun: {
+    calories: 0,
+    carbohydrates: 0,
+    constructorID: '',
+    count: 0,
+    fat: 0,
+    image: '',
+    image_large: '',
+    image_mobile: '',
+    name: '',
+    price: 0,
+    proteins: 0,
+    type: '',
+    __v: 0,
+    _id: '',
+    orderCount: 0,
+  },
   modifyedIngredients: [],
   constructorIngredients: [],
   price: 0,
   isModalOpen: false,
-  orderDetails: {},
+  orderDetails: {
+    createdAt: '',
+    ingredients: [],
+    name: '',
+    number: 0,
+    status: '',
+    updatedAt: '',
+    _id: ''
+  },
 }
 
-export default function constructorReducer(state = initialState, action) {
+export const constructorReducer = (state: TConstructorState = initialState, action: TConstructorActions) => {
   switch (action.type) {   
     case MODIFY_INGREDIENTS:
       return {

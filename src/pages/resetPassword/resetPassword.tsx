@@ -9,7 +9,7 @@ import ResetPasswordStyles from './resetPassword.module.css'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { changePassword } from '../../services/actions'
-import { ILocationState } from '../../utils/types'
+import { ILocationState } from '../../services/types/types'
 
 export const ResetPassword: FC = () => {
   const dispatch = useDispatch()

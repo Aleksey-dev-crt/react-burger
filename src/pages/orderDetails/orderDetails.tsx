@@ -4,7 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useParams, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, FC } from 'react'
-import { IIngredient, IParams, IModalDetailsProps, ILocationState, IOrder } from '../../utils/types'
+import { IIngredient, IParams, IModalDetailsProps, ILocationState, IOrder } from '../../services/types/types'
 import {
   wsConnectionOpen,
   wsConnectionAuthOpen,

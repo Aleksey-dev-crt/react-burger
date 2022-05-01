@@ -11,7 +11,7 @@ import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { Link, useLocation, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { newUser } from '../../services/actions'
-import { ILocationState } from '../../utils/types'
+import { ILocationState } from '../../services/types/types'
 
 export const Register: FC = () => {
   const { authorized } = useSelector((store: any) => store.registrationReducer)

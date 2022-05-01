@@ -1,4 +1,4 @@
-import { IIngredient, IOrder } from "./types"
+import { IIngredient, IOrder } from "../services/types/types"
 
 const configAPI = {
   baseUrl: 'https://norma.nomoreparties.space/api',
@@ -20,18 +20,6 @@ export type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
 export interface CustomBody<T extends any> extends Body {
   json(): Promise<T>;
 }
-
-// interface CustomResponse<T> extends CustomBody<T> {
-//   readonly headers: Headers;
-//   readonly ok: boolean;
-//   readonly redirected: boolean;
-//   readonly status: number;
-//   readonly statusText: string;
-//   readonly trailer: Promise<Headers>;
-//   readonly type: ResponseType;
-//   readonly url: string;
-//   clone(): Response;
-// }
 
 const checkResponse = (res: Response): Promise<any> => {
   if (res.ok) {

@@ -2,7 +2,7 @@ import { useEffect, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import HistoryOrdersStyles from './historyOrders.module.css'
 import { Orders } from '../../components/Orders/Orders'
-import { IOrdersInfo } from '../../utils/types'
+import { IOrdersInfo } from '../../services/types/types'
 import { wsConnectionAuthOpen, wsConnectionClose } from '../../services/actions/wsActions'
 
 export const HistoryOrders: FC = () => {
