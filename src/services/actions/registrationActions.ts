@@ -8,7 +8,6 @@ import {
 	UPDATE_USER_DATA,
 	GET_ACCESS_TOKEN,
 } from './actionTypes';
-
 import {
 	register,
 	forgotPassword,
@@ -26,6 +25,9 @@ import {
 import { setCookie } from '../../utils/cookies';
 import { ISaveUserData } from '../types/types';
 import { setLoaderWithOverlay } from './commonActions';
+import { AppActions, AppDispatch, RootState } from '../types';
+import { Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 
 export interface IForgotPasswordAction {
 	readonly type: typeof FORGOT_PASSWORD;
@@ -179,8 +181,10 @@ export const updateUserDataAction = (
 	payload,
 });
 
-export const passwordChangeRequest: any = (payload: string) => {
-	return (dispatch: any) => {
+export const passwordChangeRequest: ActionCreator<
+	ThunkAction<void, RootState, unknown, AppActions>
+> = (payload: string) => {
+	return (dispatch) => {
 		dispatch(setLoaderWithOverlay(true));
 		forgotPassword(payload)
 			.then((res) => dispatch(forgotPasswordAction(res)))
@@ -190,7 +194,7 @@ export const passwordChangeRequest: any = (payload: string) => {
 };
 
 export const changePassword: any = (payload: TResetPassword) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setLoaderWithOverlay(true));
 		resetPassword(payload)
 			.then((res) => dispatch(setNewPassword(res)))
@@ -200,7 +204,7 @@ export const changePassword: any = (payload: TResetPassword) => {
 };
 
 export const newUser: any = (payload: TRegister) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setLoaderWithOverlay(true));
 		register(payload)
 			.then((res) => dispatch(registerNewUser(res)))
@@ -210,7 +214,7 @@ export const newUser: any = (payload: TRegister) => {
 };
 
 export const authorization: any = (payload: TLogin) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setLoaderWithOverlay(true));
 		login(payload)
 			.then((res) => {
@@ -224,7 +228,7 @@ export const authorization: any = (payload: TLogin) => {
 };
 
 export const exit: any = (payload: string) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setLoaderWithOverlay(true));
 		logout(payload)
 			.then((res) => dispatch(logoutAction(res)))
@@ -234,7 +238,7 @@ export const exit: any = (payload: string) => {
 };
 
 export const requestUserData: any = (payload: string) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setLoaderWithOverlay(true));
 		token(payload)
 			.then((res) => {
@@ -261,7 +265,7 @@ export const requestUserData: any = (payload: string) => {
 };
 
 export const saveUserData: any = (payload: ISaveUserData) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setLoaderWithOverlay(true));
 		token(payload.refreshToken)
 			.then((res) => {

@@ -12,6 +12,7 @@ import {
 import { getIngredients, placeOrder, TResponseBody } from '../../utils/Api';
 import { IIngredient, IOrder } from '../types/types';
 import { setLoaderWithoutOverlay, setOrderPending } from './commonActions';
+import { AppDispatch } from '../types';
 
 export interface IModifyIngredients {
 	readonly type: typeof MODIFY_INGREDIENTS;
@@ -75,10 +76,10 @@ export const modifyIngredients = (
 });
 
 export const requestIngredients: any = () => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setLoaderWithoutOverlay(true));
 		getIngredients()
-			.then((res): void => dispatch(modifyIngredients(res.data)))
+			.then((res) => dispatch(modifyIngredients(res.data)))
 			.finally(() => dispatch(setLoaderWithoutOverlay(false)))
 			.catch((err) => console.log(err));
 	};
@@ -95,7 +96,7 @@ export const addStuffing = (payload: IIngredient): IAddStuffing => ({
 });
 
 export const addToConstructor: any = (payload: IIngredient) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		if (payload.type === 'bun') dispatch(addBun(payload));
 		else dispatch(addStuffing(payload));
 	};
@@ -127,7 +128,7 @@ export const postOrder: any = (payload: {
 	token: string;
 	ingredients: ReadonlyArray<IIngredient>;
 }) => {
-	return (dispatch: any) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(setOrderPending(true));
 		placeOrder(payload)
 			.then((res) => dispatch(postOrderAction(res)))
