@@ -1,7 +1,6 @@
 import { TwsActions } from '../services/store'
 
-export const socketMiddleware = (wsUrl: string, wsActions: TwsActions) => {
-  
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActions) => {  
   type TAction = {
     type: string
     payload: any
@@ -19,6 +18,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TwsActions) => {
       if (type === wsInit) {
         socket = new WebSocket(`${wsUrl}/all`)
       }
+      
       if (type === wsInitUser && token) {
         socket = new WebSocket(`${wsUrl}?token=${token.split(' ')[1]}`)
       }

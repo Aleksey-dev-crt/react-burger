@@ -15,7 +15,7 @@ import { ILocation } from '../../services/types/types'
 export const Login: FC = () => {
   const dispatch = useDispatch()
   const { authorized } = useSelector((store) => store.registrationReducer)
-  const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
+  const loading = useSelector((store) => store.commonReducer.loadingWithoutOverlay)
   const location = useLocation<ILocation>()
 
   const [email, setEmail] = useState('')
@@ -34,7 +34,6 @@ export const Login: FC = () => {
     setEmail('')
     setPassword('')
   }
-
   if (authorized) return <Redirect to={location.state ? location.state.from : '/react-burger'} />
 
   return (

@@ -1,15 +1,26 @@
-import { FC } from 'react'
-import AppHeader from '../AppHeader/AppHeader'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { Routes } from '../hoc/Routes/Routes'
+import { FC, useEffect } from 'react';
+import AppHeader from '../AppHeader/AppHeader';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Routes } from '../hoc/Routes/Routes';
+import { useDispatch } from '../../utils/hooks';
+import { getCookie } from '../../utils/cookies';
+import { requestUserData, requestIngredients } from '../../services/actions';
 
 const App: FC = () => {
-  return (
-    <Router>
-      <AppHeader />
-      <Routes />
-    </Router>
-  )
-}
+	const dispatch = useDispatch();
 
-export default App
+	useEffect(() => {
+		dispatch(requestIngredients());
+		const refreshToken = getCookie('refreshToken');
+		if (refreshToken) dispatch(requestUserData(refreshToken));
+	}, [dispatch]);
+
+	return (
+		<Router>
+			<AppHeader />
+			<Routes />
+		</Router>
+	);
+};
+
+export default App;

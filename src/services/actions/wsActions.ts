@@ -1,3 +1,4 @@
+import { IOrdersInfo } from '../types/types';
 import {
 	WS_CONNECTION_SUCCESS,
 	WS_CONNECTION_ERROR,
@@ -77,7 +78,7 @@ export const wsConnectionClosed = (): IwsConnectionClosed => ({
 	type: WS_CONNECTION_CLOSED,
 });
 
-export const wsGetMessage = (message: any): IwsGetMessage => ({
+export const wsGetMessage = (message: IOrdersInfo): IwsGetMessage => ({
 	type: WS_GET_MESSAGE,
 	payload: message,
 });

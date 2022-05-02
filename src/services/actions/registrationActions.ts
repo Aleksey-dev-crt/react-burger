@@ -29,20 +29,23 @@ import { setLoaderWithOverlay } from './commonActions';
 
 export interface IForgotPasswordAction {
 	readonly type: typeof FORGOT_PASSWORD;
-	readonly payload: TResponseBody<"message", string>;
+	readonly payload: TResponseBody<'message', string>;
 }
 
 export interface ISetNewPassword {
 	readonly type: typeof SET_NEW_PASSWORD;
-	readonly payload: TResponseBody<"message", string>;
+	readonly payload: TResponseBody<'message', string>;
 }
 
 export interface IRegisterNewUser {
 	readonly type: typeof REGISTER_NEW_USER;
-	readonly payload: TResponseBody<"user", {
-		email: string;
-		name: string;
-	}>;
+	readonly payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>;
 }
 
 export interface IGetAccessToken {
@@ -52,31 +55,40 @@ export interface IGetAccessToken {
 
 export interface IGetUserDataAction {
 	readonly type: typeof GET_USER_DATA;
-	readonly payload: TResponseBody<"user", {
-		email: string;
-		name: string;
-	}>;
+	readonly payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>;
 }
 
 export interface ILoginAction {
 	readonly type: typeof LOGIN;
-	readonly payload: TResponseBody<"user", {
-		email: string;
-		name: string;
-	}>;
+	readonly payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>;
 }
 
 export interface ILogoutAction {
 	readonly type: typeof LOGOUT;
-	readonly payload: TResponseBody<"message", string>;
+	readonly payload: TResponseBody<'message', string>;
 }
 
 export interface IUpdateUserDataAction {
 	readonly type: typeof UPDATE_USER_DATA;
-	readonly payload: TResponseBody<"user", {
-		email: string;
-		name: string;
-	}>;
+	readonly payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>;
 }
 
 export type TRegistrationActions =
@@ -90,21 +102,28 @@ export type TRegistrationActions =
 	| ISetNewPassword;
 
 export const forgotPasswordAction = (
-	payload: TResponseBody<"message", string>
+	payload: TResponseBody<'message', string>
 ): IForgotPasswordAction => ({
 	type: FORGOT_PASSWORD,
 	payload,
 });
 
-export const setNewPassword = (payload: TResponseBody<"message", string>): ISetNewPassword => ({
+export const setNewPassword = (
+	payload: TResponseBody<'message', string>
+): ISetNewPassword => ({
 	type: SET_NEW_PASSWORD,
 	payload,
 });
 
-export const registerNewUser = (payload: TResponseBody<"user", {
-    email: string;
-    name: string;
-}>): IRegisterNewUser => ({
+export const registerNewUser = (
+	payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>
+): IRegisterNewUser => ({
 	type: REGISTER_NEW_USER,
 	payload,
 });
@@ -114,31 +133,48 @@ export const getAccessToken = (payload: string): IGetAccessToken => ({
 	payload,
 });
 
-export const getUserDataAction = (payload: TResponseBody<"user", {
-    email: string;
-    name: string;
-}>): IGetUserDataAction => ({
+export const getUserDataAction = (
+	payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>
+): IGetUserDataAction => ({
 	type: GET_USER_DATA,
 	payload,
 });
 
-export const loginAction = (payload: TResponseBody<"user", {
-    email: string;
-    name: string;
-}>): ILoginAction => ({
+export const loginAction = (
+	payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>
+): ILoginAction => ({
 	type: LOGIN,
 	payload,
 });
 
-export const logoutAction = (payload: TResponseBody<"message", string>): ILogoutAction => ({
+export const logoutAction = (
+	payload: TResponseBody<'message', string>
+): ILogoutAction => ({
 	type: LOGOUT,
 	payload,
 });
 
-export const updateUserDataAction = (payload: TResponseBody<"user", {
-    email: string;
-    name: string;
-}>): IUpdateUserDataAction => ({
+export const updateUserDataAction = (
+	payload: TResponseBody<
+		'user',
+		{
+			email: string;
+			name: string;
+		}
+	>
+): IUpdateUserDataAction => ({
 	type: UPDATE_USER_DATA,
 	payload,
 });
@@ -229,7 +265,10 @@ export const saveUserData: any = (payload: ISaveUserData) => {
 		dispatch(setLoaderWithOverlay(true));
 		token(payload.refreshToken)
 			.then((res) => {
-				setCookie('refreshToken', res.refreshToken);
+				setCookie('refreshToken', res.refreshToken, {
+					path: '/',
+					expires: 1200,
+				});
 				dispatch(getAccessToken(res.accessToken));
 				updateUserData({
 					token: res.accessToken,

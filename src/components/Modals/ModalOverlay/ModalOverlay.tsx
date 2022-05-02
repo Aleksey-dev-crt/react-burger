@@ -5,7 +5,7 @@ import ModalOverlayStyles from './ModalOverlay.module.css'
 const ModalOverlay: FC<IModalProps> = ({ onClose, children }) => {
 
   const closeByOverlay = (e: SyntheticEvent) => {
-    if ((e.target as Element).className.includes('overlay')) {
+    if ((e.target as HTMLElement).localName === 'div' && (e.target as HTMLElement).className.includes('overlay')) {
       return onClose ? onClose() : null
     }
   }

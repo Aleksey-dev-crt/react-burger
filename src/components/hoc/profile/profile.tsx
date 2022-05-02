@@ -23,7 +23,7 @@ export const Profile: FC<IProfileProps> = ({ children }) => {
       </div>
         {children}
       </div>
-     
+      
       {loading && (
         <ModalOverlay>
           <Loader />
