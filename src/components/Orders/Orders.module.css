@@ -51,6 +51,7 @@
   display: flex;
   width: 420px;
   overflow: hidden;
+  z-index: 0;
 }
 
 .ingredient > img {

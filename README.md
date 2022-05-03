@@ -1,7 +1,14 @@
+**Stellar-burger**
+
+Веб приложение - бургерная. Представляет собой удобный конструктор для заказа бургера из предложенных ингредиентов. В приложении полноценный механизм регистрации/авторизации пользователей, возможность восстановления пароля, изменения учетных данных. Созданные заказы можно просматривать в профиле пользователя, также можно просматривать полную историю заказов.
+
+#
+
 **Технологии**
 
 - React
 - Redux
+- TypeScript
 - React dnd
 - React router
 - cookie
@@ -11,7 +18,7 @@
 
 **Ссылка на страницу**
 
-- [React-burger](https://aleksey-dev-crt.github.io/react-burger/)
+- [Stellar-burger](https://aleksey-dev-crt.github.io/react-burger/)
 
 # Getting Started with Create React App
 
