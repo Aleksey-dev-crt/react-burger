@@ -12,11 +12,11 @@ import {
 import { getIngredients, placeOrder, TResponseBody } from '../../utils/Api';
 import { IIngredient, IOrder } from '../types/types';
 import { setLoaderWithoutOverlay, setOrderPending } from './commonActions';
-import { AppDispatch } from '../types';
+import { ActionThunk } from '../types';
 
 export interface IModifyIngredients {
 	readonly type: typeof MODIFY_INGREDIENTS;
-	readonly payload: ReadonlyArray<IIngredient>;
+	readonly payload: Array<IIngredient>;
 }
 
 export interface IAddBun {
@@ -54,7 +54,7 @@ export interface IClearConstructor {
 
 export interface IModifyStuffing {
 	readonly type: typeof MODIFY_STUFFING;
-	readonly payload: ReadonlyArray<IIngredient>;
+	readonly payload: Array<IIngredient>;
 }
 
 export type TConstructorActions =
@@ -69,14 +69,14 @@ export type TConstructorActions =
 	| IModifyStuffing;
 
 export const modifyIngredients = (
-	payload: ReadonlyArray<IIngredient>
+	payload: Array<IIngredient>
 ): IModifyIngredients => ({
 	type: MODIFY_INGREDIENTS,
 	payload,
 });
 
-export const requestIngredients: any = () => {
-	return (dispatch: AppDispatch) => {
+export const requestIngredients: ActionThunk = () => {
+	return (dispatch) => {
 		dispatch(setLoaderWithoutOverlay(true));
 		getIngredients()
 			.then((res) => dispatch(modifyIngredients(res.data)))
@@ -95,8 +95,8 @@ export const addStuffing = (payload: IIngredient): IAddStuffing => ({
 	payload,
 });
 
-export const addToConstructor: any = (payload: IIngredient) => {
-	return (dispatch: AppDispatch) => {
+export const addToConstructor: ActionThunk = (payload: IIngredient) => {
+	return (dispatch) => {
 		if (payload.type === 'bun') dispatch(addBun(payload));
 		else dispatch(addStuffing(payload));
 	};
@@ -124,11 +124,11 @@ export const clearConstructor = (): IClearConstructor => ({
 	type: CLEAR_CONSTRUCTOR,
 });
 
-export const postOrder: any = (payload: {
+export const postOrder: ActionThunk = (payload: {
 	token: string;
-	ingredients: ReadonlyArray<IIngredient>;
+	ingredients: Array<IIngredient>;
 }) => {
-	return (dispatch: AppDispatch) => {
+	return (dispatch) => {
 		dispatch(setOrderPending(true));
 		placeOrder(payload)
 			.then((res) => dispatch(postOrderAction(res)))
@@ -140,5 +140,5 @@ export const postOrder: any = (payload: {
 };
 
 export const modifyStuffing = (
-	payload: ReadonlyArray<IIngredient>
+	payload: Array<IIngredient>
 ): IModifyStuffing => ({ type: MODIFY_STUFFING, payload });

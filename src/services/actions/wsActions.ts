@@ -36,7 +36,7 @@ export interface IwsConnectionClosed {
 
 export interface IwsGetMessage {
 	readonly type: typeof WS_GET_MESSAGE;
-	readonly payload: any;
+	readonly payload: IOrdersInfo;
 }
 
 export interface IwsSendMessage {

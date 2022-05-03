@@ -5,9 +5,10 @@ import { Routes } from '../hoc/Routes/Routes';
 import { useDispatch } from '../../utils/hooks';
 import { getCookie } from '../../utils/cookies';
 import { requestUserData, requestIngredients } from '../../services/actions';
+import { DispatchThunk } from '../../services/types';
 
 const App: FC = () => {
-	const dispatch = useDispatch();
+	const dispatch: DispatchThunk = useDispatch();
 
 	useEffect(() => {
 		dispatch(requestIngredients());

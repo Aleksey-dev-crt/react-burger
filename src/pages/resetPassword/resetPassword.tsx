@@ -10,9 +10,10 @@ import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from '../../utils/hooks'
 import { changePassword } from '../../services/actions'
 import { ILocation } from '../../services/types/types'
+import { DispatchThunk } from '../../services/types'
 
 export const ResetPassword: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch: DispatchThunk = useDispatch()
   const { authorized } = useSelector((store) => store.registrationReducer)
   const { resetPassword } = useSelector((store) => store.registrationReducer)
   const location = useLocation<ILocation>()

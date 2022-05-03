@@ -38,14 +38,14 @@ export interface IIngredient {
 }
 
 export interface IOrdersInfo {
-  orders: Array<IOrder> | [],
-  total: number,
+  orders: Array<IOrder>
+  total: number
   totalToday: number
 }
 
 export interface IOrder {
   createdAt: string
-  ingredients: string[]
+  ingredients: Array<string>
   name: string
   number: number
   status: string

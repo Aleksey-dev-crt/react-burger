@@ -4,9 +4,10 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch } from '../../utils/hooks'
 import { exit } from '../../services/actions'
 import { getCookie, deleteCookie } from '../../utils/cookies'
+import { DispatchThunk } from '../../services/types'
 
 export const ProfileMenu: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch: DispatchThunk = useDispatch()
 
   const refreshToken = getCookie('refreshToken')
 

@@ -12,12 +12,13 @@ import { Link, useLocation, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from '../../utils/hooks'
 import { newUser } from '../../services/actions'
 import { ILocation } from '../../services/types/types'
+import { DispatchThunk } from '../../services/types'
 
 export const Register: FC = () => {
   const { authorized } = useSelector((store) => store.registrationReducer)
   const location = useLocation<ILocation>()
 
-  const dispatch = useDispatch()
+  const dispatch: DispatchThunk = useDispatch()
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)
 
   const [name, setName] = useState('')

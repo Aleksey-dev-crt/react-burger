@@ -4,9 +4,10 @@ import ProfileFormStyles from './profileForm.module.css'
 import { useDispatch, useSelector } from '../../utils/hooks'
 import { requestUserData, saveUserData } from '../../services/actions'
 import { getCookie } from '../../utils/cookies'
+import { DispatchThunk } from '../../services/types'
 
 export const ProfileForm: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch: DispatchThunk = useDispatch()
   const { userData } = useSelector((store) => store.registrationReducer)
 
   const [name, setName] = useState('')

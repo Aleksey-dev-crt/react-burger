@@ -7,9 +7,11 @@ import ModalOverlay from '../../components/Modals/ModalOverlay/ModalOverlay'
 import { useDispatch, useSelector } from '../../utils/hooks'
 import { passwordChangeRequest } from '../../services/actions'
 import { ILocation } from '../../services/types/types'
+import { DispatchThunk } from '../../services/types'
 
 export const ForgotPassword: FC = () => { 
-  const dispatch = useDispatch()
+const dispatch: DispatchThunk = useDispatch()
+
   const { resetPassword, authorized } = useSelector((store) => store.registrationReducer)
   const location = useLocation<ILocation>()
   const loading = useSelector((store) => store.commonReducer.loadingWithOverlay)

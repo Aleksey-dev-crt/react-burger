@@ -21,7 +21,7 @@ const initialState = {
   }
 }
 
-export const wsReducer = (state: TwsState = initialState, action: TwsActions) => {
+export const wsReducer = (state: TwsState = initialState, action: TwsActions)  => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

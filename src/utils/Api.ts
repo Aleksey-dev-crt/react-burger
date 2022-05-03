@@ -10,6 +10,7 @@ const configAPI = {
 export type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
   [key in TDataKey]: TDataType
 } & {
+  name: string
   success: boolean
   accessToken: string
   refreshToken: string
@@ -29,7 +30,7 @@ const checkResponse = (res: Response): Promise<any> => {
 }
 
 export const getIngredients = (): Promise<
-TResponseBody<'data', ReadonlyArray<IIngredient>>
+TResponseBody<'data', Array<IIngredient>>
 > => {
   return fetch(`${configAPI.baseUrl}/ingredients`, {
     headers: configAPI.headers,
@@ -38,7 +39,7 @@ TResponseBody<'data', ReadonlyArray<IIngredient>>
 
 type TPlaceOrder = {
   token: string
-  ingredients: ReadonlyArray<IIngredient>
+  ingredients: Array<IIngredient>
 }
 
 export const placeOrder = ({ token, ingredients }: TPlaceOrder): Promise<

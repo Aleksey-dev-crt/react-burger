@@ -1,8 +1,8 @@
-import { MiddlewareAPI } from 'redux';
+import { Middleware, MiddlewareAPI } from 'redux';
 import { TwsActions } from '../services/store';
 import { AppDispatch, RootState } from '../services/types';
 
-export const socketMiddleware = (wsUrl: string, wsActions: TwsActions): any => {
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActions): Middleware => {
 	type TAction = {
 		type: string;
 		payload: any;

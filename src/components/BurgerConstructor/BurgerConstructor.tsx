@@ -23,6 +23,7 @@ import {
   postOrderModal,
   modifyStuffing,
 } from '../../services/actions'
+import { DispatchThunk } from '../../services/types'
 
 interface IConstrucorElementProps {
   element: IIngredient
@@ -99,7 +100,7 @@ const ConstrucorElement: FC<IConstrucorElementProps> = ({
 }
 
 interface IIngredientsProps {
-  ingredients: ReadonlyArray<IIngredient>
+  ingredients: Array<IIngredient>
 }
 
 const Ingredients: FC<IIngredientsProps> = ({ ingredients }) => {
@@ -151,11 +152,11 @@ const Ingredients: FC<IIngredientsProps> = ({ ingredients }) => {
 
 interface IOrderProps {
   cost: number
-  ingredients: ReadonlyArray<IIngredient>
+  ingredients: Array<IIngredient>
 }
 
 const Order: FC<IOrderProps> = ({ cost, ingredients }) => {
-  const dispatch = useDispatch()
+  const dispatch: DispatchThunk = useDispatch()
   const history = useHistory<History>()
   const { isModalOpen, orderDetails } = useSelector((store) => store.constructorReducer)
   const { orderPending } = useSelector((store) => store.commonReducer)
@@ -202,7 +203,7 @@ const Order: FC<IOrderProps> = ({ cost, ingredients }) => {
 }
 
 const BurgerConstructor: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch: DispatchThunk = useDispatch()
   const { stuffing, bun, price, constructorIngredients } = useSelector(
     (store) => store.constructorReducer
   )

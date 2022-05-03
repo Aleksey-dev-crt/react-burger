@@ -13,20 +13,20 @@ import {
 } from '../actions/actionTypes';
 
 export type TConstructorState = {
-	stuffing: ReadonlyArray<IIngredient>;
+	stuffing: Array<IIngredient>;
 	bun: IIngredient;
-	modifyedIngredients: ReadonlyArray<IIngredient>;
-	constructorIngredients: ReadonlyArray<IIngredient>;
+	modifyedIngredients: Array<IIngredient>;
+	constructorIngredients: Array<IIngredient>;
 	price: number;
 	isModalOpen: boolean;
 	orderDetails: {
-		name: string
-		order: IOrder
-		success: boolean
+		name: string;
+		order: IOrder;
+		success: boolean;
 	};
 };
 
-const initialState: TConstructorState = {
+const initialState = {
 	stuffing: [],
 	bun: {
 		calories: 0,
@@ -148,7 +148,23 @@ export const constructorReducer = (
 			return {
 				...state,
 				constructorIngredients: [],
-				bun: {},
+				bun: {
+					calories: 0,
+					carbohydrates: 0,
+					constructorID: '',
+					count: 0,
+					fat: 0,
+					image: '',
+					image_large: '',
+					image_mobile: '',
+					name: '',
+					price: 0,
+					proteins: 0,
+					type: '',
+					__v: 0,
+					_id: '',
+					orderCount: 0,
+				},
 				stuffing: [],
 				price: 0,
 				modifyedIngredients: state.modifyedIngredients.map(

@@ -1,7 +1,7 @@
 import { useRef, FC } from 'react'
 import BurgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IIngredient } from '../../services/types/types'
+import { IIngredient, ILocation } from '../../services/types/types'
 import { useSelector, useDispatch } from '../../utils/hooks'
 import { setCategory } from '../../services/actions'
 import { useDrag } from 'react-dnd'
@@ -47,7 +47,7 @@ interface IIngredientProps {
 }
 
 const Ingredient: FC<IIngredientProps> = ({ ingredient }) => {
-  let location = useLocation<Location>()
+  let location = useLocation<ILocation>()
 
   const [, drag] = useDrag(() => ({
     type: 'ingredient',
@@ -80,7 +80,7 @@ const Ingredient: FC<IIngredientProps> = ({ ingredient }) => {
 }
 
 interface IIngredientsCategoryProps {
-  ingredients: ReadonlyArray<IIngredient>
+  ingredients: Array<IIngredient>
   type: string
   text: string
 }
