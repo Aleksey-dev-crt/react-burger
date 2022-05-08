@@ -12,7 +12,10 @@ export function setCookie(
 	value: string,
 	props: { [key: string]: any } & { expires?: number | Date | string } = {}
 ): void {
-	props = props || {};
+	props = {
+		path: '/',
+		...props
+	};
 	let exp = props.expires;
 	if (typeof exp == 'number' && exp) {
 		const d = new Date();

@@ -28,6 +28,8 @@ const Order: FC<IOrderProps> = ({ order, historyOrders }) => {
 			ingredientsPrice += ingredient.price;
 		}
 	});
+	const ingredientsToShow = ingredients.slice(0, 6);
+	const leftover = ingredients.length > 6 ? ingredients.length - 6 : 0;
 
 	type TStatus = {
 		[key: string]: string;
@@ -68,14 +70,25 @@ const Order: FC<IOrderProps> = ({ order, historyOrders }) => {
 				) : null}
 			</div>
 			<div className={OrdersStyles.orderDescription}>
-				<div className={OrdersStyles.ingredient}>
-					{ingredients.map((el, i, arr) => (
-						<img
+				<div className={OrdersStyles.ingredients}>
+					{ingredientsToShow.map((el, i, arr) => (
+						<div
+							className={OrdersStyles.ingredient}
 							style={{ zIndex: `${arr.length - i}` }}
-							key={i}
-							src={el.image}
-							alt={el.name}
-						/>
+							key={i}>
+							<img
+								src={el.image}
+								alt={el.name}
+							/>
+							{i + 1 === 6 ? (
+								<span
+									className={
+										'text text_type_digits-small ' + OrdersStyles.leftover
+									}>
+									{leftover > 0 ? `+${leftover}` : null}
+								</span>
+							) : null}
+						</div>
 					))}
 				</div>
 				<div className={OrdersStyles.price}>

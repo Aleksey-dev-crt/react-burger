@@ -1,70 +1,88 @@
 .ordersContainer {
-  width: 100%;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding: 8px;
-  max-height: 756px;
-  overflow-y: auto;
-  scrollbar-width: 8px;
-  scrollbar-color: #8585ad #2f2f37;
+	width: 100%;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	padding: 8px;
+	max-height: 756px;
+	overflow-y: auto;
+	scrollbar-width: 8px;
+	scrollbar-color: #8585ad #2f2f37;
 }
 
 .ordersContainer::-webkit-scrollbar {
-  background-color: #2f2f37;
-  width: 8px;
+	background-color: #2f2f37;
+	width: 8px;
 }
 .ordersContainer::-webkit-scrollbar-thumb {
-  background-color: #8585ad;
+	background-color: #8585ad;
 }
 
 .order {
-  padding: 24px;
-  background: #1c1c21;
-  color: #fff;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  max-width: 100%;
-  border-radius: 40px;
+	padding: 24px;
+	background: #1c1c21;
+	color: #fff;
+	text-decoration: none;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	max-width: 100%;
+	border-radius: 40px;
 }
 
 .order:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .orderNumber {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
 }
 
 .orderDescription {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ingredients {
+	/* position: relative; */
+	display: flex;
+	width: 420px;
+	overflow: hidden;
+	z-index: 0;
 }
 
 .ingredient {
-  display: flex;
-  width: 420px;
-  overflow: hidden;
-  z-index: 0;
+	display: flex;
+	width: 64px;
+	height: 64px;
+	background: #131316;
+	border-radius: 50%;
+	border: #801ab2 1px solid;
+	margin-right: -20px;
 }
 
 .ingredient > img {
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  background: #131316;
-  border-radius: 50%;
-  border: #801ab2 1px solid;
-  margin-right: -20px;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .price {
-  display: flex;
-  gap: 8px;
+	display: flex;
+	gap: 8px;
+}
+
+.leftover {
+	background-color: transparent;
+	margin-left: -40px;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	display: flex;
+	align-items: center;
+	text-align: center;
 }
