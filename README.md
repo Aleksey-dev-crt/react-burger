@@ -12,8 +12,6 @@ _Веб приложение - бургерная. Представляет со
 
 - [Stellar-burger](https://aleksey-dev-crt.github.io/react-burger/)
 
-*статус проекта: завершен*
-
 #
 
 # Getting Started with Create React App
